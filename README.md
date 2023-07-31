@@ -75,25 +75,26 @@ Performing 1-pass diff (mode 7), writing results to AxiomGT1.mismatching7.diff <
 97593330 concordant, for a concordance rate of 0.996897. <br> 
 
 
-Let us have a closer look on the mismatching genotypes to see if they are uniformly distributed among the samples or not
-```
-tail -n+2 AxiomGT1.mismatching7.diff | awk '{print $2,$3}' | sort | uniq -c | sort -k1,1nr > AxiomGT1.mismatching7.diff.samples
-```
+1.  **Mismatching genotypes:** Let us have a closer look on the mismatching genotypes to see if they are uniformly distributed among the samples or not
+    ```
+    tail -n+2 AxiomGT1.mismatching7.diff | awk '{print $2,$3}' | sort | uniq -c | sort -k1,1nr > AxiomGT1.mismatching7.diff.samples
+    ```
 
-It seems that two samples show exceptional higher rate of mismatching (S007258 and S019740 have 11676 and 11440 mistmatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on array B. This likely indicate that these samples had something wrong. Swapping them on array B did not fix the issue)
+    It seems that two samples show exceptional higher rate of mismatching (S007258 and S019740 have 11676 and 11440 mistmatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on array B. This likely indicate that these samples had something wrong. Swapping them on array B did not fix the issue)
 
-The mismatching analysis reveals 1463 markrs that has the same position on bith arrays but with different SNP IDs. Futher digging in the array annotation showed that most of these markers are idententical with minor differences in the flanking sequences. To avoid genotyping errors, we will exclude these SNPs from array B.
+2.  **Variants having the same position:** The mismatching analysis reveals 1463 markrs that has the same position on bith arrays but with different SNP IDs. Futher digging in the array annotation showed that most of these markers are idententical with minor differences in the flanking sequences. To avoid genotyping errors, we will exclude these SNPs from array B.
 
-```
-grep "Warning: Variants .* have the same position" AxiomGT1.mismatching7.log | awk -F"'" 'BEGIN{OFS="\n";}{print $2,$4}' > same_pos.arrB.lst
-plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+    ```
+    grep "Warning: Variants .* have the same position" AxiomGT1.mismatching7.log | awk -F"'" 'BEGIN{OFS="\n";}{print $2,$4}' > same_pos.arrB.lst
+    plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
       --exclude same_pos.arrB.lst \
       --make-bed --output-chr 'chrM' --out output/setB/export_plink/AxiomGT1.bin_noSamePos
-```
+    ```
 ## 3.2. Merging of Array sets A and B Genotyping data
 Now, we will merge the genotyping data of both arrays. For SNPs shared between the arrays, the genotypes of array A will overwrite the nonmissing calls in array B. Also, we will exclude the 2 samples with higher rates of non-concordance
 
 ```
+echo "GRLS S007258|GRLS S019740" | tr '|' '\n' > swap_samples.lst
 plink --bfile output/setB/export_plink/AxiomGT1.bin_noSamePos --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
       --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 3 \
       --remove swap_samples.lst \
