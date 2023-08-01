@@ -27,18 +27,18 @@ conda install -c conda-forge r-base=3.6.3
 
 ## 2. Input files
 ## 2.1. Genotyping data
-1.  Affymetrix (thermofisher) Axiom Canine HD Array sets A and B were used to genotype the GRLS dogs. In this tutorial, we have the GRLS genotyping data of each array in a binary PLINK file format. You may use the [PLINK documentation](https://www.cog-genomics.org/plink/1.9/input#bed) to read more about this file format.
+1.  Affymetrix (thermofisher) Axiom Canine HD Array sets A and B were used to genotype the GRLS dogs. In this tutorial, we have the GRLS genotyping data of each array in a binary PLINK file format. You may use the [PLINK documentation](https://www.cog-genomics.org/plink/1.9/input#bed) to read more about this file format. The [genotyping analysis notes]() has detailed information on the bioinformatic pipeline used for genotyping and all notes that should be considered before any further analysis.
     - The files of array A have the prefix "output/setA/export_plink/AxiomGT1.bin"
     - The files of array B have the prefix "output/setB/export_plink/AxiomGT1.bin".
     ---
-    **_Note:_** These PLINK files have the gender as predicted by the Axiom genotyping analysis tools.
-
+    **_Note:_** These PLINK files have the gender as predicted by the Axiom genotyping analysis tools except for sample `S040136` which is encoded as male as reported in metadata but genotyping algorithm failed to predict its gender.
+    
     ---
 
-2.  A Text file that maps between sample IDs in the genotyping files, biological sample IDs, and the public IDs used in phenotype data files. 
-3.  A Text file that has gender information of the dogs as reported by their owners
-4.  A test file that has a list of dupliacte samples in the genotyping data 
- 
+2.  A text file that has gender information of the dogs as reported by their owners
+3.  A test file that has a list of dupliacte samples in the genotyping data 
+4.  A text file that maps between sample IDs in the genotyping files, biological sample IDs, and the public IDs used in phenotype data files.
+   
 ## 2.2. Phenotype data
 Morris Animal Foundation [Data Commons](https://datacommons.morrisanimalfoundation.org/) provides open access to most of the data collected by the Golden Retriever Lifetime Study. An overview description of the study data can be found [here](https://datacommons.morrisanimalfoundation.org/node/221). To download data tables, you need to [register](https://datacommons.morrisanimalfoundation.org/user/login?destination=/node/1) at the Data Commons.
 
@@ -103,7 +103,7 @@ plink --bfile output/setB/export_plink/AxiomGT1.bin_noSamePos --chr-set 38 no-xy
       --make-bed --output-chr 'chrM' --out AxiomGT1v2.comp_merge
 ```
 
-The output the merging command gives some useful stastics
+The output of the merging command gives some useful stastics
 
 > ... <br>
 Warning: 1355 het. haploid genotypes present (see AxiomGT1v2.comp_merge.hh ); <br>
