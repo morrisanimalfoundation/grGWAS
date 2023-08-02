@@ -31,7 +31,7 @@ conda install -c conda-forge r-base=3.6.3
     - The files of array A have the prefix "output/setA/export_plink/AxiomGT1.bin"
     - The files of array B have the prefix "output/setB/export_plink/AxiomGT1.bin".
     ---
-    **_Note:_** These PLINK files have the gender as predicted by the Axiom genotyping analysis tools except for sample `S040136` which is encoded as male as reported in metadata but genotyping algorithm failed to predict its gender.
+    **_Note:_** These PLINK files have the gender as predicted by the Axiom genotyping analysis tools. Check the [genotyping analysis notes]() for details
     
     ---
 
@@ -113,7 +113,7 @@ Total genotyping rate in remaining samples is 0.994631. <br>
 913984 variants and 3354 samples pass filters and QC. <br>
 ...
 
-Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haploid genotypes belong to sample `S005865`. The sample is reported male in metadata but genotyping algorithm failed to predict the gender of this sample.
+Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haploid genotypes belong to sample `S005865`. According to the genotyping analysis notes, this sample is reported male in metadata as well as by the genotyping algorithm on Array B but the algorithm failed to predict its gender on array A.
 
 
 ## 3.3. Identification and removal of duplicate samples
