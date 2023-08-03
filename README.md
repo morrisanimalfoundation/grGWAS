@@ -35,9 +35,7 @@ conda install -c conda-forge r-base=3.6.3
     
     ---
 
-2.  A text file that has gender information of the dogs as reported by their owners
-3.  A test file that has a list of dupliacte samples in the genotyping data 
-4.  A text file that maps between sample IDs in the genotyping files, biological sample IDs, and the public IDs used in phenotype data files.
+2.  A text file that maps between sample IDs in the genotyping files, biological sample IDs, and the public IDs used in phenotype data files. Moreover, the file has gender information of the dogs as reported by their owners: `map_id_sex.tab`
    
 ## 2.2. Phenotype data
 Morris Animal Foundation [Data Commons](https://datacommons.morrisanimalfoundation.org/) provides open access to most of the data collected by the Golden Retriever Lifetime Study. An overview description of the study data can be found [here](https://datacommons.morrisanimalfoundation.org/node/221). To download data tables, you need to [register](https://datacommons.morrisanimalfoundation.org/user/login?destination=/node/1) at the Data Commons.
@@ -117,4 +115,46 @@ Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haplo
 
 
 ## 3.3. Identification and removal of duplicate samples
+Plink2 has an efficient function to calculate the KING-robust knickship estimator and filter duplicate samples as well. Duplicate samples have kinship coefficients ~0.5, first-degree relations (parent-child, full siblings) correspond to ~0.25, second-degree relations correspond to ~0.125, etc. Here, we are using the conventional cufoff ~0.354 (the geometric mean of 0.5 and 0.25) to identify and filter duplicate samples
+
+```
+plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+       --king-cutoff 0.354 \
+       --out AxiomGT1v2.comp_merge.nodup
+```
+
+Now, let us compare the files selected to be removed by Plink2 knickship versus the list of samples planned to run in duplicates. This code will identify all the samples planned to run in duplicates then find those remaining after exlcusion of the samples selected by the Plink2 knickship filter. We are expecting one replicate to remain from each group of replicate samples 
+```
+awk 'BEGIN{FS=OFS="\t"}FNR==NR{a[$3]+=1;next}/^Family_ID/{print}{if(a[$3]>1)print}' map_id_sex.tab map_id_sex.tab > dup_samples.tab
+awk 'BEGIN{FS=OFS="\t"}FNR==NR{a[$1 FS $2]=1;next}{if(!a[$1 FS $2])print $0}' AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id dup_samples.tab > dup_samples_remain.tab
+tail -n+2 dup_samples_remain.tab | cut -f3 | sort | uniq -c | sort -k1,1nr
+```
+Hear is the list of the remaining duplicates and their counts
+> 2 &nbsp;&nbsp;&nbsp; 094-027376 <br>
+  1 &nbsp;&nbsp;&nbsp; 094-002188 <br>
+  1 &nbsp;&nbsp;&nbsp; 094-002396 <br>
+  1 &nbsp;&nbsp;&nbsp; 094-002995 <br>
+  . <br>
+  . <br>
+
+
+It seems that 2 duplicates of sample `094-027376` are still remaining! Let's try to calculate their KING knickship to see how similar they are:
+```
+grep 094-027376 dup_samples.tab > failed_deDup.lst
+plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+       --keep failed_deDup.lst --make-king-table \
+       --out AxiomGT1v2.comp_merge.failed_deDup
+cat AxiomGT1v2.comp_merge.failed_deDup.kin0
+```
+Here is the output. 
+> #FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP <br>
+GRLS &nbsp;&nbsp;&nbsp; S027376_2 &nbsp;&nbsp;&nbsp; GRLS &nbsp;&nbsp;&nbsp; S027376_1 &nbsp;&nbsp;&nbsp; 879956 &nbsp;&nbsp;&nbsp; 0.0645396 &nbsp;&nbsp;&nbsp; 0.0414475 &nbsp;&nbsp;&nbsp; -0.0559478 <br>
+
+It is obvious that these two samples are unlrelated. Therefore, we will exclude both of them with the duplicate samples selected by the Plink2 knickship filter. These are 120 samples in total so we will end up having 3234 samples in our output PLINK file
+```
+plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+       --remove <(cat AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id failed_deDup.lst) \
+       --make-bed --output-chr 'chrM' --out AxiomGT1v2.comp_merge.deDup
+```
+
 
