@@ -158,7 +158,7 @@ plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-e
 ```
 
 
-## 3.3. Check for gender accuracy & remove samples with wrong gender identities 
+## 3.4. Check for gender accuracy & remove samples with wrong gender identities 
 According to the [genotyping analysis notes](), there are two samples `GRLS S019740` and `GRLS S005865` that had discordant computed gender on the two arrays. The former was removed already because of the high rate of mismatching genotypes between the 2 arrays (see **3.1. replicate SNPs**). The latter showed high rate heterozygous haploid genotypes despite being reported as male in metadata (see **3.2. Merging of Array sets**). We will discard this sample from further analysis.
 
 Moreover, there are additional 9 samples with concordant gender on both arrays but different from the metadata. We can reproduce this information by known gender in metadata versus the computed gender based on genotyping data
@@ -175,3 +175,22 @@ plink2 --bfile AxiomGT1v2.comp_merge.deDup --chr-set 38 no-xy --allow-no-sex --a
        --make-bed --output-chr 'chrM' --out AxiomGT1v2.comp_merge.deDup.sexConfirm
 ```
 The output of our last PLINK command indeicate that our final file has 3224 samples (1615 females, 1609 males; 3224 founders)
+
+
+## 3.5. Update sample IDs in the genotyping files to match the phenotyping files
+The data tables at Morris Animal Foundation [Data Commons](https://datacommons.morrisanimalfoundation.org/) are using grls_ids (e.g. 094-000019) or public_ids (e.g. grlsH764T844). In this step, we will upadate the sample IDs in our genotyping files to match the grls_ids using the `map_id_sex.tab` file that maps between different types of IDs
+```
+tail -n+2 map_id_sex.tab | awk 'BEGIN{FS=OFS="\t"}{print $1,$2,$1,$3}' > grls_id.update.lst 
+plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+       --update-ids grls_id.update.lst \
+       --make-bed --output-chr 'chrM' --out AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids
+```
+
+We can also do the same to upadate the sample IDs in our genotyping files to match the public_ids
+```
+tail -n+2 map_id_sex.tab | awk 'BEGIN{FS=OFS="\t"}{print $1,$2,$1,$4}' > public_ids.update.lst 
+plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+       --update-ids public_ids.update.lst \
+       --make-bed --output-chr 'chrM' --out AxiomGT1v2.comp_merge.deDup.sexConfirm.public_ids
+```
+
