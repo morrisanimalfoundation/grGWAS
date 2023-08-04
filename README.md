@@ -80,7 +80,7 @@ The concordance rate of nonmissing genotypes is pretty good (99.7%). However, we
     tail -n+2 AxiomGT1.mismatching7.diff | awk '{print $2,$3}' | sort | uniq -c | sort -k1,1nr > AxiomGT1.mismatching7.diff.samples
     ```
 
-    It seems that two samples show exceptional higher rate of mismatching (S007258 and S019740 have 11676 and 11440 mistmatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on array B according to the genotyping analysis notes). This likely indicates that these samples had something wrong. According to the the genotyping analysis notes, swapping the 2 samples on array B did not fix the issue. Therefore, we will exclude both samples from further analysis during the merging step. 
+    It seems that two samples show exceptional higher rate of mismatching (`GRLS S007258` and `GRLS S019740` have 11676 and 11440 mistmatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on array B according to the genotyping analysis notes). This likely indicates that these samples had something wrong. According to the the genotyping analysis notes, swapping the 2 samples on array B did not fix the issue. Therefore, we will exclude both samples from further analysis during the merging step. 
 
 2.  **Variants having the same position:** The mismatching analysis reveals 1463 markrs that has the same position on bith arrays but with different SNP IDs. Futher digging in the array annotation showed that most of these markers are idententical with minor differences in the flanking sequences. To avoid genotyping errors, we will exclude these SNPs from array B.
 
@@ -111,7 +111,7 @@ Total genotyping rate in remaining samples is 0.994631. <br>
 913984 variants and 3354 samples pass filters and QC. <br>
 ...
 
-Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haploid genotypes belong to sample `S005865`. According to the genotyping analysis notes, this sample is reported male in metadata as well as by the genotyping algorithm on Array B but the algorithm failed to predict its gender on array A.
+Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haploid genotypes belong to sample `GRLS S005865`. According to the genotyping analysis notes, this sample is reported male in metadata as well as by the genotyping algorithm on Array B but the algorithm failed to predict its gender on array A.
 
 
 ## 3.3. Identification and removal of duplicate samples
@@ -158,3 +158,20 @@ plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-e
 ```
 
 
+## 3.3. Check for gender accuracy & remove samples with wrong gender identities 
+According to the [genotyping analysis notes](), there are two samples `GRLS S019740` and `GRLS S005865` that had discordant computed gender on the two arrays. The former was removed already because of the high rate of mismatching genotypes between the 2 arrays (see **3.1. replicate SNPs**). The latter showed high rate heterozygous haploid genotypes despite being reported as male in metadata (see **3.2. Merging of Array sets**). We will discard this sample from further analysis.
+
+Moreover, there are additional 9 samples with concordant gender on both arrays but different from the metadata. We can reproduce this information by known gender in metadata versus the computed gender based on genotyping data
+```
+echo "Family_ID Individual_ID computed_sex metadata_sex" | tr ' ' '\t' > gender_conflict.lst
+awk 'BEGIN{FS=OFS="\t"}FNR==NR{a[$1 FS $2]=$5;next}{if(a[$1 FS $2] && a[$1 FS $2]!=$5)print $1,$2,$5,a[$1 FS $2]}' map_id_sex.tab AxiomGT1v2.comp_merge.deDup.fam >> gender_conflict.lst
+```
+
+Wrong gender could be a mistake in the metadata or an indication for sample swap. Therefore, it is safer to exclude these samples from our genotyping data
+```
+echo "GRLS S005865" | tr ' ' '\t' >> gender_conflict.lst
+plink2 --bfile AxiomGT1v2.comp_merge.deDup --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+       --remove gender_conflict.lst \
+       --make-bed --output-chr 'chrM' --out AxiomGT1v2.comp_merge.deDup.sexConfirm
+```
+The output of our last PLINK command indeicate that our final file has 3224 samples (1615 females, 1609 males; 3224 founders)
