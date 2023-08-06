@@ -111,8 +111,25 @@ Total genotyping rate in remaining samples is 0.994631. <br>
 913984 variants and 3354 samples pass filters and QC. <br>
 ...
 
-Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haploid genotypes belong to sample `GRLS S005865`. According to the genotyping analysis notes, this sample is reported male in metadata as well as by the genotyping algorithm on Array B but the algorithm failed to predict its gender on array A.
+The first warning is is usually caused by male heterozygous calls in the X chromosome pseudo-autosomal region. Looking at `AxiomGT1v2.comp_merge.hh` shows that all the 1355 heterozygous haploid genotypes belong to sample `GRLS S005865`. According to the genotyping analysis notes, this sample is reported male in metadata as well as by the genotyping algorithm on Array B but the algorithm failed to predict its gender on array A. We will handle this sample later during the check for gender accuracy
 
+The second warning indicate that some nonmale samples have Y chromosome genotypes. Most PLINK commands treat these genotypes as missing. This behaviour is intended for safty however it makes it tricky to identify these markers. Here is some workaround to find these markers
+
+```
+mkdir -p temp_nonmale
+cat AxiomGT1v2.comp_merge.fam | awk '{if($5=="2")print}' > temp_nonmale/female.lst
+plink --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+      --keep temp_nonmale/female.lst --chr y \
+      --recode --output-chr 'chrM' --out temp_nonmale/AxiomGT1v2.comp_merge.fe
+      
+sed -i 's/chrY/chr_notY/' temp_nonmale/AxiomGT1v2.comp_merge.fe.map
+
+plink --file temp_nonmale/AxiomGT1v2.comp_merge.fe --chr-set 38 no-y --allow-no-sex --allow-extra-chr \
+      --freq counts \
+      --output-chr 'chrM' --out temp_nonmale/AxiomGT1v2.comp_merge.fe.explore
+tail -n+2 temp_nonmale/AxiomGT1v2.comp_merge.fe.explore.frq.counts | awk '{if($5!=0 || $6!=0)print}' | wc -l
+```
+We were able to identify 37 markers nonmissing Y chromosome genotypes in females. These markers could be in the psudoautosomal region but unfortunately we do not have known boundries to those regions in dogs. As mentioned above, it is safe to ignore these markers in PLINK 
 
 ## 3.3. Identification and removal of duplicate samples
 Plink2 has an efficient function to calculate the KING-robust knickship estimator and filter duplicate samples as well. Duplicate samples have kinship coefficients ~0.5, first-degree relations (parent-child, full siblings) correspond to ~0.25, second-degree relations correspond to ~0.125, etc. Here, we are using the conventional cufoff ~0.354 (the geometric mean of 0.5 and 0.25) to identify and filter duplicate samples
