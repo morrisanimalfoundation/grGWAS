@@ -21,7 +21,7 @@ conda install -c bioconda plink
 conda install -c bioconda plink2
 conda install -c bioconda bcftools
 conda install -c bioconda gcta
-conda install -c conda-forge r-base=3.6.3
+conda install -c conda-forge r-base=4.3.1 r-ggplot2=3.4.2 r-gridextra=2.3
 ```
 <br>
 
