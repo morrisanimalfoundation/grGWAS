@@ -349,13 +349,21 @@ paste gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo gwas/AxiomGT1v2.noR
 plink2 --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
        --autosome --pca \
        --output-chr 'chrM' --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca
+```
 
+I dentify the principle components that explain most of the variance 
+```
 Rscript -e 'val <- read.table("gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenval");'\
 'val$varPerc <- val$V1/sum(val$V1);'\
 'jpeg(file = "Var_PCs.jpg");'\
 'plot( x = seq(1:length(val$varPerc)), y = val$varPerc, type = "o",xlab = "Principle Component", ylab = "Variance explained in %");'\
 'dev.off();'
+```
+![](docs/images/Var_PCs.jpg)<!-- -->
 
+
+Plot the main principle components
+```
 Rscript -e 'require(ggplot2);require(gridExtra);'\
 'eigenvec <- read.table("gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec", header = TRUE, comment.char="");'\
 'eigenvec$X.FID <-  as.factor(eigenvec$X.FID);'\
