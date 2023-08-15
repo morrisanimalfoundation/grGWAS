@@ -45,8 +45,10 @@ theme:
 nav:
   - Home: index.md
   - Tutorial:
-    - Part 1: 1.install.md
-    - Part 2: 2.Input_files.md
+    - Environment Setup: 1.install.md
+    - Input Description: 2.Input_files.md
+    - Prep Array Sets: 3.prep_arrays.md
+    - QC & filtration: 4.qc_filter.md
 
   # - Examples:
   #   - Example 1: DisGeNET_similarity_network-complete.ipynb
