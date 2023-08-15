@@ -1,0 +1,859 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maf-grls.github.io/grGWAS/4.qc_filter/">
+      
+      
+        <link rel="prev" href="../3.prep_arrays/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
+    
+    
+      
+        <title>QC & filtration - grGWAS docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4-qc-and-filtration-of-genotyping-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="grGWAS docs" class="md-header__button md-logo" aria-label="grGWAS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            grGWAS docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              QC & filtration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MAF-GRLS/grGWAS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MAF-GRLS/grGWAS
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../1.install/" class="md-tabs__link md-tabs__link--active">
+        Tutorial
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="grGWAS docs" class="md-nav__button md-logo" aria-label="grGWAS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    grGWAS docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MAF-GRLS/grGWAS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MAF-GRLS/grGWAS
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.install/" class="md-nav__link">
+        Environment Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.Input_files/" class="md-nav__link">
+        Input Description
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.prep_arrays/" class="md-nav__link">
+        Prep Array Sets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          QC & filtration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        QC & filtration
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#4-qc-and-filtration-of-genotyping-data" class="md-nav__link">
+    4. QC and filtration of genotyping data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-identifcation-of-1st-degree-relatives" class="md-nav__link">
+    4.1. Identifcation of 1st degree relatives
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-explore" class="md-nav__link">
+    4.2. Explore
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#421-transform-the-heterozygosity-output-files-into-a-histogram-to-identify-the-extreme-cases" class="md-nav__link">
+    4.2.1. Transform the heterozygosity output files into a histogram to identify the extreme cases.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#422-transform-the-missingness-output-files-into-a-histogram-to-identify-the-extreme-samples-and-variants" class="md-nav__link">
+    4.2.2. Transform the missingness output files into a histogram to identify the extreme samples and variants.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#423-transform-the-allele-frequency-output-files-into-a-histogram-to-identify-markers-with-very-low-maf" class="md-nav__link">
+    4.2.3. Transform the allele frequency output files into a histogram to identify markers with very low MAF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#424-transform-the-hwe-output-files-into-a-histogram-to-identify-markers-with-significant-diviation-from-hwe" class="md-nav__link">
+    4.2.4. Transform the HWE output files into a histogram to identify markers with significant diviation from HWE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-filter" class="md-nav__link">
+    4.3. Filter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-ld-analysis" class="md-nav__link">
+    4.4. LD analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#441-ld-estimation" class="md-nav__link">
+    4.4.1 LD estimation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#442-ld-pruning" class="md-nav__link">
+    4.4.2 LD pruning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#443-ld-re-evaluation" class="md-nav__link">
+    4.4.3 LD re-evaluation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-pca" class="md-nav__link">
+    4.5. PCA
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#4-qc-and-filtration-of-genotyping-data" class="md-nav__link">
+    4. QC and filtration of genotyping data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-identifcation-of-1st-degree-relatives" class="md-nav__link">
+    4.1. Identifcation of 1st degree relatives
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-explore" class="md-nav__link">
+    4.2. Explore
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#421-transform-the-heterozygosity-output-files-into-a-histogram-to-identify-the-extreme-cases" class="md-nav__link">
+    4.2.1. Transform the heterozygosity output files into a histogram to identify the extreme cases.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#422-transform-the-missingness-output-files-into-a-histogram-to-identify-the-extreme-samples-and-variants" class="md-nav__link">
+    4.2.2. Transform the missingness output files into a histogram to identify the extreme samples and variants.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#423-transform-the-allele-frequency-output-files-into-a-histogram-to-identify-markers-with-very-low-maf" class="md-nav__link">
+    4.2.3. Transform the allele frequency output files into a histogram to identify markers with very low MAF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#424-transform-the-hwe-output-files-into-a-histogram-to-identify-markers-with-significant-diviation-from-hwe" class="md-nav__link">
+    4.2.4. Transform the HWE output files into a histogram to identify markers with significant diviation from HWE
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-filter" class="md-nav__link">
+    4.3. Filter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-ld-analysis" class="md-nav__link">
+    4.4. LD analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#441-ld-estimation" class="md-nav__link">
+    4.4.1 LD estimation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#442-ld-pruning" class="md-nav__link">
+    4.4.2 LD pruning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#443-ld-re-evaluation" class="md-nav__link">
+    4.4.3 LD re-evaluation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-pca" class="md-nav__link">
+    4.5. PCA
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+    
+      
+    
+    <a href="https://github.com/MAF-GRLS/grGWAS/tree/main/docs/4.qc_filter.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>QC & filtration</h1>
+
+<h2 id="4-qc-and-filtration-of-genotyping-data">4. QC and filtration of genotyping data</h2>
+<h2 id="41-identifcation-of-1st-degree-relatives">4.1. Identifcation of 1st degree relatives</h2>
+<p>We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the KING knickship  coeffiecient to identify 1st degree relatives.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir -p gwas
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       --king-cutoff 0.177 \
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>       --out gwas/AxiomGT1v2.1st_degree_relatives
+</span></code></pre></div>
+<p>Let us remove those relatives to avoid inflation of false associations in our GWAS</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>       --remove gwas/AxiomGT1v2.1st_degree_relatives.king.cutoff.out.id \
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>       --make-bed --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives
+</span></code></pre></div>
+<h2 id="42-explore">4.2. Explore</h2>
+<p>We use Plink commands to assess heterozygosity, missing genotyping, allele frequency, and hardy-weinberg equilibrium (HWE). The output are the files ending in ".het", ".imiss (Per-individual)/.lmiss (per-variant)", ".frq", and ".hwe"  </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>      --het --missing --freq --hardy   \
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.explore
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a># We currentlky have:
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a># 913984 variants loaded from .bim file.
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a># 2519 samples (1279 males, 1240 females) loaded from .fam.
+</span></code></pre></div>
+<h2 id="421-transform-the-heterozygosity-output-files-into-a-histogram-to-identify-the-extreme-cases">4.2.1. Transform the heterozygosity output files into a histogram to identify the extreme cases.</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.het) &gt; gwas/AxiomGT1v2.noRelatives.explore.het.histo 
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cat gwas/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if($6&gt;0.3)print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.het.high ## high homozygosity
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>cat gwas/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if(NR==1)print}{if($6&lt;-0.3)print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.het.low ## low homozygosity
+</span></code></pre></div>
+We can see at least 2 extreme cases. High heterozygosity may indicate sample contamination, however high homozygosity might just indicate higher inbreeding</p>
+<h2 id="422-transform-the-missingness-output-files-into-a-histogram-to-identify-the-extreme-samples-and-variants">4.2.2. Transform the missingness output files into a histogram to identify the extreme samples and variants.</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.imiss) &gt; gwas/AxiomGT1v2.noRelatives.explore.imiss.histo 
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.lmiss) &gt; gwas/AxiomGT1v2.noRelatives.explore.lmiss.histo 
+</span></code></pre></div>
+Missingness per individual shows 13 samples with about ~57% genotyping rates. These samples were genotyped on one array but not the other. While missingness per variant shows 36 extreme variants with about 50% genotyping rates</p>
+<h2 id="423-transform-the-allele-frequency-output-files-into-a-histogram-to-identify-markers-with-very-low-maf">4.2.3. Transform the allele frequency output files into a histogram to identify markers with very low MAF</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.frq) &gt; gwas/AxiomGT1v2.noRelatives.explore.frq.histo 
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.frq) &gt; gwas/AxiomGT1v2.noRelatives.explore.frq.histo2 
+</span></code></pre></div>
+There are 331344 markers that have &lt; 1% MAF, 278461 markers have &lt; 0.1% MAF &amp; 314175 markers have &lt; 0.5% MAF</p>
+<h2 id="424-transform-the-hwe-output-files-into-a-histogram-to-identify-markers-with-significant-diviation-from-hwe">4.2.4. Transform the HWE output files into a histogram to identify markers with significant diviation from HWE</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>awk &#39;BEGIN{OFS=&quot;\t&quot;;}{ if($9&lt;1e-10)a[&quot;1e-10 or less&quot;]++;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>                       else if($9&lt;1e-8)a[&quot;1e-8:1e-9&quot;]++; else if($9&lt;1e-9)a[&quot;1e-9:1e-10&quot;]++; \
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                       else if($9&lt;1e-7)a[&quot;1e-7:1e-8&quot;]++; else if($9&lt;1e-6)a[&quot;1e-6:1e-7&quot;]++; \
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                       else if($9&lt;1e-5)a[&quot;1e-5:1e-6&quot;]++; else if($9&lt;1e-4)a[&quot;1e-4:1e-5&quot;]++; \
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                       else if($9&lt;0.001)a[&quot;1e-3:1e-4&quot;]++; else if($9&lt;0.01)a[&quot;1e-2:1e-3&quot;]++; } \
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                 END { for(i in a) print i,a[i] }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.hwe) | sort -g &gt; gwas/AxiomGT1v2.noRelatives.explore.het.histo
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>cat gwas/AxiomGT1v2.noRelatives.explore.hwe | awk &#39;{if(NR==1)print}{if($9&lt;1e-10 )print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.hwe.low 
+</span></code></pre></div>
+1000s of SNPs show significant diviation from HWE, however this is an expected behaviour with selective breeding and artificial selection in dog breeds</p>
+<h2 id="43-filter">4.3. Filter</h2>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>echo &quot;Oldies 094-040059&quot; &gt; gwas/het_excess.lst
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>plink --bfile gwas/AxiomGT1v2.noRelatives --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>      --geno 0.05 --mind 0.05 --maf 0.01 \
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      --remove gwas/het_excess.lst\
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>      --make-bed --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered
+</span></code></pre></div>
+Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
+<h2 id="44-ld-analysis">4.4. LD analysis</h2>
+<h2 id="441-ld-estimation">4.4.1 LD estimation</h2>
+<p>--r2 reports squared inter-variant allele count correlations
+'in-phase' adds a column with in-phase allele pairs
+'dprime' adds the absolute value of Lewontin's D-prime statistic
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>      --r2 &#39;in-phase&#39; &#39;dprime&#39; \
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.stats
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo ## 128035 sequential markers have complete linkage
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.dprime_histo
+</span></code></pre></div></p>
+<h2 id="442-ld-pruning">4.4.2 LD pruning</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>      --indep-pairwise 100 10 0.2 \
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_lst ## 567586 of 582519 variants removed.
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      --extract gwas/AxiomGT1v2.noRelatives.filtered.LD_lst.prune.in \
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      --make-bed --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune ## 14933 variants remaining
+</span></code></pre></div>
+<h2 id="443-ld-re-evaluation">4.4.3 LD re-evaluation</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>      --freq --r2 &#39;in-phase&#39; &#39;dprime&#39; \
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.dprime_histo
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.frq) &gt; gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.frq.histo2 ## 278461 markers have &lt; 0.1% MAF &amp; 314175 markers have &lt; 0.5% MAF
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>paste gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo | less
+</span></code></pre></div>
+<h2 id="45-pca">4.5. PCA</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>plink2 --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>       --autosome --pca \
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>       --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca
+</span></code></pre></div>
+<p>I dentify the principle components that explain most of the variance: 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Rscript -e &#39;val &lt;- read.table(&quot;gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenval&quot;);&#39;\
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>&#39;val$varPerc &lt;- val$V1/sum(val$V1);&#39;\
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>&#39;jpeg(file = &quot;Var_PCs.jpg&quot;);&#39;\
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>&#39;plot( x = seq(1:length(val$varPerc)), y = val$varPerc, type = &quot;o&quot;,xlab = &quot;Principle Component&quot;, ylab = &quot;Variance explained in %&quot;);&#39;\
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>&#39;dev.off();&#39;
+</span></code></pre></div></p>
+<p><a class="glightbox" href="../images/Var_PCs.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/Var_PCs.jpg" /></a><!-- --></p>
+<p>Plot the main principle components:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Rscript -e &#39;require(ggplot2);require(gridExtra);&#39;\
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>&#39;eigenvec &lt;- read.table(&quot;gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec&quot;, header = TRUE, comment.char=&quot;&quot;);&#39;\
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>&#39;eigenvec$X.FID &lt;-  as.factor(eigenvec$X.FID);&#39;\
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>&#39;plot1 &lt;- ggplot(eigenvec, aes(x = PC1, y = PC2, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC1&quot;, y = &quot;PC2&quot;);&#39;\
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>&#39;plot2 &lt;- ggplot(eigenvec, aes(x = PC3, y = PC4, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC3&quot;, y = &quot;PC4&quot;);&#39;\
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>&#39;plot3 &lt;- ggplot(eigenvec, aes(x = PC1, y = PC3, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC1&quot;, y = &quot;PC3&quot;);&#39;\
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&#39;plot4 &lt;- ggplot(eigenvec, aes(x = PC2, y = PC3, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC2&quot;, y = &quot;PC3&quot;);&#39;\
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>&#39;combined_plot &lt;- grid.arrange(plot1, plot2, plot3, plot4, nrow = 2);&#39;\
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&#39;ggsave(&quot;pca_plot.png&quot;, combined_plot, width = 12, height = 8, dpi = 400);&#39;
+</span></code></pre></div></p>
+<p><a class="glightbox" href="../images/pca_plot.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/pca_plot.png" /></a><!-- --></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../3.prep_arrays/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Prep Array Sets" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Prep Array Sets
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

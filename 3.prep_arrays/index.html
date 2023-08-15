@@ -1,0 +1,818 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maf-grls.github.io/grGWAS/3.prep_arrays/">
+      
+      
+        <link rel="prev" href="../2.Input_files/">
+      
+      
+        <link rel="next" href="../4.qc_filter/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
+    
+    
+      
+        <title>Prep Array Sets - grGWAS docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.eebd395e.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-preparation-of-array-sets-a-and-b-genotyping-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="grGWAS docs" class="md-header__button md-logo" aria-label="grGWAS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            grGWAS docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Prep Array Sets
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MAF-GRLS/grGWAS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MAF-GRLS/grGWAS
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../1.install/" class="md-tabs__link md-tabs__link--active">
+        Tutorial
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="grGWAS docs" class="md-nav__button md-logo" aria-label="grGWAS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    grGWAS docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MAF-GRLS/grGWAS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MAF-GRLS/grGWAS
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.install/" class="md-nav__link">
+        Environment Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.Input_files/" class="md-nav__link">
+        Input Description
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Prep Array Sets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Prep Array Sets
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#3-preparation-of-array-sets-a-and-b-genotyping-data" class="md-nav__link">
+    3. Preparation of Array sets A and B genotyping data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#31-replicate-snps" class="md-nav__link">
+    3.1. replicate SNPs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-merging-of-array-sets-a-and-b-genotyping-data" class="md-nav__link">
+    3.2. Merging of Array sets A and B Genotyping data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-identification-and-removal-of-duplicate-samples" class="md-nav__link">
+    3.3. Identification and removal of duplicate samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fid1-id1-fid2-id2-nsnp-hethet-ibs0-kinship" class="md-nav__link">
+    FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP 
+  </a>
+  
+    <nav class="md-nav" aria-label="FID1     ID1     FID2     ID2     NSNP     HETHET     IBS0     KINSHIP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#34-check-for-gender-accuracy-remove-samples-with-wrong-gender-identities" class="md-nav__link">
+    3.4. Check for gender accuracy &amp; remove samples with wrong gender identities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-update-sample-ids-in-the-genotyping-files-to-match-the-phenotyping-files" class="md-nav__link">
+    3.5. Update sample IDs in the genotyping files to match the phenotyping files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.qc_filter/" class="md-nav__link">
+        QC & filtration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#3-preparation-of-array-sets-a-and-b-genotyping-data" class="md-nav__link">
+    3. Preparation of Array sets A and B genotyping data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#31-replicate-snps" class="md-nav__link">
+    3.1. replicate SNPs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-merging-of-array-sets-a-and-b-genotyping-data" class="md-nav__link">
+    3.2. Merging of Array sets A and B Genotyping data
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-identification-and-removal-of-duplicate-samples" class="md-nav__link">
+    3.3. Identification and removal of duplicate samples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fid1-id1-fid2-id2-nsnp-hethet-ibs0-kinship" class="md-nav__link">
+    FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP 
+  </a>
+  
+    <nav class="md-nav" aria-label="FID1     ID1     FID2     ID2     NSNP     HETHET     IBS0     KINSHIP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#34-check-for-gender-accuracy-remove-samples-with-wrong-gender-identities" class="md-nav__link">
+    3.4. Check for gender accuracy &amp; remove samples with wrong gender identities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-update-sample-ids-in-the-genotyping-files-to-match-the-phenotyping-files" class="md-nav__link">
+    3.5. Update sample IDs in the genotyping files to match the phenotyping files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+    
+      
+    
+    <a href="https://github.com/MAF-GRLS/grGWAS/tree/main/docs/3.prep_arrays.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+<h2 id="3-preparation-of-array-sets-a-and-b-genotyping-data">3. Preparation of Array sets A and B genotyping data</h2>
+<h2 id="31-replicate-snps">3.1. replicate SNPs</h2>
+<p>Both arrays has a number of replicate SNPs which are usefull for QC but also require special attention for proper merging of the files of both arrays. We are using a QC merging mode of PLINK to identify mismatching nonmissing calls between the 2 arrays</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 7 \
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      --output-chr &#39;chrM&#39; --out AxiomGT1.mismatching7
+</span></code></pre></div>
+<p>Here is the output of this command</p>
+<blockquote>
+<p>3339 samples loaded from output/setB/export_plink/AxiomGT1.bin.fam. <br> 
+3355 samples to be merged from output/setA/export_plink/AxiomGT1.bin.fam. <br> 
+Of these, 17 are new, while 3338 are present in the base dataset. <br> 
+547232 markers loaded from output/setB/export_plink/AxiomGT1.bin.bim. <br> 
+397685 markers to be merged from output/setA/export_plink/AxiomGT1.bin.bim. <br> 
+Of these, 368215 are new, while 29470 are present in the base dataset. <br> 
+Warning: Variants 'Affx-206088448' and 'Affx-205939940' have the same position. <br> 
+Warning: Variants 'Affx-205859745' and 'Affx-205344060' have the same position. <br> 
+Warning: Variants 'Affx-206706550' and 'Affx-205359377' have the same position. <br> 
+1460 more same-position warnings: see log file. <br> 
+Performing 1-pass diff (mode 7), writing results to AxiomGT1.mismatching7.diff <br> 
+98370860 overlapping calls, 97897061 nonmissing in both filesets. <br> 
+97593330 concordant, for a concordance rate of 0.996897. <br> </p>
+</blockquote>
+<p>The concordance rate of nonmissing genotypes is pretty good (99.7%). However, we still have to handle two issues: </p>
+<ol>
+<li>
+<p><strong>Mismatching genotypes:</strong> Let us have a closer look on the mismatching genotypes to see if they are uniformly distributed among the samples or not
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tail -n+2 AxiomGT1.mismatching7.diff | awk &#39;{print $2,$3}&#39; | sort | uniq -c | sort -k1,1nr &gt; AxiomGT1.mismatching7.diff.samples
+</span></code></pre></div></p>
+<p>It seems that two samples show exceptional higher rate of mismatching (<code>GRLS S007258</code> and <code>GRLS S019740</code> have 11676 and 11440 mistmatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on array B according to the genotyping analysis notes). This likely indicates that these samples had something wrong. According to the the genotyping analysis notes, swapping the 2 samples on array B did not fix the issue. Therefore, we will exclude both samples from further analysis during the merging step. </p>
+</li>
+<li>
+<p><strong>Variants having the same position:</strong> The mismatching analysis reveals 1463 markrs that has the same position on bith arrays but with different SNP IDs. Futher digging in the array annotation showed that most of these markers are idententical with minor differences in the flanking sequences. To avoid genotyping errors, we will exclude these SNPs from array B.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>grep &quot;Warning: Variants .* have the same position&quot; AxiomGT1.mismatching7.log | awk -F&quot;&#39;&quot; &#39;BEGIN{OFS=&quot;\n&quot;;}{print $2,$4}&#39; &gt; same_pos.arrB.lst
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  --exclude same_pos.arrB.lst \
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  --make-bed --output-chr &#39;chrM&#39; --out output/setB/export_plink/AxiomGT1.bin_noSamePos
+</span></code></pre></div>
+<h2 id="32-merging-of-array-sets-a-and-b-genotyping-data">3.2. Merging of Array sets A and B Genotyping data</h2>
+<p>Now, we will merge the genotyping data of both arrays. For SNPs shared between the arrays, the genotypes of array A will overwrite the nonmissing calls in array B. Also, we will <strong>exclude the 2 samples with higher rates of non-concordance</strong></p>
+</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>echo &quot;GRLS S007258|GRLS S019740&quot; | tr &#39;|&#39; &#39;\n&#39; &gt; swap_samples.lst
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin_noSamePos --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>      --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 3 \
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      --remove swap_samples.lst \
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge
+</span></code></pre></div>
+<p>The output of the merging command gives some useful stastics</p>
+<blockquote>
+<p>... <br>
+Warning: 1355 het. haploid genotypes present (see AxiomGT1v2.comp_merge.hh ); <br>
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; <br>
+... <br>
+Total genotyping rate in remaining samples is 0.994631. <br>
+913984 variants and 3354 samples pass filters and QC. <br>
+...</p>
+</blockquote>
+<p>The first warning is is usually caused by male heterozygous calls in the X chromosome pseudo-autosomal region. Looking at <code>AxiomGT1v2.comp_merge.hh</code> shows that all the 1355 heterozygous haploid genotypes belong to sample <code>GRLS S005865</code>. According to the genotyping analysis notes, this sample is reported male in metadata as well as by the genotyping algorithm on Array B but the algorithm failed to predict its gender on array A. We will handle this sample later during the check for gender accuracy</p>
+<p>The second warning indicate that some nonmale samples have Y chromosome genotypes. Most PLINK commands treat these genotypes as missing. This behaviour is intended for safty however it makes it tricky to identify these markers. Here is some workaround to find these markers</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdir -p temp_nonmale
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cat AxiomGT1v2.comp_merge.fam | awk &#39;{if($5==&quot;2&quot;)print}&#39; &gt; temp_nonmale/female.lst
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>plink --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>      --keep temp_nonmale/female.lst --chr y \
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>      --recode --output-chr &#39;chrM&#39; --out temp_nonmale/AxiomGT1v2.comp_merge.fe
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>sed -i &#39;s/chrY/chr_notY/&#39; temp_nonmale/AxiomGT1v2.comp_merge.fe.map
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>plink --file temp_nonmale/AxiomGT1v2.comp_merge.fe --chr-set 38 no-y --allow-no-sex --allow-extra-chr \
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>      --freq counts \
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>      --output-chr &#39;chrM&#39; --out temp_nonmale/AxiomGT1v2.comp_merge.fe.explore
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>tail -n+2 temp_nonmale/AxiomGT1v2.comp_merge.fe.explore.frq.counts | awk &#39;{if($5!=0 || $6!=0)print}&#39; | wc -l
+</span></code></pre></div>
+We were able to identify 37 markers nonmissing Y chromosome genotypes in females. These markers could be in the psudoautosomal region but unfortunately we do not have known boundries to those regions in dogs. As mentioned above, it is safe to ignore these markers in PLINK </p>
+<h2 id="33-identification-and-removal-of-duplicate-samples">3.3. Identification and removal of duplicate samples</h2>
+<p>Plink2 has an efficient function to calculate the KING-robust knickship estimator and filter duplicate samples as well. Duplicate samples have kinship coefficients ~0.5, first-degree relations (parent-child, full siblings) correspond to ~0.25, second-degree relations correspond to ~0.125, etc. Here, we are using the conventional cufoff ~0.354 (the geometric mean of 0.5 and 0.25) to identify and filter duplicate samples</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>       --king-cutoff 0.354 \
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>       --out AxiomGT1v2.comp_merge.nodup
+</span></code></pre></div>
+<p>Now, let us compare the files selected to be removed by Plink2 knickship versus the list of samples planned to run in duplicates. This code will identify all the samples planned to run in duplicates then find those remaining after exlcusion of the samples selected by the Plink2 knickship filter. We are expecting one replicate to remain from each group of replicate samples 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$3]+=1;next}/^Family_ID/{print}{if(a[$3]&gt;1)print}&#39; map_id_sex.tab map_id_sex.tab &gt; dup_samples.tab
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$1 FS $2]=1;next}{if(!a[$1 FS $2])print $0}&#39; AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id dup_samples.tab &gt; dup_samples_remain.tab
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>tail -n+2 dup_samples_remain.tab | cut -f3 | sort | uniq -c | sort -k1,1nr
+</span></code></pre></div>
+Hear is the list of the remaining duplicates and their counts</p>
+<blockquote>
+<p>2 &nbsp;&nbsp;&nbsp; 094-027376 <br>
+  1 &nbsp;&nbsp;&nbsp; 094-002188 <br>
+  1 &nbsp;&nbsp;&nbsp; 094-002396 <br>
+  1 &nbsp;&nbsp;&nbsp; 094-002995 <br>
+  . <br>
+  . <br></p>
+</blockquote>
+<p>It seems that 2 duplicates of sample <code>094-027376</code> are still remaining! Let's try to calculate their KING knickship to see how similar they are:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>grep 094-027376 dup_samples.tab &gt; failed_deDup.lst
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>       --keep failed_deDup.lst --make-king-table \
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>       --out AxiomGT1v2.comp_merge.failed_deDup
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>cat AxiomGT1v2.comp_merge.failed_deDup.kin0
+</span></code></pre></div>
+Here is the output. </p>
+<blockquote>
+<h1 id="fid1-id1-fid2-id2-nsnp-hethet-ibs0-kinship">FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP <br></h1>
+<p>GRLS &nbsp;&nbsp;&nbsp; S027376_2 &nbsp;&nbsp;&nbsp; GRLS &nbsp;&nbsp;&nbsp; S027376_1 &nbsp;&nbsp;&nbsp; 879956 &nbsp;&nbsp;&nbsp; 0.0645396 &nbsp;&nbsp;&nbsp; 0.0414475 &nbsp;&nbsp;&nbsp; -0.0559478 <br></p>
+</blockquote>
+<p>It is obvious that these two samples are unlrelated. Therefore, we will exclude both of them with the duplicate samples selected by the Plink2 knickship filter. These are 120 samples in total so we will end up having 3234 samples in our output PLINK file
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>       --remove &lt;(cat AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id failed_deDup.lst) \
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup
+</span></code></pre></div></p>
+<h2 id="34-check-for-gender-accuracy-remove-samples-with-wrong-gender-identities">3.4. Check for gender accuracy &amp; remove samples with wrong gender identities</h2>
+<p>According to the <a href="">genotyping analysis notes</a>, there are two samples <code>GRLS S019740</code> and <code>GRLS S005865</code> that had discordant computed gender on the two arrays. The former was removed already because of the high rate of mismatching genotypes between the 2 arrays (see <strong>3.1. replicate SNPs</strong>). The latter showed high rate heterozygous haploid genotypes despite being reported as male in metadata (see <strong>3.2. Merging of Array sets</strong>). We will discard this sample from further analysis.</p>
+<p>Moreover, there are additional 9 samples with concordant gender on both arrays but different from the metadata. We can reproduce this information by known gender in metadata versus the computed gender based on genotyping data
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>echo &quot;Family_ID Individual_ID computed_sex metadata_sex&quot; | tr &#39; &#39; &#39;\t&#39; &gt; gender_conflict.lst
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$1 FS $2]=$5;next}{if(a[$1 FS $2] &amp;&amp; a[$1 FS $2]!=$5)print $1,$2,$5,a[$1 FS $2]}&#39; map_id_sex.tab AxiomGT1v2.comp_merge.deDup.fam &gt;&gt; gender_conflict.lst
+</span></code></pre></div></p>
+<p>Wrong gender could be a mistake in the metadata or an indication for sample swap. Therefore, it is safer to exclude these samples from our genotyping data
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>echo &quot;GRLS S005865&quot; | tr &#39; &#39; &#39;\t&#39; &gt;&gt; gender_conflict.lst
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>       --remove gender_conflict.lst \
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup.sexConfirm
+</span></code></pre></div>
+The output of our last PLINK command indeicate that our final file has 3224 samples (1615 females, 1609 males; 3224 founders)</p>
+<h2 id="35-update-sample-ids-in-the-genotyping-files-to-match-the-phenotyping-files">3.5. Update sample IDs in the genotyping files to match the phenotyping files</h2>
+<p>The data tables at Morris Animal Foundation <a href="https://datacommons.morrisanimalfoundation.org/">Data Commons</a> are using grls_ids (e.g. 094-000019) or public_ids (e.g. grlsH764T844). In this step, we will upadate the sample IDs in our genotyping files to match the grls_ids using the <code>map_id_sex.tab</code> file that maps between different types of IDs
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>tail -n+2 map_id_sex.tab | awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}{print $1,$2,$1,$3}&#39; &gt; grls_id.update.lst 
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>       --update-ids grls_id.update.lst \
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids
+</span></code></pre></div></p>
+<p>We can also do the same to upadate the sample IDs in our genotyping files to match the public_ids
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>tail -n+2 map_id_sex.tab | awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}{print $1,$2,$1,$4}&#39; &gt; public_ids.update.lst 
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>       --update-ids public_ids.update.lst \
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup.sexConfirm.public_ids
+</span></code></pre></div></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2.Input_files/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Input Description" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Input Description
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../4.qc_filter/" class="md-footer__link md-footer__link--next" aria-label="Next: QC &amp; filtration" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                QC & filtration
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
