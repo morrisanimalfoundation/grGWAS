@@ -14,6 +14,8 @@
         <link rel="prev" href="../3.prep_arrays/">
       
       
+        <link rel="next" href="../5.pheno/">
+      
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
@@ -326,6 +328,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -439,29 +443,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#421-transform-the-heterozygosity-output-files-into-a-histogram-to-identify-the-extreme-cases" class="md-nav__link">
-    4.2.1. Transform the heterozygosity output files into a histogram to identify the extreme cases.
+  <a href="#421-extreme-cases-of-heterozygosity" class="md-nav__link">
+    4.2.1. Extreme cases of heterozygosity:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#422-transform-the-missingness-output-files-into-a-histogram-to-identify-the-extreme-samples-and-variants" class="md-nav__link">
-    4.2.2. Transform the missingness output files into a histogram to identify the extreme samples and variants.
+  <a href="#422-genotype-missingness-in-samples-and-variants" class="md-nav__link">
+    4.2.2. Genotype Missingness in samples and variants:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#423-transform-the-allele-frequency-output-files-into-a-histogram-to-identify-markers-with-very-low-maf" class="md-nav__link">
-    4.2.3. Transform the allele frequency output files into a histogram to identify markers with very low MAF
+  <a href="#423-variants-with-very-low-maf" class="md-nav__link">
+    4.2.3. Variants with very low MAF:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#424-transform-the-hwe-output-files-into-a-histogram-to-identify-markers-with-significant-diviation-from-hwe" class="md-nav__link">
-    4.2.4. Transform the HWE output files into a histogram to identify markers with significant diviation from HWE
+  <a href="#424-markers-with-significant-diviation-from-hwe" class="md-nav__link">
+    4.2.4. Markers with significant diviation from HWE
   </a>
   
 </li>
@@ -512,6 +516,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.pheno/" class="md-nav__link">
+        Phenotyping data
+      </a>
     </li>
   
 
@@ -569,29 +587,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#421-transform-the-heterozygosity-output-files-into-a-histogram-to-identify-the-extreme-cases" class="md-nav__link">
-    4.2.1. Transform the heterozygosity output files into a histogram to identify the extreme cases.
+  <a href="#421-extreme-cases-of-heterozygosity" class="md-nav__link">
+    4.2.1. Extreme cases of heterozygosity:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#422-transform-the-missingness-output-files-into-a-histogram-to-identify-the-extreme-samples-and-variants" class="md-nav__link">
-    4.2.2. Transform the missingness output files into a histogram to identify the extreme samples and variants.
+  <a href="#422-genotype-missingness-in-samples-and-variants" class="md-nav__link">
+    4.2.2. Genotype Missingness in samples and variants:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#423-transform-the-allele-frequency-output-files-into-a-histogram-to-identify-markers-with-very-low-maf" class="md-nav__link">
-    4.2.3. Transform the allele frequency output files into a histogram to identify markers with very low MAF
+  <a href="#423-variants-with-very-low-maf" class="md-nav__link">
+    4.2.3. Variants with very low MAF:
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#424-transform-the-hwe-output-files-into-a-histogram-to-identify-markers-with-significant-diviation-from-hwe" class="md-nav__link">
-    4.2.4. Transform the HWE output files into a histogram to identify markers with significant diviation from HWE
+  <a href="#424-markers-with-significant-diviation-from-hwe" class="md-nav__link">
+    4.2.4. Markers with significant diviation from HWE
   </a>
   
 </li>
@@ -689,7 +707,7 @@
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a># 913984 variants loaded from .bim file.
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a># 2519 samples (1279 males, 1240 females) loaded from .fam.
 </span></code></pre></div>
-<h2 id="421-transform-the-heterozygosity-output-files-into-a-histogram-to-identify-the-extreme-cases">4.2.1. Transform the heterozygosity output files into a histogram to identify the extreme cases.</h2>
+<h2 id="421-extreme-cases-of-heterozygosity">4.2.1. Extreme cases of heterozygosity:</h2>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.het) &gt; gwas/AxiomGT1v2.noRelatives.explore.het.histo 
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cat gwas/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if($6&gt;0.3)print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.het.high ## high homozygosity
@@ -697,19 +715,19 @@
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>cat gwas/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if(NR==1)print}{if($6&lt;-0.3)print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.het.low ## low homozygosity
 </span></code></pre></div>
 We can see at least 2 extreme cases. High heterozygosity may indicate sample contamination, however high homozygosity might just indicate higher inbreeding</p>
-<h2 id="422-transform-the-missingness-output-files-into-a-histogram-to-identify-the-extreme-samples-and-variants">4.2.2. Transform the missingness output files into a histogram to identify the extreme samples and variants.</h2>
+<h2 id="422-genotype-missingness-in-samples-and-variants">4.2.2. Genotype Missingness in samples and variants:</h2>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.imiss) &gt; gwas/AxiomGT1v2.noRelatives.explore.imiss.histo 
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.lmiss) &gt; gwas/AxiomGT1v2.noRelatives.explore.lmiss.histo 
 </span></code></pre></div>
 Missingness per individual shows 13 samples with about ~57% genotyping rates. These samples were genotyped on one array but not the other. While missingness per variant shows 36 extreme variants with about 50% genotyping rates</p>
-<h2 id="423-transform-the-allele-frequency-output-files-into-a-histogram-to-identify-markers-with-very-low-maf">4.2.3. Transform the allele frequency output files into a histogram to identify markers with very low MAF</h2>
+<h2 id="423-variants-with-very-low-maf">4.2.3. Variants with very low MAF:</h2>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.frq) &gt; gwas/AxiomGT1v2.noRelatives.explore.frq.histo 
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.frq) &gt; gwas/AxiomGT1v2.noRelatives.explore.frq.histo2 
 </span></code></pre></div>
 There are 331344 markers that have &lt; 1% MAF, 278461 markers have &lt; 0.1% MAF &amp; 314175 markers have &lt; 0.5% MAF</p>
-<h2 id="424-transform-the-hwe-output-files-into-a-histogram-to-identify-markers-with-significant-diviation-from-hwe">4.2.4. Transform the HWE output files into a histogram to identify markers with significant diviation from HWE</h2>
+<h2 id="424-markers-with-significant-diviation-from-hwe">4.2.4. Markers with significant diviation from HWE</h2>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>awk &#39;BEGIN{OFS=&quot;\t&quot;;}{ if($9&lt;1e-10)a[&quot;1e-10 or less&quot;]++;
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>                       else if($9&lt;1e-8)a[&quot;1e-8:1e-9&quot;]++; else if($9&lt;1e-9)a[&quot;1e-9:1e-10&quot;]++; \
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                       else if($9&lt;1e-7)a[&quot;1e-7:1e-8&quot;]++; else if($9&lt;1e-6)a[&quot;1e-6:1e-7&quot;]++; \
@@ -787,6 +805,7 @@ Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&#39;ggsave(&quot;pca_plot.png&quot;, combined_plot, width = 12, height = 8, dpi = 400);&#39;
 </span></code></pre></div></p>
 <p><a class="glightbox" href="../images/pca_plot.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/pca_plot.png" /></a><!-- --></p>
+<p>An additional tutorial of possible admixture analysis is <a href="../admixture_analysis/">here</a> </p>
 
 
 
@@ -824,6 +843,21 @@ Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
             </div>
           </a>
         
+        
+          
+          <a href="../5.pheno/" class="md-footer__link md-footer__link--next" aria-label="Next: Phenotyping data" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Phenotyping data
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
         
       </nav>
     

@@ -328,6 +328,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -434,29 +436,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fid1-id1-fid2-id2-nsnp-hethet-ibs0-kinship" class="md-nav__link">
-    FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP 
-  </a>
-  
-    <nav class="md-nav" aria-label="FID1     ID1     FID2     ID2     NSNP     HETHET     IBS0     KINSHIP">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#34-check-for-gender-accuracy-remove-samples-with-wrong-gender-identities" class="md-nav__link">
     3.4. Check for gender accuracy &amp; remove samples with wrong gender identities
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#35-update-sample-ids-in-the-genotyping-files-to-match-the-phenotyping-files" class="md-nav__link">
     3.5. Update sample IDs in the genotyping files to match the phenotyping files
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -477,6 +466,20 @@
     <li class="md-nav__item">
       <a href="../4.qc_filter/" class="md-nav__link">
         QC & filtration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.pheno/" class="md-nav__link">
+        Phenotyping data
       </a>
     </li>
   
@@ -542,29 +545,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fid1-id1-fid2-id2-nsnp-hethet-ibs0-kinship" class="md-nav__link">
-    FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP 
-  </a>
-  
-    <nav class="md-nav" aria-label="FID1     ID1     FID2     ID2     NSNP     HETHET     IBS0     KINSHIP">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#34-check-for-gender-accuracy-remove-samples-with-wrong-gender-identities" class="md-nav__link">
     3.4. Check for gender accuracy &amp; remove samples with wrong gender identities
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#35-update-sample-ids-in-the-genotyping-files-to-match-the-phenotyping-files" class="md-nav__link">
     3.5. Update sample IDs in the genotyping files to match the phenotyping files
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -593,6 +583,8 @@
     </a>
   
 
+
+  <h1>Prep Array Sets</h1>
 
 <h2 id="3-preparation-of-array-sets-a-and-b-genotyping-data">3. Preparation of Array sets A and B genotyping data</h2>
 <h2 id="31-replicate-snps">3.1. replicate SNPs</h2>
@@ -632,10 +624,10 @@ Performing 1-pass diff (mode 7), writing results to AxiomGT1.mismatching7.diff <
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  --exclude same_pos.arrB.lst \
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  --make-bed --output-chr &#39;chrM&#39; --out output/setB/export_plink/AxiomGT1.bin_noSamePos
 </span></code></pre></div>
-<h2 id="32-merging-of-array-sets-a-and-b-genotyping-data">3.2. Merging of Array sets A and B Genotyping data</h2>
-<p>Now, we will merge the genotyping data of both arrays. For SNPs shared between the arrays, the genotypes of array A will overwrite the nonmissing calls in array B. Also, we will <strong>exclude the 2 samples with higher rates of non-concordance</strong></p>
 </li>
 </ol>
+<h2 id="32-merging-of-array-sets-a-and-b-genotyping-data">3.2. Merging of Array sets A and B Genotyping data</h2>
+<p>Now, we will merge the genotyping data of both arrays. For SNPs shared between the arrays, the genotypes of array A will overwrite the nonmissing calls in array B. Also, we will <strong>exclude the 2 samples with higher rates of non-concordance</strong></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>echo &quot;GRLS S007258|GRLS S019740&quot; | tr &#39;|&#39; &#39;\n&#39; &gt; swap_samples.lst
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin_noSamePos --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>      --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 3 \
@@ -694,12 +686,11 @@ Hear is the list of the remaining duplicates and their counts</p>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>       --keep failed_deDup.lst --make-king-table \
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>       --out AxiomGT1v2.comp_merge.failed_deDup
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>cat AxiomGT1v2.comp_merge.failed_deDup.kin0
-</span></code></pre></div>
-Here is the output. </p>
-<blockquote>
-<h1 id="fid1-id1-fid2-id2-nsnp-hethet-ibs0-kinship">FID1 &nbsp;&nbsp;&nbsp; ID1 &nbsp;&nbsp;&nbsp; FID2 &nbsp;&nbsp;&nbsp; ID2 &nbsp;&nbsp;&nbsp; NSNP &nbsp;&nbsp;&nbsp; HETHET &nbsp;&nbsp;&nbsp; IBS0 &nbsp;&nbsp;&nbsp; KINSHIP <br></h1>
-<p>GRLS &nbsp;&nbsp;&nbsp; S027376_2 &nbsp;&nbsp;&nbsp; GRLS &nbsp;&nbsp;&nbsp; S027376_1 &nbsp;&nbsp;&nbsp; 879956 &nbsp;&nbsp;&nbsp; 0.0645396 &nbsp;&nbsp;&nbsp; 0.0414475 &nbsp;&nbsp;&nbsp; -0.0559478 <br></p>
-</blockquote>
+</span></code></pre></div></p>
+<p>Here is the output. 
+| FID1 | ID1       | FID2 | ID2       | NSNP   | HETHET    | IBS0      | KINSHIP    |
+| ---- | --------- | ---- | --------- | ------ | --------- | --------- | ---------- |
+| GRLS | S027376_2 | GRLS | S027376_1 | 879956 | 0.0645396 | 0.0414475 | -0.0559478 |</p>
 <p>It is obvious that these two samples are unlrelated. Therefore, we will exclude both of them with the duplicate samples selected by the Plink2 knickship filter. These are 120 samples in total so we will end up having 3234 samples in our output PLINK file
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>       --remove &lt;(cat AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id failed_deDup.lst) \
