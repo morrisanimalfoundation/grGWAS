@@ -31,7 +31,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://maf-grls.github.io/grGWAS/admixture_analysis/</loc>
+         <loc>https://maf-grls.github.io/grGWAS/ext_docs/KING_knickship/</loc>
+         <lastmod>2023-08-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://maf-grls.github.io/grGWAS/ext_docs/admixture_analysis/</loc>
          <lastmod>2023-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>

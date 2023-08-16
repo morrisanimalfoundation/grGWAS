@@ -686,7 +686,7 @@
 
 <h2 id="4-qc-and-filtration-of-genotyping-data">4. QC and filtration of genotyping data</h2>
 <h2 id="41-identifcation-of-1st-degree-relatives">4.1. Identifcation of 1st degree relatives</h2>
-<p>We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the KING knickship  coeffiecient to identify 1st degree relatives.</p>
+<p>We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the <a href="../ext_docs/KING_knickship/">KING knickship  coeffiecients</a> to identify 1st degree relatives.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir -p gwas
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       --king-cutoff 0.177 \
@@ -805,7 +805,7 @@ Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&#39;ggsave(&quot;pca_plot.png&quot;, combined_plot, width = 12, height = 8, dpi = 400);&#39;
 </span></code></pre></div></p>
 <p><a class="glightbox" href="../images/pca_plot.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/pca_plot.png" /></a><!-- --></p>
-<p>An additional tutorial of possible admixture analysis is <a href="../admixture_analysis/">here</a> </p>
+<p>An additional tutorial of possible admixture analysis is <a href="../ext_docs/admixture_analysis/">here</a> </p>
 
 
 
