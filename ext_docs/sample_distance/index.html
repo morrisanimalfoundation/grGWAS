@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://maf-grls.github.io/grGWAS/ext_docs/KING_knickship/">
+        <link rel="canonical" href="https://maf-grls.github.io/grGWAS/ext_docs/sample_distance/">
       
       
       
@@ -17,7 +17,7 @@
     
     
       
-        <title>KING knickship - grGWAS docs</title>
+        <title>Sample distance - grGWAS docs</title>
       
     
     
@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#sample-distance-and-similarity-matrices" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -108,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              KING knickship
+              Sample distance
             
           </span>
         </div>
@@ -317,6 +322,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -401,6 +408,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6.heritability/" class="md-nav__link">
+        Heritability
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -425,6 +446,21 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sample-distance-and-similarity-matrices" class="md-nav__link">
+    Sample-distance and similarity matrices
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -442,19 +478,22 @@
     
       
     
-    <a href="https://github.com/MAF-GRLS/grGWAS/tree/main/docs/ext_docs/KING_knickship.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/MAF-GRLS/grGWAS/tree/main/docs/ext_docs/sample_distance.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
     </a>
   
 
 
-  <h1>KING knickship</h1>
+  <h1>Sample distance</h1>
 
-<p>Hidden relations between indivisuals is usually uncovered by calculating a genomic relationship matrix (GRM).
-GRM is a covariance matrix calculated using the minor allele frequencies (MAFs) of genotyped SNPs assuming a homogeneous population structure.
-However, <a href="https://www.ncbi.nlm.nih.gov/pubmed/20926424">KING-robust estimation</a> is an alternative approach that does not need MAFs. This techqniue is more trusted in mixed-population datasets (unless the parents are from very different populations).</p>
-<p>In our study, we can use either techqniues safely. I our tutorial, we will use the KING-robust kinship estimator. 
+<h2 id="sample-distance-and-similarity-matrices">Sample-distance and similarity matrices</h2>
+<p>Assessemnt of similairty between studied individual is useful to identify sample duplications or unexpected outliers. Moreover, it is critical to adjust for hidden population structure.
+A pairwise similarity can be calculated by counting the alleles descended from a common ancestor (i.e. Identity by descent; IBD) and/or alleles that are the same, irrespective of whether they are inherited from a recent ancestor (i.e. Identity by state; IBS).</p>
+<p>Pedigree information allow us to figure out the expected proportion of shared alleles by descent and thus IBD distances within families. However, the proposed pedigree is not uncommon to be wrong. With genotyping arrays and sequecning, marker information can be used to calculate IBS or IBD similarity matrices and predict the actual pedigree structure </p>
+<p>VanRaden (2008) and Yang et al. (2010) described the genomic relationship matrix (GRM) as a a covariance matrix which uses identical by state (IBS) information scaled by the allele frequencies, as shared rare alleles are more likely to be IBD than common alleles. These methods do not explicitly differentiate between IBD and IBS information <a href="https://rune.une.edu.au/web/handle/1959.11/14477">Clark et al. (2012)</a>.</p>
+<p>GRM uses the minor allele frequencies (MAFs) of genotyped SNPs assuming a homogeneous population structure which is not always a true assumption. <a href="https://www.ncbi.nlm.nih.gov/pubmed/20926424">KING-robust estimation</a> is an alternative approach that does not need MAFs. This techqniue is more trusted in mixed-population datasets (unless the parents are from very different populations).</p>
+<p>In the GRLS study, we can use either techqniues safely. Therefore, we will use the KING-robust kinship estimator in this tutorial.
 According to the PLINK2 documentation, the KING kinship coefficients are scaled such that duplicate samples have kinship 0.5. 
 Accordingly, first-degree relations (parent-child, full siblings) correspond to ~0.25, second-degree relations correspond to ~0.125, etc. 
 It is conventional to use a cutoff of ~0.354 (the geometric mean of 0.5 and 0.25) to screen for monozygotic twins and duplicate samples, ~0.177 to add first-degree relations, etc.</p>

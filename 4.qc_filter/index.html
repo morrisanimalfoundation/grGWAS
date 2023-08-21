@@ -330,6 +330,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -535,6 +537,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.heritability/" class="md-nav__link">
+        Heritability
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -686,7 +702,8 @@
 
 <h2 id="4-qc-and-filtration-of-genotyping-data">4. QC and filtration of genotyping data</h2>
 <h2 id="41-identifcation-of-1st-degree-relatives">4.1. Identifcation of 1st degree relatives</h2>
-<p>We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the <a href="../ext_docs/KING_knickship/">KING knickship  coeffiecients</a> to identify 1st degree relatives.</p>
+<p>Genotyping data can be used to assess <a href="../ext_docs/sample_distance/">sample-distances</a> and thus identify sample duplications. 
+We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the KING knickship  coeffiecients to identify 1st degree relatives.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir -p gwas
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       --king-cutoff 0.177 \
@@ -748,17 +765,20 @@ There are 331344 markers that have &lt; 1% MAF, 278461 markers have &lt; 0.1% MA
 Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
 <h2 id="44-ld-analysis">4.4. LD analysis</h2>
 <h2 id="441-ld-estimation">4.4.1 LD estimation</h2>
-<p>--r2 reports squared inter-variant allele count correlations
-'in-phase' adds a column with in-phase allele pairs
-'dprime' adds the absolute value of Lewontin's D-prime statistic
+<ul>
+<li>--r2 reports squared inter-variant allele count correlations</li>
+<li>'in-phase' adds a column with in-phase allele pairs</li>
+<li>'dprime' adds the absolute value of Lewontin's D-prime statistic</li>
+</ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>      --r2 &#39;in-phase&#39; &#39;dprime&#39; \
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.stats
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo ## 128035 sequential markers have complete linkage
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.dprime_histo
-</span></code></pre></div></p>
+</span></code></pre></div>
 <h2 id="442-ld-pruning">4.4.2 LD pruning</h2>
+<p>We will prune pairwise SNPs with R2 &gt;  0.2 (using windows of 100 SNPs and step size of 10 SNPs)</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>      --indep-pairwise 100 10 0.2 \
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_lst ## 567586 of 582519 variants removed.
@@ -781,6 +801,7 @@ Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
 </span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>paste gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo | less
 </span></code></pre></div>
 <h2 id="45-pca">4.5. PCA</h2>
+<p>The <code>--pca</code> function in Plink2, similar to GCTA, extracts top principal components from the variance-standardized relationship matrix (i.e. genomic relationship matrix)</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>plink2 --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>       --autosome --pca \
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>       --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca
