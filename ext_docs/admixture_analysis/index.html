@@ -11,6 +11,10 @@
         <link rel="canonical" href="https://maf-grls.github.io/grGWAS/ext_docs/admixture_analysis/">
       
       
+        <link rel="prev" href="../sample_distance/">
+      
+      
+        <link rel="next" href="../GREML_analysis/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -254,6 +258,28 @@
   
 
       
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../health_concerns/" class="md-tabs__link">
+          
+  
+    
+  
+  Bulletin
+
+        </a>
+      </li>
+    
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -325,6 +351,8 @@
   
     
     
+      
+        
       
         
       
@@ -486,6 +514,237 @@
 
               
             
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7.gwas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GWAS Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bulletin
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bulletin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../health_concerns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Health concerns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sample_distance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample-distance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Admixture analysis
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Admixture analysis
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#admixture-analysis" class="md-nav__link">
+    Admixture Analysis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-install" class="md-nav__link">
+    1. install
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-remove-non-autosomal-markers-and-change-chr-names-to-intigers" class="md-nav__link">
+    2. remove non-autosomal markers and change chr names to intigers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries" class="md-nav__link">
+    3. Run Admixture in the cross validation mode to find out the best number of ancestries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-plot-the-q-estimates" class="md-nav__link">
+    4. plot the Q estimates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-plot-the-q-estimates-of-a-selected-subset-of-individuals" class="md-nav__link">
+    5. plot the Q estimates of a selected subset of individuals
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GREML_analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GREML analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -588,6 +847,15 @@
   <h1>Admixture analysis</h1>
 
 <h2 id="admixture-analysis">Admixture Analysis</h2>
+<p>Admixture analysis is a statistical method used in population genetics to estimate the proportions of ancestry in an individual's genome derived from multiple populations. By analyzing variations in DNA sequences, this method provides insights into historical migrations, inter-population mixing, and the genetic backgrounds of mixed populations. </p>
+<p>Species with breeds under artificial selection pressure like dogs can make use of admixture analysis in special situations including:</p>
+<ol>
+<li><strong><em>Historical Admixture:</em></strong> If there is suspicion or historical evidence that a particular breed was created through the mixing of two or more other breeds, admixture analysis can provide insights into the genetic contributions of each ancestral breed. The Golden Retriever breed has a well-documented origin, having been developed in the Scottish Highlands in the late 19th century from a blend of Yellow Retrievers, Tweed Water Spaniels, and other breeds. Therefore, this situation does not seem applicable </li>
+<li><strong><em>Population Bottlenecks and Diversity:</em></strong> Admixture analysis can help determine if there's been a recent bottleneck (a sharp reduction in the size of a population) in the breed's history. Such events can lead to a decrease in genetic diversity, which can increase susceptibility to diseases. This would be a useful application if our population represents a wide array of Golden Retrievers from different lineages or regions but this is not the case</li>
+<li><strong><em>Breed Purity:</em></strong> Admixture analysis can be used to assess the genetic purity of individual dogs or lines within a breed. If there's unexpected genetic material from another breed, it might be indicative of undisclosed crossbreeding in the past. That seems as a useful application but we need our studied population to include samples from other breeds to identify any unusual genetic signals within the Golden Retriever dogs.</li>
+<li><strong><em>Health and Genetic Disorders:</em></strong> Many purebred dogs are prone to specific genetic disorders. Golden Retrievers, like many purebred dogs, have specific health concerns, including hip dysplasia, certain cancers, and eye issues. While admixture analysis doesn't directly target these, understanding the genetic makeup and potential sources of variation within a breed can help in broader genetic studies aimed at improving breed health. While health-focused studies can be breed-specific, knowing the genetic makeup of related breeds might help identify the origins of certain genetic disorders or traits.</li>
+</ol>
+<p>In conclusion, for this analysis to be useful, we need a population of dogs the include more breeds. For now, we will use the data of Golden retrievers only to explore the genetic diversity within the breed but hopefully we will expand this dataset soon to include more dogs from other breeds.     </p>
 <h2 id="1-install">1. install</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>conda install -c bioconda admixture=1.3.0
 </span></code></pre></div>
@@ -608,7 +876,7 @@
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>&#39;plot( x = val$V1, y = val$V2, type = &quot;o&quot;,xlab = &quot;K Ancestry&quot;, ylab = &quot;CV error&quot;);&#39;\
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>&#39;dev.off();&#39;
 </span></code></pre></div>
-<p><a class="glightbox" href="images/admix_cv.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="images/admix_cv.jpg" /></a><!-- --></p>
+<p><a class="glightbox" href="../../images/admix_cv.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/admix_cv.jpg" /></a><!-- --></p>
 <p>There is an output file for each parameter set: Q (the ancestry fractions), and P (the allele frequencies of the inferred ancestral populations). </p>
 <h2 id="4-plot-the-q-estimates">4. plot the Q estimates</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sort -k1,3nr AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q &gt; AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted
@@ -617,7 +885,7 @@
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>&#39;barplot(t(as.matrix(tbl)), col=rainbow(3),xlab=&quot;Individual #&quot;, ylab=&quot;Ancestry&quot;, border=NA);&#39;\
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>&#39;dev.off();&#39;
 </span></code></pre></div>
-<p><a class="glightbox" href="images/ancestries.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="images/ancestries.jpg" /></a><!-- --></p>
+<p><a class="glightbox" href="../../images/ancestries.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/ancestries.jpg" /></a><!-- --></p>
 <h2 id="5-plot-the-q-estimates-of-a-selected-subset-of-individuals">5. plot the Q estimates of a selected subset of individuals</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tail -n+2 AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec | awk &#39;{if($3&lt;0.02 &amp;&amp; $4&gt;0.03)print $1,$2}&#39; &gt; pc2_extreme
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>paste AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q  AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.fam | grep -wf pc2_extreme &gt; pc2_extreme.Q
@@ -631,7 +899,7 @@
 </span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>&#39;bar2 &lt;- bar + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size = 4));&#39;\
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>&#39;ggsave(&quot;subset_ancestries.png&quot;, bar2, width = 12, height = 6, dpi = 400);&#39;
 </span></code></pre></div>
-<p><a class="glightbox" href="images/subset_ancestries.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="images/subset_ancestries.png" /></a><!-- --></p>
+<p><a class="glightbox" href="../../images/subset_ancestries.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/subset_ancestries.png" /></a><!-- --></p>
 
 
 
@@ -650,6 +918,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../sample_distance/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Sample-distance" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Sample-distance
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../GREML_analysis/" class="md-footer__link md-footer__link--next" aria-label="Next: GREML analysis" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                GREML analysis
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

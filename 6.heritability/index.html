@@ -14,6 +14,8 @@
         <link rel="prev" href="../5.pheno/">
       
       
+        <link rel="next" href="../7.gwas/">
+      
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.1">
@@ -258,6 +260,26 @@
   
 
       
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ext_docs/health_concerns/" class="md-tabs__link">
+          
+  
+    
+  
+  Bulletin
+
+        </a>
+      </li>
+    
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -331,6 +353,8 @@
   
     
     
+      
+        
       
         
       
@@ -562,8 +586,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#63-interpretation-of-results" class="md-nav__link">
-    6.3. Interpretation of results
+  <a href="#66-interpretation-of-results" class="md-nav__link">
+    6.6. Interpretation of results
   </a>
   
 </li>
@@ -572,6 +596,157 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7.gwas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GWAS Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bulletin
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bulletin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ext_docs/health_concerns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Health concerns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ext_docs/sample_distance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample-distance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ext_docs/admixture_analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Admixture analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ext_docs/GREML_analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GREML analysis
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -651,8 +826,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#63-interpretation-of-results" class="md-nav__link">
-    6.3. Interpretation of results
+  <a href="#66-interpretation-of-results" class="md-nav__link">
+    6.6. Interpretation of results
   </a>
   
 </li>
@@ -812,24 +987,32 @@
 </span><span id="__span-3-85"><a id="__codelineno-3-85" name="__codelineno-3-85" href="#__codelineno-3-85"></a>Analysis finished at 22:53:17 PDT on Sun Aug 20 2023
 </span><span id="__span-3-86"><a id="__codelineno-3-86" name="__codelineno-3-86" href="#__codelineno-3-86"></a>Overall computational time: 9.85 sec.
 </span></code></pre></div>
-<h2 id="63-interpretation-of-results">6.3. Interpretation of results</h2>
-<p>a) <code>gwas/atopy_greml.hsq</code>: The output file of the <code>--reml</code> command 
-*  V(G), V(e) and Vp for genetic variance, residual variance, and phenotypic variance respectively.
-*  Note that Vp =  V(G) + V(e)
-*  V(G)/Vp represents the proportion of phenotypic variance explained by SNPs. Our results here indicate that SNPs can explain 3% only of the phenotypic variance 
-*  The standard error (SE) is importnat to judge the reliability of the results. A 95% confidence interval (CI) is approximately h2-SNP estimate +/- 1.96 * SE. If the SE is too large, the 95% CI will cover the whole parameter space (from 0 to 1) so that you won't be able to make any meaningful inference from the estimate. Therefore, a value of SE &lt; 0.1 is needed to have reliable results
-*  logL is the log likelihood for the full model (the null hypothesis that σ<sup>2</sup><sub>g</sub> ≠ 0). 
-*  logL0 is the log likelihood for the reduced model (the null hypothesis that σ<sup>2</sup><sub>g</sub> = 0). 
-*  LRT is the log-likelihood ratio test statistic. It is calculated as twice the difference in log-likelihood between the full (h<sup>2</sup> ≠ 0) and reduced (h<sup>2</sup> = 0) models. i.e. LRT = 2[logL - logL0] 
-* Degree of freedom (df), p-value, and sample size <br>
-For more information about the full and reduced models and the interpretation of log likelihoods and LRT, check <a href="../ext_docs/GREML_analysis/">here</a></p>
-<p>b) <code>gwas/atopy_greml.indi.blp</code>:  The output file of the <code>--reml-pred-rand</code> command 
-*  columns are family ID, individual ID, an intermediate variable, the total genetic effect, another intermediate variable and the residual effect.</p>
+<h2 id="66-interpretation-of-results">6.6. Interpretation of results</h2>
+<p>a) <code>gwas/atopy_greml.hsq</code>: The output file of the <code>--reml</code> command  <br></p>
+<ul>
+<li>V(G), V(e) and Vp for genetic variance, residual variance, and phenotypic variance respectively. <br>
+   Note that Vp =  V(G) + V(e)</li>
+<li>V(G)/Vp represents the proportion of phenotypic variance explained by SNPs. Our results here indicate that SNPs can explain 3% only of the phenotypic variance </li>
+<li>The standard error (SE) is importnat to judge the reliability of the results. A 95% confidence interval (CI) is approximately h2-SNP estimate +/- 1.96 * SE. If the SE is too large, the 95% CI will cover the whole parameter space (from 0 to 1) so that you won't be able to make any meaningful inference from the estimate. Therefore, a value of SE &lt; 0.1 is needed to have reliable results</li>
+<li>logL is the log likelihood for the full model (the null hypothesis that σ<sup>2</sup><sub>g</sub> ≠ 0). </li>
+<li>logL0 is the log likelihood for the reduced model (the null hypothesis that σ<sup>2</sup><sub>g</sub> = 0). </li>
+<li>LRT is the log-likelihood ratio test statistic. It is calculated as twice the difference in log-likelihood between the full (h<sup>2</sup> ≠ 0) and reduced (h<sup>2</sup> = 0) models. i.e. LRT = 2[logL - logL0] </li>
+<li>Degree of freedom (df), p-value, and sample size <br>
+For more information about the full and reduced models and the interpretation of log likelihoods and LRT, check <a href="../ext_docs/GREML_analysis/">here</a></li>
+</ul>
+<p>b) <code>gwas/atopy_greml.indi.blp</code>:  The output file of the <code>--reml-pred-rand</code> command <br></p>
+<ul>
+<li>columns are family ID, individual ID, an intermediate variable, the total genetic effect, another intermediate variable and the residual effect.</li>
+</ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39; gwas/atopy_greml.indi.blp &gt; gwas/atopy_greml.indi.blp_histo
 </span></code></pre></div>
+<p><br>
+<br></p>
 <blockquote>
 <p><strong>Note:</strong>  GCTA has additional valuble options e.g. <code>--gxe</code> to estimate the variance of genotype-environment (GE) interaction and <code>--prevalence</code> to transform the estimate of variance explained, V(1)/Vp, on the observed scale to that on the underlying scale, V(1)/Vp_L. Check <a href="https://yanglab.westlake.edu.cn/software/gcta/#GREMLanalysis">GCTA's documentation</a> for details </p>
 </blockquote>
+<p><br>
+<br></p>
 
 
 
@@ -868,6 +1051,22 @@ For more information about the full and reduced models and the interpretation of
             </div>
           </a>
         
+        
+          
+          <a href="../7.gwas/" class="md-footer__link md-footer__link--next" aria-label="Next: GWAS Analysis" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                GWAS Analysis
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
         
       </nav>
     
