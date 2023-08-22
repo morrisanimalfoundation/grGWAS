@@ -51,6 +51,13 @@ nav:
     - QC & filtration: 4.qc_filter.md
     - Phenotyping data: 5.pheno.md
     - Heritability: 6.heritability.md
+    - GWAS Analysis: 7.gwas.md
+  - Bulletin:
+    - Health concerns: ext_docs/health_concerns.md
+    - Sample-distance: ext_docs/sample_distance.md
+    - Admixture analysis: ext_docs/admixture_analysis.md
+    - GREML analysis: ext_docs/GREML_analysis.md
+  
 
   # - Examples:
   #   - Example 1: DisGeNET_similarity_network-complete.ipynb
