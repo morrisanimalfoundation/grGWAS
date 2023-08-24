@@ -806,17 +806,12 @@
 
 <h2 id="1-setup">1. Setup</h2>
 <h2 id="11-install-conda">1.1. Install conda</h2>
-<p>We are using <a href="https://conda.io/projects/conda/en/stable/index.html">conda</a> to install software needed to run this tutorial. Here are the steps we used to install conda on a <strong>64-bit</strong> computer with a <strong>Linux</strong> system using <strong>Miniconda</strong>. For other operating systems, you can find detailed instructions <a href="https://conda.io/projects/conda/en/stable/user-guide/install/index.html">here</a></p>
+<p>We are using <a href="https://conda.io/projects/conda/en/stable/index.html">conda</a> to install software needed to run this tutorial. Here are the steps we used to install conda on a <strong>64-bit</strong> computer with a <strong>Linux</strong> system using <strong>Mambaforge</strong>. For other operating systems, you can find detailed instructions <a href="https://github.com/conda-forge/miniforge">here</a></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>bash Mambaforge-Linux-x86_64.sh -b -p &quot;${HOME}/conda&quot;
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>~/conda/bin/mamba init
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>source ~/.bashrc
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a># if you are using zsh then do `source ~/.zshrc`
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>source ~/.bashrc  # if you are using zsh then do `source ~/.zshrc`
 </span></code></pre></div>
-<ul>
-<li>Follow the prompts on the installer screens and accept the defaults.</li>
-<li>Restart the terminal</li>
-</ul>
 <h2 id="12-create-a-new-environment-and-install-software-packages">1.2. Create a new environment and install software packages</h2>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mamba create -n grGWAS
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mamba activate grGWAS

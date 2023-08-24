@@ -571,8 +571,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plotting" class="md-nav__link">
-    Plotting
+  <a href="#1-linear-model" class="md-nav__link">
+    1.  linear model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-genomic-control" class="md-nav__link">
+    2. genomic control
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-plotting" class="md-nav__link">
+    3. Plotting
   </a>
   
 </li>
@@ -585,8 +599,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plotting_1" class="md-nav__link">
-    Plotting
+  <a href="#1-mixed-linear-model" class="md-nav__link">
+    1.  Mixed linear model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-genomic-control_1" class="md-nav__link">
+    2. genomic control:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-plotting_1" class="md-nav__link">
+    3.  Plotting
   </a>
   
 </li>
@@ -770,8 +798,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plotting" class="md-nav__link">
-    Plotting
+  <a href="#1-linear-model" class="md-nav__link">
+    1.  linear model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-genomic-control" class="md-nav__link">
+    2. genomic control
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-plotting" class="md-nav__link">
+    3. Plotting
   </a>
   
 </li>
@@ -784,8 +826,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plotting_1" class="md-nav__link">
-    Plotting
+  <a href="#1-mixed-linear-model" class="md-nav__link">
+    1.  Mixed linear model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-genomic-control_1" class="md-nav__link">
+    2. genomic control:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-plotting_1" class="md-nav__link">
+    3.  Plotting
   </a>
   
 </li>
@@ -819,6 +875,7 @@
   <h1>GWAS Analysis</h1>
 
 <h2 id="gwas-by-plink">GWAS by Plink</h2>
+<h2 id="1-linear-model">1.  linear model</h2>
 <p>PLINK 2.0 has the new <code>--glm</code> command for association analysis (instead of  <code>--linear</code> and <code>--logistic</code> in Plink 1.9). For quantitative phenotypes, <code>--glm</code> fits a linear model while for binary phenotypes, it fits a logistic or Firth regression model instead.</p>
 <ul>
 <li>The model has a fixed-covariate matrix to include covariates loaded by <code>--covar</code>.<ul>
@@ -872,29 +929,42 @@ Our filtered dataset already fullfill these precautions</li>
 </span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>--glm logistic regression on phenotype &#39;PHENO1&#39;: done.
 </span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>Results written to gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.glm.PHENO1.glm.logistic .
 </span></code></pre></div>
-<h2 id="plotting">Plotting</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>input_asc=&quot;gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.glm.PHENO1.glm.logistic&quot;
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>output_prefix=&quot;gwas/${target}.glm.logistic&quot;
+<h2 id="2-genomic-control">2. genomic control</h2>
+<p>The genomic control λ value (often referred to as the "genomic inflation factor") is used to measure and correct for population stratification. A λ value close to 1 suggests that the results are not inflated due to population stratification, while values greater than 1 suggest potential inflation. <a href="https://jbiomedsci.biomedcentral.com/articles/10.1186/s12929-021-00733-7#:~:text=The%20genomic%20inflation%20factor%20%CE%BB,considered%20acceptable%20for%20a%20GWAS.">However, values up to 1.10 are generally considered acceptable for a GWAS</a> <br>
+We can use the results of our regression analysis to calculate the genomic control λ value:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>## λ = observed median chi-square statistic / 0.456
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>## Chi-square statistic = Z_stat&lt;sup&gt;2&lt;/sup&gt;
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Rscript -e &#39;args=(commandArgs(TRUE));require(qqman);&#39;\
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>&#39;asc &lt;- read.table(args[1],head=TRUE,comment.char=&quot;&quot;);&#39;\
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>&#39;asc &lt;- na.omit(asc);&#39;\
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>&#39;tiff(paste(args[2],&quot;.qqplot.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=10, height=10, res=300);&#39;\
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>&#39;qq(asc$P, main = &quot;Q-Q plot&quot;, col = &quot;blue4&quot;);&#39;\
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>&#39;dev.off();&#39;\
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>&#39;noOfTests &lt;- dim(asc)[1];bonf &lt;- 0.05/as.numeric(noOfTests);bonfBy200 &lt;- 10/as.numeric(noOfTests);&#39;\
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>&#39;sigSNPs &lt;- asc$ID[which(asc$P&lt;=bonfBy200)];&#39;\
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>&#39;tiff(paste(args[2],&quot;.manh.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=30, height=10, res=300);&#39;\
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;X.CHROM&quot;, bp = &quot;POS&quot;, p = &quot;P&quot;, snp = &quot;ID&quot;, ylim = c(0, 6), chrlabs = c(1:38, &quot;X&quot;),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>&#39;dev.off();&#39;  &quot;$input_asc&quot; &quot;$output_prefix&quot;
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.glm.PHENO1.glm.logistic | awk &#39;{print $13*$13}&#39; | sort | awk &#39;{count[NR] = $1;}\
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>END{
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>if(NR % 2){gif = count[(NR + 1) / 2];} else {gif = (count[(NR / 2)] + count[(NR / 2) + 1]) / 2.0;}
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>print &quot;Genomic inflation factor = &quot; gif/0.456;}&#39;
+</span></code></pre></div>
+<p>Genomic inflation factor = 1.08413 which is great!</p>
+<h2 id="3-plotting">3. Plotting</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>input_asc=&quot;gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.glm.PHENO1.glm.logistic&quot;
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>output_prefix=&quot;gwas/${target}.glm.logistic&quot;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Rscript -e &#39;args=(commandArgs(TRUE));require(qqman);&#39;\
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>&#39;asc &lt;- read.table(args[1],head=TRUE,comment.char=&quot;&quot;);&#39;\
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>&#39;asc &lt;- na.omit(asc);&#39;\
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>&#39;tiff(paste(args[2],&quot;.qqplot.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=10, height=10, res=300);&#39;\
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>&#39;qq(asc$P, main = &quot;Q-Q plot&quot;, col = &quot;blue4&quot;);&#39;\
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>&#39;dev.off();&#39;\
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>&#39;noOfTests &lt;- dim(asc)[1];bonf &lt;- 0.05/as.numeric(noOfTests);bonfBy200 &lt;- 10/as.numeric(noOfTests);&#39;\
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>&#39;sigSNPs &lt;- asc$ID[which(asc$P&lt;=bonfBy200)];&#39;\
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>&#39;tiff(paste(args[2],&quot;.manh.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=30, height=10, res=300);&#39;\
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;X.CHROM&quot;, bp = &quot;POS&quot;, p = &quot;P&quot;, snp = &quot;ID&quot;, ylim = c(0, 6), chrlabs = c(1:38, &quot;X&quot;),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>&#39;dev.off();&#39;  &quot;$input_asc&quot; &quot;$output_prefix&quot;
 </span></code></pre></div>
 <p>Here is the Q-Q plot</p>
 <p><a class="glightbox" href="../images/atopy.glm.logistic.qqplot.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.glm.logistic.qqplot.jpg" /></a><!-- --></p>
 <p>And the Manhaten plot</p>
 <p><a class="glightbox" href="../images/atopy.glm.logistic.manh.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.glm.logistic.manh.jpg" /></a><!-- --></p>
 <h2 id="gwas-by-gcta">GWAS by GCTA</h2>
+<h2 id="1-mixed-linear-model">1.  Mixed linear model</h2>
 <p>Mixed model association software such as SAIGE, BOLT-LMM, GCTA, or FaST-LMM instead; or regenie's whole genome regression can better handel genetic relatedness. In this tutroial, we will use <code>--mlma-loco</code> for mixed linear model based association analysis. </p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>y = a + bx + g + e
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>y = a + bx + g + e
 </span></code></pre></div>
 <p>where: 
 *  y is the phenotype
@@ -908,27 +978,48 @@ Our filtered dataset already fullfill these precautions</li>
 <p><em>Note1:</em> The mixed linear model incorporates the genetic relationship matrix (GRM) to capture the accumulated effect of all SNPs which accounts for population stratification to a large extent. Therefore, there is no need to adjust for top PCs.</p>
 <p><em>Note2:</em> By default, the model include covariates (if provided) as fixed effects and the phenotype will be adjusted by the mean (i.e. intercept) and covariates before testing for SNP association. However, if SNPs are correlated with the covariates, pre-adjusting the phenotype by the covariates will probably cause loss of power. If the <code>--mlma-no-preadj-covar</code> option is specified, the covariates will be fitted together with the SNP for association test. However, this will significantly reduce computational efficiency.</p>
 </blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gcta64 --mlma-loco --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta --autosome-num 38 --autosome \
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>       --grm gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm \
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>       --pheno gwas/${target}.pheno \
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>       --covar gwas/gender.txt --mlma-no-preadj-covar \
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>       --out gwas/${target}_asc --thread-num 10
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>gcta64 --mlma-loco --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta --autosome-num 38 --autosome \
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>       --grm gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm \
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>       --pheno gwas/${target}.pheno \
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>       --covar gwas/gender.txt --mlma-no-preadj-covar \
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>       --out gwas/${target}_asc --thread-num 10
 </span></code></pre></div>
-<h2 id="plotting_1">Plotting</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>input_asc=&quot;gwas/atopy_asc.loco.mlma&quot;
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>output_prefix=&quot;gwas/${target}.loco.mlma&quot;
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Rscript -e &#39;args=(commandArgs(TRUE));require(qqman);&#39;\
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>&#39;asc &lt;- read.table(args[1],head=TRUE,comment.char=&quot;&quot;);&#39;\
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>&#39;asc &lt;- na.omit(asc);&#39;\
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>&#39;tiff(paste(args[2],&quot;.qqplot.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=10, height=10, res=300);&#39;\
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>&#39;qq(asc$p, main = &quot;Q-Q plot&quot;, col = &quot;blue4&quot;);&#39;\
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>&#39;dev.off();&#39;\
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>&#39;noOfTests &lt;- dim(asc)[1];bonf &lt;- 0.05/as.numeric(noOfTests);bonfBy200 &lt;- 10/as.numeric(noOfTests);&#39;\
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>&#39;sigSNPs &lt;- asc$SNP[which(asc$p&lt;=bonfBy200)];&#39;\
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>&#39;tiff(paste(args[2],&quot;.manh.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=30, height=10, res=300);&#39;\
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;Chr&quot;, bp = &quot;bp&quot;, p = &quot;p&quot;, snp = &quot;SNP&quot;, ylim = c(0, 6),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>&#39;dev.off();&#39;  &quot;$input_asc&quot; &quot;$output_prefix&quot;
+<h2 id="2-genomic-control_1">2. genomic control:</h2>
+<p>The output of the MLM-LOCO analysis does not have chi-square statistic, however the p-values can be converted to chi-squared statistics for 1 degree of freedom by using the inverse of the cumulative distribution function (CDF) of the chi-squared distribution. This can be easily done using python</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>## Let us prepaper our conda environmnet to run Python
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mamba install -c conda-forge python=3.11.4 pandas=2.0.3 scipy=1.11.2
+</span></code></pre></div>
+<p>Now, we can open python in interactive mode by using the command <code>python</code>. Once we are dome, we can exit the interactive mode by using the command <code>exit</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Load the GCTA-LOCO results</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">gwas_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s2">&quot;gwas/atopy_asc.loco.mlma&quot;</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Convert p-values to chi-squared statistics</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">gwas_results</span><span class="p">[</span><span class="s1">&#39;CHISQ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gwas_results</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Calculate lambda</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">lambda_value</span> <span class="o">=</span> <span class="n">gwas_results</span><span class="p">[</span><span class="s2">&quot;CHISQ&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> <span class="o">/</span> <span class="mf">0.456</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Genomic control λ:&quot;</span><span class="p">,</span> <span class="n">lambda_value</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Genomic control λ: 0.9888753019675566 suggesting minimal deflation in the test statistics. This could happen because of overcorrection for Population Stratification and/or other covariates </p>
+<h2 id="3-plotting_1">3.  Plotting</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>input_asc=&quot;gwas/atopy_asc.loco.mlma&quot;
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>output_prefix=&quot;gwas/${target}.loco.mlma&quot;
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Rscript -e &#39;args=(commandArgs(TRUE));require(qqman);&#39;\
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>&#39;asc &lt;- read.table(args[1],head=TRUE,comment.char=&quot;&quot;);&#39;\
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>&#39;asc &lt;- na.omit(asc);&#39;\
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>&#39;tiff(paste(args[2],&quot;.qqplot.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=10, height=10, res=300);&#39;\
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>&#39;qq(asc$p, main = &quot;Q-Q plot&quot;, col = &quot;blue4&quot;);&#39;\
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>&#39;dev.off();&#39;\
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>&#39;noOfTests &lt;- dim(asc)[1];bonf &lt;- 0.05/as.numeric(noOfTests);bonfBy200 &lt;- 10/as.numeric(noOfTests);&#39;\
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>&#39;sigSNPs &lt;- asc$SNP[which(asc$p&lt;=bonfBy200)];&#39;\
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>&#39;tiff(paste(args[2],&quot;.manh.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=30, height=10, res=300);&#39;\
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;Chr&quot;, bp = &quot;bp&quot;, p = &quot;p&quot;, snp = &quot;SNP&quot;, ylim = c(0, 6),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>&#39;dev.off();&#39;  &quot;$input_asc&quot; &quot;$output_prefix&quot;
 </span></code></pre></div>
 <p>Here is the Q-Q plot</p>
 <p><a class="glightbox" href="../images/atopy.loco.mlma.qqplot.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.loco.mlma.qqplot.jpg" /></a><!-- --></p>

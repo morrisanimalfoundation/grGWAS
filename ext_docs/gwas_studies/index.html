@@ -1,0 +1,824 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://maf-grls.github.io/grGWAS/ext_docs/gwas_studies/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.3">
+    
+    
+      
+        <title>Gwas studies - grGWAS docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0e669242.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gwass-in-golden-retrievers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="grGWAS docs" class="md-header__button md-logo" aria-label="grGWAS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            grGWAS docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gwas studies
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MAF-GRLS/grGWAS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MAF-GRLS/grGWAS
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../1.install/" class="md-tabs__link">
+          
+  
+    
+  
+  Tutorial
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../health_concerns/" class="md-tabs__link">
+          
+  
+    
+  
+  Bulletin
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="grGWAS docs" class="md-nav__button md-logo" aria-label="grGWAS docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    grGWAS docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MAF-GRLS/grGWAS" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MAF-GRLS/grGWAS
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1.install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.Input_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Input Description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.prep_arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prep Array Sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4.qc_filter/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QC & filtration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.pheno/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Phenotyping data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../6.heritability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Heritability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../7.gwas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GWAS Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bulletin
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bulletin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../health_concerns/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Health concerns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sample_distance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sample-distance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../admixture_analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Admixture analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GREML_analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GREML analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gwass-in-golden-retrievers" class="md-nav__link">
+    GWASs in Golden Retrievers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-cancers" class="md-nav__link">
+    A) Cancers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b-non-cancer" class="md-nav__link">
+    B) Non-cancer
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+    
+      
+    
+    <a href="https://github.com/MAF-GRLS/grGWAS/tree/main/docs/ext_docs/gwas_studies.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"/></svg>
+    </a>
+  
+
+
+  <h1>Gwas studies</h1>
+
+<h2 id="gwass-in-golden-retrievers">GWASs in Golden Retrievers</h2>
+<h2 id="a-cancers">A) Cancers</h2>
+<ol>
+<li><strong><em>Tonomura et al. Genome-wide association study identifies shared risk loci common to two malignancies in golden retrievers. PLoS Genet. 2015 Feb 2;11(2):e1004922. doi: 10.1371/journal.pgen.1004922. eCollection 2015 Feb.</em></strong> <br>
+Canine B-cell lymphoma and hemangiosarcoma are both malignancies of the hematologic system. Golden retrievers in the US show significantly elevated lifetime risk for both B-cell lymphoma (6%) and hemangiosarcoma (20%). GWAS for hemangiosarcoma and B-cell lymphoma, identifying two shared predisposing loci. The two associated loci are located on CFA 5, and together contribute ~20% of the risk of developing these cancers. Genome-wide p-values for the top SNP of each locus are 4.6×10-7 and 2.7×10-6, respectively. Whole genome resequencing of nine cases and controls identified three shared and one B-cell lymphoma specific risk haplotypes within the two loci, but no coding changes were associated with the risk haplotypes. Gene expression analysis of B-cell lymphoma tumors revealed that carrying the risk haplotypes at the first locus is associated with down-regulation of several nearby genes including the proximal gene TRPC6, a transient receptor Ca2+-channel involved in T-cell activation, among other functions. The shared risk haplotype in the second locus overlaps the vesicle transport and release gene STX8. Carrying the shared risk haplotype is associated with gene expression changes of 100 genes enriched for pathways involved in immune cell activation. Thus, the predisposing germline mutations in B-cell lymphoma and hemangiosarcoma appear to be regulatory, and affect pathways involved in T-cell mediated immune response in the tumor.  <br> <br></li>
+<li><strong><em>Evans et al. Multi-omics approach identifies germline regulatory variants associated with hematopoietic malignancies in retriever dog breeds. PLoS Genet. 2021 May 13;17(5):e1009543. doi: 10.1371/journal.pgen.1009543. eCollection 2021 May.</em></strong> <br>
+Histiocytic sarcoma is an aggressive hematopoietic malignancy of mature tissue histiocytes. Flat-coated retrievers (FCRs) have unusually high frequency (lethal in 20%). GWASs identifying two significant risk loci on CFA 5 (Pwald = 4.83x10-9) and 19 (Pwald = 2.25x10-7). A multi-omics approach generating whole genome, transcriptome, and chromatin immunoprecipitation sequencing highlighted the PI3K pathway gene PIK3R6 on CFA5, and proximal candidate regulatory variants that are strongly associated with histiocytic sarcoma and predicted to impact transcription factor binding. <strong>The CFA5 association colocalizes with susceptibility loci for two hematopoietic malignancies, hemangiosarcoma and B-cell lymphoma, in the closely related golden retriever breed, revealing the risk contribution this single locus makes to multiple hematological cancers.</strong> By comparison, the CFA19 locus is unique to the FCR and harbors risk alleles associated with upregulation of TNFAIP6, which itself affects cell migration and metastasis. Together, these loci explain ~35% of disease risk. <br> <br></li>
+<li><strong><em>Hédan et al. Identification of common predisposing loci to hematopoietic cancers in four dog breeds. PLoS Genet. 2021 Apr 1;17(4):e1009395. doi: 10.1371/journal.pgen.1009395. eCollection 2021 Apr.</em></strong> <br>
+Histiocytic sarcoma (HS) is a rare but aggressive cancer in both humans and dogs with specific breed predispositions. This study combined several GWASs in a multi-breed (Bernese mountain dogs, Rottweilers, flat-coated retrievers, and golden retrievers) and multi-cancer (HS, lymphoma, and mast cell tumor). Results confirmed the previously identified HS risk CDKN2A locus on CFA 11.  Also identified new loci on canine chromosomes 2, 5, 14, and 20. Capture and targeted sequencing of specific loci suggested the existence of regulatory variants in non-coding regions and methylation mechanisms linked to risk haplotypes, which lead to strong cancer predisposition in specific dog breeds. We also showed that these canine cancer predisposing loci appeared to be due to the additive effect of several risk haplotypes involved in other hematopoietic cancers such as lymphoma or mast cell tumors as well. <br> <br></li>
+<li><strong><em>Labadie et al. Genome-wide association analysis of canine T zone lymphoma identifies link to hypothyroidism and a shared association with mast-cell tumors. BMC Genomics. 2020 Jul 6;21(1):464. doi: 10.1186/s12864-020-06872-9.</em></strong> <br>
+T zone lymphoma (TZL) represents about 12% of all canine lymphomas. Golden Retrievers appear predisposed, representing over 40% of TZL cases. Asymptomatic aged Golden Retrievers frequently have populations of T zone-like cells (phenotypically identical to TZL) of undetermined significance (TZUS), potentially representing a pre-clinical state. Dogs were categorized as TZL (n = 95), TZUS (n = 142), or control (n = 101) using flow cytometry and genotyped using the Illumina CanineHD BeadChip. Using a mixed linear model adjusting for population stratification, we found association with genome-wide significance in regions on chromosomes 8 and 14. The chromosome 14 peak included four SNPs (Odds Ratio = 1.18-1.19, p = .3 × 10- 5-5.1 × 10- 5) near three hyaluronidase genes (SPAM1, HYAL4, and HYALP1). Targeted resequencing identified missense mutations in all three genes; the variant in SPAM1 was predicted to be damaging. <strong>These mutations were also associated with risk for mast cell tumors among Golden Retrievers in an unrelated study</strong>. The chromosome 8 peak contained 7 SNPs (Odds Ratio = 1.24-1.42, p = 2.7 × 10- 7-7.5 × 10- 5) near genes involved in thyroid hormone regulation (DIO2 and TSHR). A prior study from our laboratory found hypothyroidism is inversely associated with TZL risk. No coding mutations were found with targeted resequencing but identified variants may play a regulatory role for all or some of the genes. <br> <br></li>
+<li><strong><em>Biasoli et al. A synonymous germline variant in a gene encoding a cell adhesion molecule is associated with cutaneous mast cell tumour development in Labrador and Golden Retrievers. PLoS Genet. 2019 Mar 22;15(3):e1007967. doi: 10.1371/journal.pgen.1007967. eCollection 2019 Mar.</em></strong> <br>
+Mast cell tumours (MCT) are the most common type of skin cancer in dogs with known breed-predisposition. In in Labrador Retrievers, GWAS combined with targeted next generation sequencing, and TaqMan genotyping identified a synonymous variant in the DSCAM gene on CAF 31. Furthermore, we showed that the variant is also associated with MCT in Golden Retrievers. The variant is common in both Labradors and Golden Retrievers and consequently is likely to be a significant genetic contributor to the increased susceptibility of both breeds to develop mast cell tumours. <br> <br></li>
+<li><strong><em>Arendt et al. Genome-Wide Association Study of Golden Retrievers Identifies Germ-Line Risk Factors Predisposing to Mast Cell Tumours. PLoS Genet. 2015 Nov 20;11(11):e1005647. doi: 10.1371/journal.pgen.1005647. eCollection 2015 Nov.</em></strong> <br>
+... somatic mutations in the oncogene C-KIT have been detected in a proportion of Canine MCT. GWAS in golden retrievers from two continents identified separate regions in the two populations. Sequence capture of associated regions and subsequent fine mapping in a larger cohort of dogs identified a SNP associated with development of MCT in the GNAI2 gene (p = 2.2x10-16), introducing an alternative splice form of this gene resulting in a truncated protein. In addition, disease associated haplotypes harbouring the hyaluronidase genes HYAL1, HYAL2 and HYAL3 on cfa20 and HYAL4, SPAM1 and HYALP1 on cfa14 were identified as separate risk factors in European and US golden retrievers, respectively, suggesting that turnover of hyaluronan plays an important role in the development of CMCT. <br> <br></li>
+</ol>
+<h2 id="b-non-cancer">B) Non-cancer</h2>
+<ol>
+<li><strong><em>Arendt et al. The ABCC4 gene is associated with pyometra in golden retriever dogs. Sci Rep. 2021 Aug 17;11(1):16647. doi: 10.1038/s41598-021-95936-1.</em></strong> <br>
+Pyometra is inflammation and bacterial infection of the uterus. There is clear breed predisposition (risk ratio: 3.3 in GR). GWAS with mixed model. GWAS comparing 98 cases, and 96 controls identified an associated locus on chromosome 22 (p = 1.2 × 10-6). This locus contained five significantly associated SNPs positioned within introns of the ATP-binding cassette transporter 4 (ABCC4) gene. NGS and genotyping of cases and controls subsequently identified four missense SNPs within the ABCC4 gene. One missense SNP at chr22:45,893,198 (p.Met787Val) showed complete LD with the associated GWAS SNPs suggesting a potential role in disease development. Another locus on chromosome 18 overlapping the TESMIN gene, is also potentially implicated in the development of the disease. <br> <br></li>
+<li><strong><em>Brinkmeyer-Langford et al. Genome-wide association study to identify potential genetic modifiers in a canine model for Duchenne muscular dystrophy
+Candice BMC Genomics. 2016 Aug 22;17(1):665. doi: 10.1186/s12864-016-2948-z.</em></strong> <br>
+Duchenne muscular dystrophy (DMD) causes progressive muscle degeneration, cardiomyopathy and respiratory failure in approximately 1/5,000 boys. Golden Retriever muscular dystrophy (GRMD) resembles DMD both clinically and pathologically. The disease exhibits remarkable phenotypic variation among affected dogs, suggesting the influence of modifiers. A linear mixed-model (LMM) analysis using 16 variably-affected dogs from our GRMD colony (8 dystrophic vs 8 non-dystrophic).  <br> <br></li>
+<li><strong><em>Olsson et al. Genome-Wide Analyses Suggest Mechanisms Involving Early B-Cell Development in Canine IgA Deficiency. PLoS One. 2015 Jul 30;10(7):e0133844. doi: 10.1371/journal.pone.0133844. eCollection 2015.</em></strong> <br>
+Immunoglobulin A deficiency (IgAD) is the most common primary immune deficiency disorder in both humans and dogs, characterized by recurrent mucosal tract infections and a predisposition for allergic and other immune mediated diseases. A novel percentile groups-approach was used to establish breed-specific cut-offs and to perform analyses in a close to continuous manner. GWAS performed in four breeds prone to low IgA levels (German shepherd, Golden retriever, Labrador retriever and Shar-Pei) identified 35 genomic loci suggestively associated (p &lt;0.0005) to IgA levels. In German shepherd, three genomic regions (candidate genes include KIRREL3 and SERPINA9) were genome-wide significantly associated (p &lt;0.0002) with IgA levels. A ~20kb long haplotype on CFA28, significantly associated (p = 0.0005) to IgA levels in Shar-Pei, was positioned within the first intron of the gene SLIT1. The suggestively associated regions were enriched for genes in Gene Ontology gene sets involving inflammation and early immune cell development. <br> <br></li>
+<li><strong><em>Downs et al. A novel mutation in TTC8 is associated with progressive retinal atrophy in the golden retriever. Canine Genet Epidemiol. 2014 Apr 16;1:4. doi: 10.1186/2052-6687-1-4. eCollection 2014.</em></strong> <br>
+Generalized progressive retinal atrophy (PRA) is a group of inherited eye diseases characterised by progressive retinal degeneration that ultimately leads to blindness in dogs. Mutations in two distinct genes have been reported to cause PRA in Golden Retrievers: prcd-PRA (c.5G &gt; A at the PRCD gene on CFA9) and GR_PRA1 (c.2601_2602insC at the SLC4A3 gene on CFA37), but for approximately 39% of cases in this breed the causal mutation remains unknown. GWAS of 10 PRA cases and 16 controls identified an association on CFA8. Using haplotype analysis we defined a 737 kb critical region. Using targeted NGS, a single nucleotide deletion was identified in exon 8 of the TTC8 gene of affected Golden Retrievers. The frame shift mutation was predicted to cause a premature termination codon. <br> <br></li>
+<li><strong><em>Grall et al. PNPLA1 mutations cause autosomal recessive congenital ichthyosis in golden retriever dogs and humans. Nat Genet. 2012 Jan 15;44(2):140-7. doi: 10.1038/ng.1056.</em></strong> <br>
+Ichthyoses comprise a heterogeneous group of genodermatoses characterized by abnormal desquamation over the whole body. GWAS in golden retrievers affected by a lamellar ichthyosis identified a homozygous insertion-deletion (indel) mutation in PNPLA1 on CFA12 that leads to a premature stop codon in all affected golden retriever dogs. <br> <br></li>
+<li><strong><em>Wood et al. Genome-wide association analysis of canine atopic dermatitis and identification of disease related SNPs. Immunogenetics. 2009 Dec;61(11-12):765-72. doi: 10.1007/s00251-009-0402-y. Epub 2010 Jan 5.</em></strong> <br>
+GWAS of atopic dermatitis (cAD) was done in Golden Retrievers. Further validation studies were performed for potentially associated SNPs using Sequenom genotyping of larger numbers of cases and controls across eight breeds (Boxer, German Shepherd Dog, Labrador, Golden Retriever, Shiba Inu, Shih Tzu, Pit Bull, and West Highland White Terriers). Using meta-analysis, two SNPs were associated with cAD in all breeds tested. RS22114085 was identified as a susceptibility locus (p=0.00014, odds ratio=2) and RS23472497 as a protective locus (p=0.0015, odds ratio=0.6). Both of these SNPs were located in intergenic regions, and their effects have been demonstrated to be independent of each other, highlighting that further fine mapping and resequencing is required of these areas. Further, 12 SNPs were validated by Sequenom genotyping as associated with cAD, but these were not associated with all breeds. <br> <br></li>
+<li><strong><em>[Review] Ontiveros et al. Genetics of canine subvalvular aortic stenosis (SAS). Canine Med Genet. 2021 May 7;8(1):4. doi: 10.1186/s40575-021-00103-4.</em></strong> <br>
+A GWAS analysis was also completed for SAS affected Golden Retrievers [39]. This abstract reported a region on chromosome 13 that was identified in 29 affected and 52 control Golden Retrievers. We have also completed a GWAS analysis for the Newfoundland and Rottweiler breed, both of which also demonstrated a locus on chromosome 13 that exceeded the Bonferroni threshold for significance (unpublished data). Therefore, we completed an across breed GWAS analysis for the Golden Retriever, Newfoundland, and Rottweiler breeds to determine if they shared a common genetic variant on chromosome 13 (unpublished data). Given that these breeds share haplotypes with each other, it is possible that they may all share a genetic variant that predisposes them for SAS [40]. The across breed GWAS analysis identified a locus achieving genome-wide significance on chromosome 13. The aim of these analyses was to decipher the genetic architecture for SAS affected dogs. This candidate region on chromosome 13 requires further evaluation through the use of targeted or whole-genome sequencing approaches. This can result in the identification of distinct or shared genetic variants associated with SAS in the Golden Retriever, Newfoundland, and Rottweiler breed. <br> <br></li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
