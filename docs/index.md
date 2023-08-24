@@ -1,6 +1,6 @@
 # GRLS GWAS Tutorial
 
-Golden Retrievers are one of the most popular breeds in the world, known for their friendly demeanor and beautiful golden coats. However, as with any breed, they are prone to specific [health problems](./ext_docs/health_concerns.md).
+Golden Retrievers are one of the most popular breeds in the world, known for their friendly demeanor and beautiful golden coats. However, as with any breed, they are prone to specific [health problems](./ext_docs/health_concerns.md). Several [GWAS studies](./ext_docs/gwas_studies.md) were already done to uncover the underlying genetics of many disorders. Many of these studies need to be confirmed and many other phenotypes still need to be studied  
 
 The [Golden Retriever Lifetime Study (GRLS)](https://www.morrisanimalfoundation.org/golden-retriever-lifetime-study) has a vast amount of phenotypic data collected from veterinarian records, and dog owners’ questioners over years for 3,000+ dogs. In addition, the study has genotyped ~ 1.1 Million genetic markers using Axiom™ Canine Genotyping Array Sets A and B. This reposatory should provide [tutorials](./1.install.md) for handling of the GRLS phenotypic and genotypic data to produce successful GWAS studies. Also, we are building a growing list of [resources](./ext_docs/health_concerns.md) to support these studies. 
 
