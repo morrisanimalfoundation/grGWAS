@@ -45,15 +45,16 @@ theme:
 nav:
   - Home: index.md
   - Tutorial:
-    - Environment Setup: 1.install.md
-    - Input Description: 2.Input_files.md
-    - Prep Array Sets: 3.prep_arrays.md
-    - QC & filtration: 4.qc_filter.md
-    - Phenotyping data: 5.pheno.md
-    - Heritability: 6.heritability.md
-    - GWAS Analysis: 7.gwas.md
+    - 1. Environment Setup: 1.install.md
+    - 2. Input Description: 2.Input_files.md
+    - 3. Prep Array Sets: 3.prep_arrays.md
+    - 4. QC & filtration: 4.qc_filter.md
+    - 5. Study design: 5.pheno.md
+    - 6. Heritability: 6.heritability.md
+    - 7. GWAS Analysis: 7.gwas.md
   - Bulletin:
     - Health concerns: ext_docs/health_concerns.md
+    - Previous GWAS: ext_docs/gwas_studies.md
     - Sample-distance: ext_docs/sample_distance.md
     - Admixture analysis: ext_docs/admixture_analysis.md
     - GREML analysis: ext_docs/GREML_analysis.md
