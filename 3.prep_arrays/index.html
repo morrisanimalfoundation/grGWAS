@@ -22,7 +22,7 @@
     
     
       
-        <title>Prep Array Sets - grGWAS docs</title>
+        <title>3. Prep Array Sets - grGWAS docs</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#3-preparation-of-array-sets-a-and-b-genotyping-data" class="md-skip">
+        <a href="#31-replicate-snps" class="md-skip">
           Skip to content
         </a>
       
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Prep Array Sets
+              3. Prep Array Sets
             
           </span>
         </div>
@@ -406,7 +406,7 @@
         
   
   <span class="md-ellipsis">
-    Environment Setup
+    1. Environment Setup
   </span>
   
 
@@ -426,7 +426,7 @@
         
   
   <span class="md-ellipsis">
-    Input Description
+    2. Input Description
   </span>
   
 
@@ -453,7 +453,7 @@
           
   
   <span class="md-ellipsis">
-    Prep Array Sets
+    3. Prep Array Sets
   </span>
   
 
@@ -464,7 +464,7 @@
         
   
   <span class="md-ellipsis">
-    Prep Array Sets
+    3. Prep Array Sets
   </span>
   
 
@@ -482,13 +482,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#3-preparation-of-array-sets-a-and-b-genotyping-data" class="md-nav__link">
-    3. Preparation of Array sets A and B genotyping data
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#31-replicate-snps" class="md-nav__link">
@@ -544,7 +537,7 @@
         
   
   <span class="md-ellipsis">
-    QC & filtration
+    4. QC & filtration
   </span>
   
 
@@ -564,7 +557,7 @@
         
   
   <span class="md-ellipsis">
-    Phenotyping data
+    5. Study design
   </span>
   
 
@@ -584,7 +577,7 @@
         
   
   <span class="md-ellipsis">
-    Heritability
+    6. Heritability
   </span>
   
 
@@ -604,7 +597,7 @@
         
   
   <span class="md-ellipsis">
-    GWAS Analysis
+    7. GWAS Analysis
   </span>
   
 
@@ -628,6 +621,8 @@
   
     
     
+      
+        
       
         
       
@@ -676,6 +671,26 @@
   
   <span class="md-ellipsis">
     Health concerns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ext_docs/gwas_studies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Previous GWAS
   </span>
   
 
@@ -777,13 +792,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#3-preparation-of-array-sets-a-and-b-genotyping-data" class="md-nav__link">
-    3. Preparation of Array sets A and B genotyping data
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#31-replicate-snps" class="md-nav__link">
     3.1. replicate SNPs
   </a>
@@ -844,11 +852,11 @@
   
 
 
-  <h1>Prep Array Sets</h1>
+  <h1>3. Prep Array Sets</h1>
 
-<h2 id="3-preparation-of-array-sets-a-and-b-genotyping-data">3. Preparation of Array sets A and B genotyping data</h2>
+<p>Genotyping data are provided as 2 datasets for Affymetrix (thermofisher) Axiom Canine HD Array sets A and B. We have to merge both datasets into one final dataset but this requires resolving replicate SNPs, known technical replicates, and gender conflicts. Moreover, we have to make sure that sample IDs in the genotyping files are matching to those in the phenotype files.     </p>
 <h2 id="31-replicate-snps">3.1. replicate SNPs</h2>
-<p>Both arrays has a number of replicate SNPs which are usefull for QC but also require special attention for proper merging of the files of both arrays. We are using a QC merging mode of PLINK to identify mismatching nonmissing calls between the 2 arrays</p>
+<p>Both arrays has a number of replicate SNPs which are usefull for QC but also require special attention for proper merging of the files of both arrays. We are using a QC merging mode of PLINK to identify mismatching non-missing calls between the 2 arrays</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 7 \
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      --output-chr &#39;chrM&#39; --out AxiomGT1.mismatching7
@@ -866,10 +874,10 @@ Warning: Variants 'Affx-205859745' and 'Affx-205344060' have the same position. 
 Warning: Variants 'Affx-206706550' and 'Affx-205359377' have the same position. <br> 
 1460 more same-position warnings: see log file. <br> 
 Performing 1-pass diff (mode 7), writing results to AxiomGT1.mismatching7.diff <br> 
-98370860 overlapping calls, 97897061 nonmissing in both filesets. <br> 
+98370860 overlapping calls, 97897061 non-missing in both filesets. <br> 
 97593330 concordant, for a concordance rate of 0.996897. <br> </p>
 </blockquote>
-<p>The concordance rate of nonmissing genotypes is pretty good (99.7%). However, we still have to handle two issues: </p>
+<p>The concordance rate of non-missing genotypes is pretty good (99.7%). However, we still have to handle two issues: </p>
 <ol>
 <li>
 <p><strong>Mismatching genotypes:</strong> Let us have a closer look on the mismatching genotypes to see if they are uniformly distributed among the samples or not
@@ -878,7 +886,7 @@ Performing 1-pass diff (mode 7), writing results to AxiomGT1.mismatching7.diff <
 <p>It seems that two samples show exceptional higher rate of mismatching (<code>GRLS S007258</code> and <code>GRLS S019740</code> have 11676 and 11440 mistmatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on array B according to the genotyping analysis notes). This likely indicates that these samples had something wrong. According to the the genotyping analysis notes, swapping the 2 samples on array B did not fix the issue. Therefore, we will exclude both samples from further analysis during the merging step. </p>
 </li>
 <li>
-<p><strong>Variants having the same position:</strong> The mismatching analysis reveals 1463 markrs that has the same position on bith arrays but with different SNP IDs. Futher digging in the array annotation showed that most of these markers are idententical with minor differences in the flanking sequences. To avoid genotyping errors, we will exclude these SNPs from array B.</p>
+<p><strong>Variants having the same position:</strong> The mismatching analysis reveals 1463 markers that has the same position on both arrays but with different SNP IDs. Further digging in the array annotation showed that most of these markers are identical with minor differences in the flanking sequences. To avoid genotyping errors, we will exclude these SNPs from array B.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>grep &quot;Warning: Variants .* have the same position&quot; AxiomGT1.mismatching7.log | awk -F&quot;&#39;&quot; &#39;BEGIN{OFS=&quot;\n&quot;;}{print $2,$4}&#39; &gt; same_pos.arrB.lst
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  --exclude same_pos.arrB.lst \
@@ -947,10 +955,33 @@ Hear is the list of the remaining duplicates and their counts</p>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>       --out AxiomGT1v2.comp_merge.failed_deDup
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>cat AxiomGT1v2.comp_merge.failed_deDup.kin0
 </span></code></pre></div></p>
-<p>Here is the output. 
-| FID1 | ID1       | FID2 | ID2       | NSNP   | HETHET    | IBS0      | KINSHIP    |
-| ---- | --------- | ---- | --------- | ------ | --------- | --------- | ---------- |
-| GRLS | S027376_2 | GRLS | S027376_1 | 879956 | 0.0645396 | 0.0414475 | -0.0559478 |</p>
+<p>Here is the output.</p>
+<table>
+<thead>
+<tr>
+<th>FID1</th>
+<th>ID1</th>
+<th>FID2</th>
+<th>ID2</th>
+<th>NSNP</th>
+<th>HETHET</th>
+<th>IBS0</th>
+<th>KINSHIP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GRLS</td>
+<td>S027376_2</td>
+<td>GRLS</td>
+<td>S027376_1</td>
+<td>879956</td>
+<td>0.0645396</td>
+<td>0.0414475</td>
+<td>-0.0559478</td>
+</tr>
+</tbody>
+</table>
 <p>It is obvious that these two samples are unlrelated. Therefore, we will exclude both of them with the duplicate samples selected by the Plink2 knickship filter. These are 120 samples in total so we will end up having 3234 samples in our output PLINK file
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>       --remove &lt;(cat AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id failed_deDup.lst) \
@@ -1005,7 +1036,7 @@ The output of our last PLINK command indeicate that our final file has 3224 samp
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../2.Input_files/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Input Description" rel="prev">
+          <a href="../2.Input_files/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Input Description" rel="prev">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1015,20 +1046,20 @@ The output of our last PLINK command indeicate that our final file has 3224 samp
                 Previous
               </span>
               <div class="md-ellipsis">
-                Input Description
+                2. Input Description
               </div>
             </div>
           </a>
         
         
           
-          <a href="../4.qc_filter/" class="md-footer__link md-footer__link--next" aria-label="Next: QC &amp; filtration" rel="next">
+          <a href="../4.qc_filter/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. QC &amp; filtration" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                QC & filtration
+                4. QC & filtration
               </div>
             </div>
             <div class="md-footer__button md-icon">

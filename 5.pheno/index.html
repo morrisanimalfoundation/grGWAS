@@ -22,7 +22,7 @@
     
     
       
-        <title>Phenotyping data - grGWAS docs</title>
+        <title>5. Study design - grGWAS docs</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#5-pre-process-the-skin-phenotypic-data" class="md-skip">
+        <a href="#51-identify-affected-cases-until-last-year" class="md-skip">
           Skip to content
         </a>
       
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Phenotyping data
+              5. Study design
             
           </span>
         </div>
@@ -406,7 +406,7 @@
         
   
   <span class="md-ellipsis">
-    Environment Setup
+    1. Environment Setup
   </span>
   
 
@@ -426,7 +426,7 @@
         
   
   <span class="md-ellipsis">
-    Input Description
+    2. Input Description
   </span>
   
 
@@ -446,7 +446,7 @@
         
   
   <span class="md-ellipsis">
-    Prep Array Sets
+    3. Prep Array Sets
   </span>
   
 
@@ -466,7 +466,7 @@
         
   
   <span class="md-ellipsis">
-    QC & filtration
+    4. QC & filtration
   </span>
   
 
@@ -493,7 +493,7 @@
           
   
   <span class="md-ellipsis">
-    Phenotyping data
+    5. Study design
   </span>
   
 
@@ -504,7 +504,7 @@
         
   
   <span class="md-ellipsis">
-    Phenotyping data
+    5. Study design
   </span>
   
 
@@ -522,13 +522,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#5-pre-process-the-skin-phenotypic-data" class="md-nav__link">
-    5. Pre-process the Skin phenotypic data
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#51-identify-affected-cases-until-last-year" class="md-nav__link">
@@ -612,7 +605,7 @@
         
   
   <span class="md-ellipsis">
-    Heritability
+    6. Heritability
   </span>
   
 
@@ -632,7 +625,7 @@
         
   
   <span class="md-ellipsis">
-    GWAS Analysis
+    7. GWAS Analysis
   </span>
   
 
@@ -656,6 +649,8 @@
   
     
     
+      
+        
       
         
       
@@ -704,6 +699,26 @@
   
   <span class="md-ellipsis">
     Health concerns
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ext_docs/gwas_studies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Previous GWAS
   </span>
   
 
@@ -805,13 +820,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#5-pre-process-the-skin-phenotypic-data" class="md-nav__link">
-    5. Pre-process the Skin phenotypic data
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#51-identify-affected-cases-until-last-year" class="md-nav__link">
     5.1. Identify affected cases until last year
   </a>
@@ -900,9 +908,10 @@
   
 
 
-  <h1>Phenotyping data</h1>
+  <h1>5. Study design</h1>
 
-<h2 id="5-pre-process-the-skin-phenotypic-data">5. Pre-process the Skin phenotypic data</h2>
+<p>Our phenotype of interest will define the GWAS design. Some phenotypes are quantitative like body mass index or fasting blood glucose while other are qualitative, binary phenotypes (e.g., Case/Control studies). Each type requires special preparation of the input data, proper selection of the statistical tests, and mindful interpretation of the final results. In this tutorial, we have an example for a Case/Control study.  </p>
+<p>To start, we have to select our cases and control based on the inclusion and exclusion criteria in our project. Accordingly, we should subset our genotypic and phenotypic data. Then, we need to assess the possible correlation of our phenotype with the genetic principal components in the studied population.  Also, we have to identify the possible covarites that might affect our phenotype of interest but we will do it during the assessment of heritability of out phenotype in the studied population. </p>
 <h2 id="51-identify-affected-cases-until-last-year">5.1. Identify affected cases until last year</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cat phenotypes/conditions_skin.csv | awk &#39;BEGIN{FS=&quot;,&quot;}\
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    NR==1{print $0;next}{if ($5==1) {\
@@ -995,7 +1004,7 @@ There are 14864 variants and 1885 samples that passed filters and QC.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../4.qc_filter/" class="md-footer__link md-footer__link--prev" aria-label="Previous: QC &amp; filtration" rel="prev">
+          <a href="../4.qc_filter/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. QC &amp; filtration" rel="prev">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1005,20 +1014,20 @@ There are 14864 variants and 1885 samples that passed filters and QC.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                QC & filtration
+                4. QC & filtration
               </div>
             </div>
           </a>
         
         
           
-          <a href="../6.heritability/" class="md-footer__link md-footer__link--next" aria-label="Next: Heritability" rel="next">
+          <a href="../6.heritability/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Heritability" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Heritability
+                6. Heritability
               </div>
             </div>
             <div class="md-footer__button md-icon">
