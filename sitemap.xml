@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://maf-grls.github.io/grGWAS/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/1.install/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/2.Input_files/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/3.prep_arrays/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/4.qc_filter/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/5.pheno/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/6.heritability/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/7.gwas/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/ext_docs/GREML_analysis/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/ext_docs/admixture_analysis/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/ext_docs/gwas_studies/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/ext_docs/health_concerns/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://maf-grls.github.io/grGWAS/ext_docs/sample_distance/</loc>
-         <lastmod>2023-08-25</lastmod>
+         <lastmod>2023-08-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

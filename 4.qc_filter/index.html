@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.3">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
     
     
       
@@ -956,47 +956,47 @@
 <h2 id="41-identifcation-of-1st-degree-relatives">4.1. Identifcation of 1st degree relatives</h2>
 <p>Genotyping data can be used to assess <a href="../ext_docs/sample_distance/">sample-distances</a> and thus identify sample duplications. 
 We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the KING knickship  coeffiecients to identify 1st degree relatives.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir -p gwas
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       --king-cutoff 0.177 \
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>       --out gwas/AxiomGT1v2.1st_degree_relatives
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>       --king-cutoff 0.177 \
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       --out AxiomGT1v2.1st_degree_relatives
 </span></code></pre></div>
 <p>Let us remove those relatives to avoid inflation of false associations in our GWAS</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm.grls_ids --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>       --remove gwas/AxiomGT1v2.1st_degree_relatives.king.cutoff.out.id \
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>       --make-bed --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>       --remove AxiomGT1v2.1st_degree_relatives.king.cutoff.out.id \
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.noRelatives
 </span></code></pre></div>
 <h2 id="42-explore">4.2. Explore</h2>
 <p>We use Plink commands to assess heterozygosity, missing genotyping, allele frequency, and hardy-weinberg equilibrium (HWE). The output are the files ending in ".het", ".imiss (Per-individual)/.lmiss (per-variant)", ".frq", and ".hwe" </p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>      --het --missing --freq --hardy &#39;midp&#39;  \
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.explore
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a># We currentlky have:
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a># 913984 variants loaded from .bim file.
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a># 2519 samples (1279 males, 1240 females) loaded from .fam.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir -p inspect
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>plink --bfile AxiomGT1v2.noRelatives --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>      --het --missing --freq --hardy &#39;midp&#39;  \
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      --output-chr &#39;chrM&#39; --out inspect/AxiomGT1v2.noRelatives.explore
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a># We currentlky have:
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a># 913984 variants loaded from .bim file.
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a># 2519 samples (1279 males, 1240 females) loaded from .fam.
 </span></code></pre></div>
 <blockquote>
 <p><em>Note:</em> The 'midp' modifier of the command <code>--hardy</code> applies the mid-p adjustment described <a href="https://www.ncbi.nlm.nih.gov/pubmed/23934608">here</a>. The mid-p adjustment tends to bring the null rejection rate in line with the nominal p-value, and also reduces the filter's tendency to favor retention of variants with missing data</p>
 </blockquote>
 <h2 id="421-extreme-cases-of-heterozygosity">4.2.1. Extreme cases of heterozygosity:</h2>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.het) &gt; gwas/AxiomGT1v2.noRelatives.explore.het.histo 
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.explore.het) &gt; inspect/AxiomGT1v2.noRelatives.explore.het.histo 
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cat gwas/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if($6&gt;0.3)print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.het.high ## high homozygosity
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cat inspect/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if($6&gt;0.3)print}&#39; &gt;  inspect/AxiomGT1v2.noRelatives.explore.het.high ## high homozygosity
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>cat gwas/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if(NR==1)print}{if($6&lt;-0.3)print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.het.low ## low homozygosity
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>cat inspect/AxiomGT1v2.noRelatives.explore.het | awk &#39;{if(NR==1)print}{if($6&lt;-0.3)print}&#39; &gt;  inspect/AxiomGT1v2.noRelatives.explore.het.low ## low homozygosity
 </span></code></pre></div>
 We can see at least 2 extreme cases. High heterozygosity may indicate sample contamination, however high homozygosity might just indicate higher inbreeding</p>
 <h2 id="422-genotype-missingness-in-samples-and-variants">4.2.2. Genotype Missingness in samples and variants:</h2>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.imiss) &gt; gwas/AxiomGT1v2.noRelatives.explore.imiss.histo 
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.explore.imiss) &gt; inspect/AxiomGT1v2.noRelatives.explore.imiss.histo 
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.lmiss) &gt; gwas/AxiomGT1v2.noRelatives.explore.lmiss.histo 
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.explore.lmiss) &gt; inspect/AxiomGT1v2.noRelatives.explore.lmiss.histo 
 </span></code></pre></div>
 Missingness per individual shows 13 samples with about ~57% genotyping rates. These samples were genotyped on one array but not the other. While missingness per variant shows 36 extreme variants with about 50% genotyping rates</p>
 <h2 id="423-variants-with-very-low-maf">4.2.3. Variants with very low MAF:</h2>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.frq) &gt; gwas/AxiomGT1v2.noRelatives.explore.frq.histo 
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.explore.frq) &gt; inspect/AxiomGT1v2.noRelatives.explore.frq.histo 
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.frq) &gt; gwas/AxiomGT1v2.noRelatives.explore.frq.histo2 
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.explore.frq) &gt; inspect/AxiomGT1v2.noRelatives.explore.frq.histo2 
 </span></code></pre></div>
 There are 331344 markers that have &lt; 1% MAF, 278461 markers have &lt; 0.1% MAF &amp; 314175 markers have &lt; 0.5% MAF</p>
 <h2 id="424-markers-with-significant-diviation-from-hwe">4.2.4. Markers with significant diviation from HWE</h2>
@@ -1007,19 +1007,19 @@ There are 331344 markers that have &lt; 1% MAF, 278461 markers have &lt; 0.1% MA
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                       else if($9&lt;1e-7)a[&quot;1e-7:1e-8&quot;]++; else if($9&lt;1e-6)a[&quot;1e-6:1e-7&quot;]++; \
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>                       else if($9&lt;1e-5)a[&quot;1e-5:1e-6&quot;]++; else if($9&lt;1e-4)a[&quot;1e-4:1e-5&quot;]++; \
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>                       else if($9&lt;0.001)a[&quot;1e-3:1e-4&quot;]++; else if($9&lt;0.01)a[&quot;1e-2:1e-3&quot;]++; } \
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>                 END { for(i in a) print i,a[i] }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.explore.hwe) | sort -g &gt; gwas/AxiomGT1v2.noRelatives.explore.hwe.histo
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>                 END { for(i in a) print i,a[i] }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.explore.hwe) | sort -g &gt; inspect/AxiomGT1v2.noRelatives.explore.hwe.histo
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>## Let&#39;s have a look on those variants with extreme diviation from HWE
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>cat gwas/AxiomGT1v2.noRelatives.explore.hwe | awk &#39;{if(NR==1)print}{if($9&lt;1e-50 )print}&#39; &gt;  gwas/AxiomGT1v2.noRelatives.explore.hwe.low 
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>cat inspect/AxiomGT1v2.noRelatives.explore.hwe | awk &#39;{if(NR==1)print}{if($9&lt;1e-50 )print}&#39; &gt;  inspect/AxiomGT1v2.noRelatives.explore.hwe.low 
 </span></code></pre></div>
 <p>Serious genotyping errors often yield extreme p-values, therefore a cut-off like 1e-50 is usually advised to exclude these variants. However, I believe this is ok in populations where reasonable random mating is expected.<br />
 Dog breeds are subjected to high selective breeding and artificial selection and thus I prefer excluding cases with extreme heterozygosity instead of apply any HWE-based filtering </p>
 <h2 id="43-filter">4.3. Filter</h2>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>echo &quot;Oldies 094-040059&quot; &gt; gwas/het_excess.lst
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>plink --bfile gwas/AxiomGT1v2.noRelatives --chr-set 38 no-xy --allow-extra-chr \
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>echo &quot;Oldies 094-040059&quot; &gt; het_excess.lst
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>plink --bfile AxiomGT1v2.noRelatives --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>      --geno 0.05 --mind 0.05 --maf 0.01 \
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      --remove gwas/het_excess.lst\
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>      --make-bed --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      --remove het_excess.lst\
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>      --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.noRelatives.filtered
 </span></code></pre></div>
 Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
 <h2 id="44-linkage-disequilibrium-ld-analysis">4.4. linkage disequilibrium (LD) analysis</h2>
@@ -1029,60 +1029,60 @@ Now, we have 582519 variants and 2505 samples that passed filters and QC.</p>
 <li>'in-phase' adds a column with in-phase allele pairs</li>
 <li>'dprime' adds the absolute value of Lewontin's D-prime statistic</li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink --bfile AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>      --r2 &#39;in-phase&#39; &#39;dprime&#39; \
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.stats
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>      --output-chr &#39;chrM&#39; --out inspect/AxiomGT1v2.noRelatives.filtered.stats
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo ## 128035 sequential markers have complete linkage
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.dprime_histo
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; inspect/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo ## 128035 sequential markers have complete linkage
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.filtered.stats.ld) &gt; inspect/AxiomGT1v2.noRelatives.filtered.stats.ld.dprime_histo
 </span></code></pre></div>
 <h2 id="442-ld-pruning">4.4.2 LD pruning</h2>
 <p>We will prune pairwise SNPs with R2 &gt;  0.2 (using windows of 100 SNPs and step size of 10 SNPs)</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>plink --bfile AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>      --indep-pairwise 100 10 0.2 \
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_lst ## 567586 of 582519 variants removed.
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>      --output-chr &#39;chrM&#39; --out AxiomGT1v2.noRelatives.filtered.LD_lst ## 567586 of 582519 variants to be removed.
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      --extract gwas/AxiomGT1v2.noRelatives.filtered.LD_lst.prune.in \
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      --make-bed --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune ## 14933 variants remaining
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>plink --bfile AxiomGT1v2.noRelatives.filtered --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      --extract AxiomGT1v2.noRelatives.filtered.LD_lst.prune.in \
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.noRelatives.filtered.LD_prune ## 14933 variants remaining
 </span></code></pre></div>
 <h2 id="443-ld-re-evaluation">4.4.3 LD re-evaluation</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>plink --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>plink --bfile AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>      --freq --r2 &#39;in-phase&#39; &#39;dprime&#39; \
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>      --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>      --output-chr &#39;chrM&#39; --out inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($8/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld) &gt; inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld) &gt; gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.dprime_histo
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($9/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld) &gt; inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.dprime_histo
 </span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.frq) &gt; gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.frq.histo2 ## 278461 markers have &lt; 0.1% MAF &amp; 314175 markers have &lt; 0.5% MAF
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>awk -v size=0.001 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($5/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.frq) &gt; inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.frq.histo2 ## 278461 markers have &lt; 0.1% MAF &amp; 314175 markers have &lt; 0.5% MAF
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>paste gwas/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo | less
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>paste inspect/AxiomGT1v2.noRelatives.filtered.stats.ld.r2_histo inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.stats.ld.r2_histo | less
 </span></code></pre></div>
 <h2 id="45-pca">4.5. PCA</h2>
 <p>The <code>--pca</code> function in Plink2, similar to GCTA, extracts top principal components from the variance-standardized relationship matrix (i.e. genomic relationship matrix)</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>plink2 --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>plink2 --bfile AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>       --autosome --pca \
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>       --output-chr &#39;chrM&#39; --out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>       --output-chr &#39;chrM&#39; --out inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.pca
 </span></code></pre></div>
 <p>I dentify the principle components that explain most of the variance: 
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Rscript -e &#39;val &lt;- read.table(&quot;gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenval&quot;);&#39;\
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Rscript -e &#39;val &lt;- read.table(&quot;inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenval&quot;);&#39;\
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>&#39;val$varPerc &lt;- val$V1/sum(val$V1);&#39;\
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>&#39;jpeg(file = &quot;Var_PCs.jpg&quot;);&#39;\
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>&#39;jpeg(file = &quot;inspect/Var_PCs.jpg&quot;);&#39;\
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>&#39;plot( x = seq(1:length(val$varPerc)), y = val$varPerc, type = &quot;o&quot;,xlab = &quot;Principle Component&quot;, ylab = &quot;Variance explained in %&quot;);&#39;\
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>&#39;dev.off();&#39;
 </span></code></pre></div></p>
 <p><a class="glightbox" href="../images/Var_PCs.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/Var_PCs.jpg" /></a><!-- --></p>
 <p>Plot the main principle components:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Rscript -e &#39;require(ggplot2);require(gridExtra);&#39;\
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>&#39;eigenvec &lt;- read.table(&quot;gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec&quot;, header = TRUE, comment.char=&quot;&quot;);&#39;\
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>&#39;eigenvec &lt;- read.table(&quot;inspect/AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec&quot;, header = TRUE, comment.char=&quot;&quot;);&#39;\
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>&#39;eigenvec$X.FID &lt;-  as.factor(eigenvec$X.FID);&#39;\
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>&#39;plot1 &lt;- ggplot(eigenvec, aes(x = PC1, y = PC2, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC1&quot;, y = &quot;PC2&quot;);&#39;\
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>&#39;plot2 &lt;- ggplot(eigenvec, aes(x = PC3, y = PC4, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC3&quot;, y = &quot;PC4&quot;);&#39;\
 </span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>&#39;plot3 &lt;- ggplot(eigenvec, aes(x = PC1, y = PC3, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC1&quot;, y = &quot;PC3&quot;);&#39;\
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&#39;plot4 &lt;- ggplot(eigenvec, aes(x = PC2, y = PC3, col = X.FID)) + geom_point() + labs(title = &quot;PCA Plot&quot;, x = &quot;PC2&quot;, y = &quot;PC3&quot;);&#39;\
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>&#39;combined_plot &lt;- grid.arrange(plot1, plot2, plot3, plot4, nrow = 2);&#39;\
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&#39;ggsave(&quot;pca_plot.png&quot;, combined_plot, width = 12, height = 8, dpi = 400);&#39;
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>&#39;ggsave(&quot;inspect/pca_plot.png&quot;, combined_plot, width = 12, height = 8, dpi = 400);&#39;
 </span></code></pre></div></p>
 <p><a class="glightbox" href="../images/pca_plot.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/pca_plot.png" /></a><!-- --></p>
 <p>An additional tutorial of possible admixture analysis is <a href="../ext_docs/admixture_analysis/">here</a> </p>
