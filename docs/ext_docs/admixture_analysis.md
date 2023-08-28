@@ -19,14 +19,15 @@ conda install -c bioconda admixture=1.3.0
 
 ## 2. remove non-autosomal markers and change chr names to intigers
 ```
-plink --bfile gwas/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+mkdir -p admix
+plink --bfile AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
       --autosome \
-      --make-bed -out gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
+      --make-bed -out admix/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
 ```
 
 ## 3. Run Admixture in the cross validation mode to find out the best number of ancestries
 ```
-cd gwas
+cd admix
 for k in {1..10};do echo $k;
   admixture -j8 --cv AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.bed $k | tee log${k}.out
 done
