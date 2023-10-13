@@ -39,6 +39,7 @@
     "license": "CC BY 4.0",
     "DOI": "DOI handle",
     "repository_link": "https://www.example-data-repository.com",
+    "usage_tutorial": "https://maf-grls.github.io/grGWAS/1.install/"
     "contact": {
       "name": "Contact person Name",
       "email": "contact@example.com",
