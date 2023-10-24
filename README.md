@@ -16,4 +16,4 @@ Morris Animal Foundation [Data Commons](https://datacommons.morrisanimalfoundati
 
 <br>
 
-[Let's start the journey >>>](https://maf-grls.github.io/grGWAS/1.install/)
+[Let's start the journey >>>](https://morrisanimalfoundation.github.io/grGWAS/1.install/)
