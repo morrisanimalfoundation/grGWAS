@@ -6,7 +6,7 @@ The Golden Retriever Lifetime Study (GRLS) has a vast amount of phenotypic data 
 
 <br>
 
-## How to acess the GRLS data?
+## How to access the GRLS data?
 
 ## 2.1. Genotyping data
 The GRLS genotyping dataset is publicly available in a PLINK file format. More information about this dataset and how to access it can be found [here](https://github.com/MAF-GRLS/grGWAS/blob/main/GRLS_Axiom.json).
