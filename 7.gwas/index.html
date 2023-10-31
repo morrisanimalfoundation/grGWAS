@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.4b4a2bd9.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
@@ -906,7 +906,7 @@
 
   <h1>7. GWAS Analysis</h1>
 
-<p>We will use 2 different software packages to perform the GWAS analysis. Each one use a different stastical approach to adjust for population stratification. We will use the genomic control λ to assess the efficiency of each. </p>
+<p>We will use 2 different software packages to perform the GWAS analysis. Each one use a different statistical approach to adjust for population stratification. We will use the genomic control λ to assess the efficiency of each. </p>
 <h2 id="71-gwas-by-plink">7.1.  GWAS by Plink</h2>
 <h2 id="711-linear-model">7.1.1.  linear model</h2>
 <p>PLINK 2.0 has the new <code>--glm</code> command for association analysis (instead of  <code>--linear</code> and <code>--logistic</code> in Plink 1.9). For quantitative phenotypes, <code>--glm</code> fits a linear model while for binary phenotypes, it fits a logistic or Firth regression model instead.</p>
@@ -918,8 +918,8 @@
 </li>
 <li>Dataset precautions:<ul>
 <li>This method does not properly adjust for small-scale family structure. As a consequence, it is usually necessary to prune close relations</li>
-<li>It is advised to exlcude variants with very small minor allele count ("--mac 20" is a reasonable filter to apply). <br>
-Our filtered dataset already fullfill these precautions</li>
+<li>It is advised to exclude variants with very small minor allele count ("--mac 20" is a reasonable filter to apply). <br>
+Our filtered dataset already fulfill these precautions</li>
 </ul>
 </li>
 <li>The model uses the minor allele dosages by default. To make it always contain ALT allele dosages instead (the A1 column of the main report), we need to add the 'omit-ref' modifier. </li>
@@ -992,20 +992,22 @@ We can use the results of our regression analysis to calculate the genomic contr
 </span></code></pre></div>
 <p>Here is the Q-Q plot</p>
 <p><a class="glightbox" href="../images/atopy.glm.logistic.qqplot.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.glm.logistic.qqplot.jpg" /></a><!-- --></p>
-<p>And the Manhaten plot</p>
+<p>And the Manhattan plot</p>
 <p><a class="glightbox" href="../images/atopy.glm.logistic.manh.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.glm.logistic.manh.jpg" /></a><!-- --></p>
 <h2 id="72-gwas-by-gcta">7.2.  GWAS by GCTA</h2>
 <h2 id="721-mixed-linear-model">7.2.1.  Mixed linear model</h2>
-<p>Mixed model association software such as SAIGE, BOLT-LMM, GCTA, or FaST-LMM instead; or regenie's whole genome regression can better handel genetic relatedness. In this tutroial, we will use <code>--mlma-loco</code> for mixed linear model based association analysis. </p>
+<p>Mixed model association software such as SAIGE, BOLT-LMM, GCTA, or FaST-LMM instead; or regenie's whole genome regression can better handel genetic relatedness. In this tutorial, we will use <code>--mlma-loco</code> for mixed linear model based association analysis. </p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>y = a + bx + g + e
 </span></code></pre></div>
-<p>where: 
-*  y is the phenotype
-*  a is the mean term (i.e. intercept)
-*  b is the additive effect (fixed effect) of the candidate SNP to be tested for association
-*  x is the SNP genotype indicator variable coded as 0, 1 or 2
-*  g is the polygenic effect (random effect) i.e. the accumulated effect of all SNPs (as captured by the GRM calculated using all SNPs)<br />
-*  e is the residual. </p>
+<p>where: </p>
+<ul>
+<li>y is the phenotype</li>
+<li>a is the mean term (i.e. intercept)</li>
+<li>b is the additive effect (fixed effect) of the candidate SNP to be tested for association</li>
+<li>x is the SNP genotype indicator variable coded as 0, 1 or 2</li>
+<li>g is the polygenic effect (random effect) i.e. the accumulated effect of all SNPs (as captured by the GRM calculated using all SNPs)  </li>
+<li>e is the residual. </li>
+</ul>
 <p>The MLM leaving-one-chromosome-out (LOCO) analysis implements the model with the chromosome, on which the candidate SNP is located, excluded from calculating the GRM. This means that g is the accumulated effect of all SNPs except those on the chromosome where the candidate SNP is located. The var(g) will be re-estimated each time when a chromosome is excluded from calculating the GRM. The MLM-LOCO analysis is computationally less efficient but more powerful as compared with the classical MLM analysis.</p>
 <blockquote>
 <p><em>Note1:</em> The mixed linear model incorporates the genetic relationship matrix (GRM) to capture the accumulated effect of all SNPs which accounts for population stratification to a large extent. Therefore, there is no need to adjust for top PCs.</p>
@@ -1019,7 +1021,7 @@ We can use the results of our regression analysis to calculate the genomic contr
 </span></code></pre></div>
 <h2 id="722-genomic-control">7.2.2. genomic control:</h2>
 <p>The output of the MLM-LOCO analysis does not have chi-square statistic, however the p-values can be converted to chi-squared statistics for 1 degree of freedom by using the inverse of the cumulative distribution function (CDF) of the chi-squared distribution. This can be easily done using python</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>## Let us prepaper our conda environmnet to run Python
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>## Let us prepare our conda environment to run Python
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mamba install -c conda-forge python=3.11.4 pandas=2.0.3 scipy=1.11.2
 </span></code></pre></div>
 <p>Now, we can open python in interactive mode by using the command <code>python</code>. Once we are dome, we can exit the interactive mode by using the <code>exit()</code> function</p>
@@ -1056,7 +1058,7 @@ We can use the results of our regression analysis to calculate the genomic contr
 </span></code></pre></div>
 <p>Here is the Q-Q plot</p>
 <p><a class="glightbox" href="../images/atopy.loco.mlma.qqplot.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.loco.mlma.qqplot.jpg" /></a><!-- --></p>
-<p>And the Manhaten plot</p>
+<p>And the Manhattan plot</p>
 <p><a class="glightbox" href="../images/atopy.loco.mlma.manh.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.loco.mlma.manh.jpg" /></a><!-- --></p>
 
 

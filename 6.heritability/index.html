@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.35e1ed30.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.4b4a2bd9.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
@@ -880,13 +880,13 @@
 
 <p>It is meaningless to perform a genomic association study with a phenotype unless it is heritable. Preceding studies are needed to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5635617/">determine heritability estimates specially for complex traits</a>; however, this is out of our scope here. By heritability assessment, we mean estimating the proportion of variance in our phenotype explained by the genotyped SNPs. Later, we should calculate how much of this heritability was captured by the selected markers.   </p>
 <p>We are using <a href="https://yanglab.westlake.edu.cn/software/gcta/#Overview">GCTA software</a> to perform the GREML analysis for heritability assessment </p>
-<p>The <code>--reml</code> command of GCTA estimates the proportion of phenotypic variance that can be explained by SNPs. Here is a more detailed explaination of the <a href="../ext_docs/GREML_analysis/">GREML method</a> and the undelying linear mixed model. </p>
+<p>The <code>--reml</code> command of GCTA estimates the proportion of phenotypic variance that can be explained by SNPs. Here is a more detailed explanation of the <a href="../ext_docs/GREML_analysis/">GREML method</a> and the underlying linear mixed model. </p>
 <p>In brief, GREML utilizes the genetic relationships between individuals in a sample population, captured in a genomic relationship matrix (GRM), to <em>partition the phenotypic variance</em> into its genetic and residual components. By fitting a linear mixed model, GREML estimates the proportion of variance attributable to all SNPs.</p>
 <p>The summary result of REML analysis will be saved in a plain text file (*.hsq).</p>
 <h2 id="61-gcta-grm">6.1. GCTA-GRM</h2>
 <ul>
 <li>This command calculates the genetic relationship matrix (GRM) from all the autosomal SNPs.</li>
-<li>GCTA receives PLINK binary PED files as input. However, we have to tweak our Plink files to update the chromosome names into a numerical format and remove all extra chromosmes.  </li>
+<li>GCTA receives PLINK binary PED files as input. However, we have to tweak our Plink files to update the chromosome names into a numerical format and remove all extra chromosomes.  </li>
 <li>Data needs to be filtered to remove rare SNPs (e.g. --maf 0.01), and cryptic relatedness (e.g. --grm-cutoff 0.025). Our dataset does not need any further filtration</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>## a) Prepare the Plink input files
@@ -902,7 +902,7 @@
 <p>The input phenotype file is a plain text file similar to that of Plink. If the phenotypic value is coded as 0 or 1 (or 1 and 2, compatible with PLINK), then it will be recognized as a case-control study (0 for controls and 1 for cases). Missing value should be represented by "-9" or "NA". </p>
 <p>For this tutorial, we will use the file <code>$gwas/atopy.pheno</code> that has 240 atopy cases and 1645 controls</p>
 <h2 id="63-covariates">6.3. Covariates</h2>
-<p>We can adjust for quantitative and discrete covariates. Previous PCA analysis showed that three principle components explain most of the variance and non of them segregates with our phenotype of interest. Therfore, we will adjust the GREML analysis for these 3 eigenvectors. Also, we will adjust for possible gender effect.</p>
+<p>We can adjust for quantitative and discrete covariates. Previous PCA analysis showed that three principle components explain most of the variance and non of them segregates with our phenotype of interest. Therefore, we will adjust the GREML analysis for these 3 eigenvectors. Also, we will adjust for possible gender effect.</p>
 <p>We already have this information but we need to reformat to match the GCTA expectations:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tail -n+2 $gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.pca.eigenvec | cut -f1-5 &gt; $gwas/3PCs.txt
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta.fam | awk &#39;{print $1,$2,$5}&#39; &gt; gender.txt
@@ -918,7 +918,7 @@
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>       --reml-pred-rand \
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>       --out $gwas/${target}_greml --thread-num 10
 </span></code></pre></div>
-<p>Here is the ouput:</p>
+<p>Here is the output:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>*******************************************************************
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>* Genome-wide Complex Trait Analysis (GCTA)
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>* version v1.94.1 Linux
@@ -1011,7 +1011,7 @@
 <li>V(G), V(e) and Vp for genetic variance, residual variance, and phenotypic variance respectively. <br>
    Note that Vp =  V(G) + V(e)</li>
 <li>V(G)/Vp represents the proportion of phenotypic variance explained by SNPs. Our results here indicate that SNPs can explain ~10% only of the phenotypic variance </li>
-<li>The standard error (SE) is importnat to judge the reliability of the results. A 95% confidence interval (CI) is approximately h2-SNP estimate +/- 1.96 * SE. If the SE is too large, the 95% CI will cover the whole parameter space (from 0 to 1) so that you won't be able to make any meaningful inference from the estimate. Therefore, a value of SE &lt; 0.1 is needed to have reliable results</li>
+<li>The standard error (SE) is important to judge the reliability of the results. A 95% confidence interval (CI) is approximately h2-SNP estimate +/- 1.96 * SE. If the SE is too large, the 95% CI will cover the whole parameter space (from 0 to 1) so that you won't be able to make any meaningful inference from the estimate. Therefore, a value of SE &lt; 0.1 is needed to have reliable results</li>
 <li>logL is the log likelihood for the full model (the null hypothesis that σ<sup>2</sup><sub>g</sub> ≠ 0). </li>
 <li>logL0 is the log likelihood for the reduced model (the null hypothesis that σ<sup>2</sup><sub>g</sub> = 0). </li>
 <li>LRT is the log-likelihood ratio test statistic. It is calculated as twice the difference in log-likelihood between the full (h<sup>2</sup> ≠ 0) and reduced (h<sup>2</sup> = 0) models. i.e. LRT = 2[logL - logL0] </li>
@@ -1027,7 +1027,7 @@ For more information about the full and reduced models and the interpretation of
 <p><br>
 <br></p>
 <blockquote>
-<p><strong>Note:</strong>  GCTA has additional valuble options e.g. <code>--gxe</code> to estimate the variance of genotype-environment (GE) interaction and <code>--prevalence</code> to transform the estimate of variance explained, V(1)/Vp, on the observed scale to that on the underlying scale, V(1)/Vp_L. Check <a href="https://yanglab.westlake.edu.cn/software/gcta/#GREMLanalysis">GCTA's documentation</a> for details </p>
+<p><strong>Note:</strong>  GCTA has additional valuable options e.g. <code>--gxe</code> to estimate the variance of genotype-environment (GE) interaction and <code>--prevalence</code> to transform the estimate of variance explained, V(1)/Vp, on the observed scale to that on the underlying scale, V(1)/Vp_L. Check <a href="https://yanglab.westlake.edu.cn/software/gcta/#GREMLanalysis">GCTA's documentation</a> for details </p>
 </blockquote>
 <p><br>
 <br></p>
