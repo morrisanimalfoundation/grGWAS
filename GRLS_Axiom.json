@@ -22,7 +22,7 @@
     "target_regions": "Whole genome",
     "analysis_pipeline": {
       "description": "All the samples were analyzed as one batch. Analysis was done using Applied Biosystems Array Power Tools (APT) version 1.18. The analysis pipeline followed the best practice workflow recommended by Thermofisher with some modification (follow the link for detailed analysis notes)",
-      "link": "https://github.com/MAF-GRLS/grGWAS/raw/main/Genotyping_Analysis_Notes.docx"
+      "link": "https://github.com/morrisanimalfoundation/grGWAS/raw/main/Genotyping_Analysis_Notes.docx"
     },
     "data_format": "PLINK",
     "associated_publications": [
@@ -39,7 +39,7 @@
     "license": "CC BY 4.0",
     "DOI": "DOI handle",
     "repository_link": "https://www.example-data-repository.com",
-    "usage_tutorial": "https://maf-grls.github.io/grGWAS/1.install/"
+    "usage_tutorial": "https://morrisanimalfoundation.github.io/grGWAS/1.install/"
     "contact": {
       "name": "Contact person Name",
       "email": "contact@example.com",
