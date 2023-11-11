@@ -1,9 +1,9 @@
 # theme docs https://squidfunk.github.io/mkdocs-material/getting-started/
 
 site_name: grGWAS docs
-site_url: https://maf-grls.github.io/grGWAS/
-repo_name: MAF-GRLS/grGWAS
-repo_url: https://github.com/MAF-GRLS/grGWAS
+site_url: https://morrisanimalfoundation.github.io/grGWAS/
+repo_name: morrisanimalfoundation/grGWAS
+repo_url: https://github.com/morrisanimalfoundation/grGWAS
 edit_uri: tree/main/docs/
 
 
@@ -26,8 +26,8 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  
-      
+
+
   features:
     - content.code.copy
     - content.code.annotate
@@ -58,7 +58,7 @@ nav:
     - Sample-distance: ext_docs/sample_distance.md
     - Admixture analysis: ext_docs/admixture_analysis.md
     - GREML analysis: ext_docs/GREML_analysis.md
-  
+
 
   # - Examples:
   #   - Example 1: DisGeNET_similarity_network-complete.ipynb
@@ -102,7 +102,6 @@ markdown_extensions:
           class: mermaid
           # format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
-      alternate_style: true 
+      alternate_style: true
   - pymdownx.arithmatex:
       generic: true
-
