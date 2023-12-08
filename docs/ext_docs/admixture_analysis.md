@@ -17,15 +17,29 @@ In conclusion, for this analysis to be useful, we need a population of dogs the 
 conda install -c bioconda admixture=1.3.0
 ```
 
-## 2. remove non-autosomal markers and change chr names to intigers
+## 2. Exclude 1st degree relatives
 ```
 mkdir -p admix
-plink --bfile AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
-      --autosome \
-      --make-bed -out admix/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
+# We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the KING kinship coeffiecients to identify 1st degree relatives.
+plink2 --bfile AxiomGT1v2.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+       --king-cutoff 0.177 \
+       --out admix/AxiomGT1v2.1st_degree_relatives
+
+# Let's remove those relatives to avoid inflation of false associations in our GWAS
+plink2 --bfile AxiomGT1v2.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+       --remove admix/AxiomGT1v2.1st_degree_relatives.king.cutoff.out.id \
+       --make-bed --output-chr 'chrM' --out admix/AxiomGT1v2.noRelatives.filtered.LD_prune
 ```
 
-## 3. Run Admixture in the cross validation mode to find out the best number of ancestries
+
+## 3. remove non-autosomal markers and change chr names to intigers
+```
+plink2 --bfile admix/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+       --autosome \
+       --make-bed -out admix/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
+```
+
+## 4. Run Admixture in the cross validation mode to find out the best number of ancestries
 ```
 cd admix
 for k in {1..10};do echo $k;
@@ -44,7 +58,7 @@ Rscript -e 'val <- read.table("admix_cv.txt");'\
 
 There is an output file for each parameter set: Q (the ancestry fractions), and P (the allele frequencies of the inferred ancestral populations). 
 
-## 4. plot the Q estimates
+## 5. plot the Q estimates
 ```
 sort -k1,3nr AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q > AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted
 Rscript -e 'tbl=read.table("AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted");'\
@@ -56,7 +70,7 @@ Rscript -e 'tbl=read.table("AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3
 ![](../images/ancestries.jpg)<!-- -->
 
 
-## 5. plot the Q estimates of a selected subset of individuals
+## 6. plot the Q estimates of a selected subset of individuals
 ```
 tail -n+2 AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec | awk '{if($3<0.02 && $4>0.03)print $1,$2}' > pc2_extreme
 paste AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q  AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.fam | grep -wf pc2_extreme > pc2_extreme.Q
