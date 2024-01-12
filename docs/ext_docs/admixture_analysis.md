@@ -1,18 +1,18 @@
-## Admixture Analysis
+## Admixture analysis
 Admixture analysis is a statistical method used in population genetics to estimate the proportions of ancestry in an individual's genome derived from multiple populations. By analyzing variations in DNA sequences, this method provides insights into historical migrations, inter-population mixing, and the genetic backgrounds of mixed populations. 
 
 Species with breeds under artificial selection pressure like dogs can make use of admixture analysis in special situations including:
 
-1.  ***Historical Admixture:*** If there is suspicion or historical evidence that a particular breed was created through the mixing of two or more other breeds, admixture analysis can provide insights into the genetic contributions of each ancestral breed. The Golden Retriever breed has a well-documented origin, having been developed in the Scottish Highlands in the late 19th century from a blend of Yellow Retrievers, Tweed Water Spaniels, and other breeds. Therefore, this situation does not seem applicable 
-2.  ***Population Bottlenecks and Diversity:*** Admixture analysis can help determine if there's been a recent bottleneck (a sharp reduction in the size of a population) in the breed's history. Such events can lead to a decrease in genetic diversity, which can increase susceptibility to diseases. This would be a useful application if our population represents a wide array of Golden Retrievers from different lineages or regions but this is not the case
-3.  ***Breed Purity:*** Admixture analysis can be used to assess the genetic purity of individual dogs or lines within a breed. If there's unexpected genetic material from another breed, it might be indicative of undisclosed crossbreeding in the past. That seems as a useful application but we need our studied population to include samples from other breeds to identify any unusual genetic signals within the Golden Retriever dogs.
-4.  ***Health and Genetic Disorders:*** Many purebred dogs are prone to specific genetic disorders. Golden Retrievers, like many purebred dogs, have specific health concerns, including hip dysplasia, certain cancers, and eye issues. While admixture analysis doesn't directly target these, understanding the genetic makeup and potential sources of variation within a breed can help in broader genetic studies aimed at improving breed health. While health-focused studies can be breed-specific, knowing the genetic makeup of related breeds might help identify the origins of certain genetic disorders or traits.
+1.  ***Historical admixture:*** If there is suspicion or historical evidence that a particular breed was created through the mixing of two or more other breeds, admixture analysis can provide insights into the genetic contributions of each ancestral breed. The Golden Retriever breed has a well-documented origin, having been developed in the Scottish Highlands in the late 19th century from a blend of Yellow Retrievers, Tweed Water Spaniels and other breeds. Therefore, this situation does not seem applicable.
+2.  ***Population bottlenecks and diversity:*** Admixture analysis can help determine if there has been a recent bottleneck (a sharp reduction in the size of a population) in the breed's history. Such events can lead to a decrease in genetic diversity, which can increase susceptibility to diseases. This would be a useful application if the population represented a wide array of Golden Retrievers from different lineages or regions, but this is not the case.
+3.  ***Breed purity:*** Admixture analysis can be used to assess the genetic purity of individual dogs or lines within a breed. If there's unexpected genetic material from another breed, it might be indicative of undisclosed crossbreeding in the past. That seems like a useful application but the studied population would need to include samples from other breeds to identify any unusual genetic signals within the Golden Retriever dogs.
+4.  ***Health and genetic disorders:*** Many pure-bred dogs are prone to specific genetic disorders. Golden Retrievers, like many pure-bred dogs, have specific health concerns, including hip dysplasia, certain cancers and eye issues. While admixture analysis doesn't directly target these, understanding the genetic makeup and potential sources of variation within a breed can help in broader genetic studies aimed at improving breed health. While health-focused studies can be breed-specific, knowing the genetic makeup of related breeds might help identify the origins of certain genetic disorders or traits.
 
 
-In conclusion, for this analysis to be useful, a population of dogs including more breeds is needed. For now, the data of Golden retrievers only will be used to explore the genetic diversity within the breed. Hopefully this dataset can be expanded soon to include more dogs from other breeds.     
+In conclusion, for this analysis to be useful, a population of dogs including more breeds is needed. For now, the data of Golden retrievers only will be used to explore the genetic diversity within the breed. Hopefully, this dataset can be expanded soon to include more dogs from other breeds.     
 
 
-## 1. install
+## 1. Install
 ```
 conda install -c bioconda admixture=1.3.0
 ```
@@ -32,14 +32,14 @@ plink2 --bfile AxiomGT1v2.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr
 ```
 
 
-## 3. Remove non-autosomal markers and change chr names to integers
+## 3. Remove non-autosomal markers and change character names to integers
 ```
 plink2 --bfile admix/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
        --autosome \
        --make-bed -out admix/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
 ```
 
-## 4. Run Admixture in the cross validation mode to find out the best number of ancestries
+## 4. Run Admixture in the cross-validation mode to find out the best number of ancestries
 ```
 cd admix
 for k in {1..10};do echo $k;
@@ -56,7 +56,7 @@ Rscript -e 'val <- read.table("admix_cv.txt");'\
 ![](../images/admix_cv.jpg)<!-- -->
 
 
-There is an output file for each parameter set: Q (the ancestry fractions), and P (the allele frequencies of the inferred ancestral populations). 
+There is an output file for each parameter set: Q (the ancestry fractions) and P (the allele frequencies of the inferred ancestral populations). 
 
 ## 5. Plot the Q estimates
 ```
