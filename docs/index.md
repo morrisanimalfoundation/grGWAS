@@ -1,14 +1,14 @@
 # GRLS GWAS Tutorial
 
-Golden Retrievers are one of the most popular breeds in the world. However, like many pure-bred dogs, golden retrievers are prone to breed specific and non-breed specific [health problems](https://morrisanimalfoundation.github.io/grGWAS/ext_docs/health_concerns/). Previous [GWAS studies](https://morrisanimalfoundation.github.io/grGWAS/ext_docs/gwas_studies/) have uncovered the underlying genetics of several disorders but some studies would benefit from replication. And we know there are many other research questions waiting to be explored!
+Golden retrievers are one of the most popular breeds in the world. However, like many pure-bred dogs, golden retrievers are prone to breed specific and non-breed specific [health problems](https://morrisanimalfoundation.github.io/grGWAS/ext_docs/health_concerns/). Previous [GWAS studies](https://morrisanimalfoundation.github.io/grGWAS/ext_docs/gwas_studies/) have uncovered the underlying genetics of several disorders but some studies would benefit from replication. There are also many other research questions waiting to be explored!
 
-The Golden Retriever Lifetime Study (GRLS) has a vast amount of phenotypic data collected from veterinarian records and dog owners’ questionnaires over the years for 3,000+ dogs. In addition, the study has genotyped ~ 1.1 million genetic markers using Axiom™ Canine Genotyping Array Sets A and B. This repository should provide tutorials for handling the GRLS phenotypic and genotypic data to produce successful GWAS studies. Also, we are building a growing list of resources to support these studies.
+The Golden Retriever Lifetime Study (GRLS) has a vast amount of phenotypic data collected from veterinarian records and owner questionnaires over the years for 3,000+ dogs. In addition, the study has genotyped ~ 1.1 million genetic markers using ThermoFisher's Axiom™ Canine Genotyping Array Sets A and B. This repository provides a tutorial for handling the GRLS phenotypic and genotypic data to produce successful GWAS studies. We are building a growing list of resources to support these studies. 
 
 Morris Animal Foundation’s Golden Retriever Lifetime Study (GRLS) is a longitudinal, prospective study following 3,044 golden retrievers over their lifetimes. The Study’s primary purpose is to identify the nutritional, environmental, lifestyle and genetic risk factors for cancer and other diseases. The study has collected over 10 years' worth of phenotypic data from both veterinarian and owner’ questionnaires, as well as biological samples.  
 
 A subproject of the Golden Retriever Lifetime Study was The Golden Oldies study. In this project, an additional cohort of golden retrievers that had reached the age of 12 years or older and had not yet been diagnosed with cancer were recruited to provide DNA samples. We anticipated this population could serve as a control group. Only DNA samples were collected from this group of dogs. Because the purpose of this study was to create an additional sample inventory, there is no phenotypic data from questionnaires available. 
 
-~1.1 million genetic markers from the GRLS cohort and 200 of the Golden Oldie’s participants were genotyped using Axiom™ Canine Genotyping Array Sets A and B.  
+~1.1 million genetic markers from the entire GRLS cohort and 200 of the Golden Oldie’s participants were genotyped using ThermoFisher's Axiom™ Canine Genotyping Array Sets A and B.  
 
 <br>
 
