@@ -1,4 +1,4 @@
-## GWASs in Golden Retrievers
+## Previous GWAS Studies in Golden Retrievers
 
 
 ## A) Cancers
