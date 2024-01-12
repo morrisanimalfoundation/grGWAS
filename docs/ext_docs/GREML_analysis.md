@@ -1,4 +1,4 @@
-## GCTA-GREML analysis
+## GCTA-GREML Analysis
 
 The narrow-sense heritability (h<sup>2</sup>) is defined as the proportion of phenotypic variance due to additive genetic variance. GREML (Genomic-relatedness-based restricted maximum likelihood) is a method used to estimate the proportion of variance in a phenotype that can be explained by SNPs in a population. In other words, **GREML calculates the SNP-based heritability**.
 
