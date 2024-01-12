@@ -1,6 +1,6 @@
 ## Health Concerns in Golden Retrievers: A Literature Review
 
-Golden Retrievers are one of the most popular breeds in the world. However, like many pure-bred dogs, golden retrievers are prone to breed specific and non-beed specific health problems. This review aims to summarize some of the most prevalent health concerns in Golden Retrievers.
+Golden Retrievers are one of the most popular breeds in the world. However, like many pure-bred dogs, golden retrievers are prone to breed specific and non-breed specific health problems. This review aims to summarize some of the most prevalent health concerns in Golden Retrievers.
 
 **A) Breed specific:**
 
