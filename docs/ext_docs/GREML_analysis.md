@@ -4,10 +4,10 @@ The narrow-sense heritability (h<sup>2</sup>) is defined as the proportion of ph
 
 GREML utilizes the genetic relationships between individuals in a sample population, captured in a genomic relationship matrix (GRM), to *partition the phenotypic variance* into its genetic and residual components. By fitting a linear mixed model, GREML estimates the proportion of variance attributable to all SNPs.
 
-Let us dive deeper into linear mixed models (LMM) and how they are used in the context of this genomic analysis:
+Lets dive deeper into linear mixed models (LMM) and how they are used in the context of this genomic analysis:
 
-***1. Basics of Linear Models:*** <br>
-In simple linear regression, we model the relationship between a dependent variable (phenotype) and one or more independent variables (often genotypic data). The model is described as:
+***1. Basics of linear models:*** <br>
+In simple linear regression, the relationship between a dependent variable (phenotype) and one or more independent variables (often genotypic data) is modeled. The model is described as:
 
 Y=Xβ+ϵ
 
@@ -20,7 +20,7 @@ Where:
 
 <br>
 
-***2. Mixed Models Add a Random Component:*** <br>
+***2. Mixed models add a random component:*** <br>
 In mixed models, besides fixed effects (like the β in the linear model), there are random effects which capture variability in the data due to certain groups or clusters.
 
 Y=Xβ+Zu+ϵ
@@ -32,7 +32,7 @@ Where:
 
 <br>
 
-***3. Application to Genomic Data:*** <br>
+***3. Application to genomic data:*** <br>
 In the context of GREML and genomic studies:
 
 *  The fixed effects (β) might capture known factors influencing the phenotype, like age or gender.
@@ -41,7 +41,7 @@ In the context of GREML and genomic studies:
 
 <br>
 
-***4. Estimating the Variance Components:*** <br>
+***4. Estimating the variance components:*** <br>
 The key goal in GREML is to estimate the σ<sup>2</sup><sub>g</sub> (genetic variance) and σ<sup>2</sup><sub>e</sub> (residual variance). From these, we can compute the SNP-based heritability as:
 
 h<sup>2</sup> = σ<sup>2</sup><sub>g</sub> / (σ<sup>2</sup><sub>g</sub> + σ<sup>2</sup><sub>e</sub>)
@@ -58,7 +58,7 @@ In summary, by using a linear mixed model, the GREML approach leverages both fix
 <br>
 
 
-***6. statistical varification:*** <br>
+***6. Statistical varification:*** <br>
 For GCTA to assess the importance of the SNPs' effects to the model, it fits and compare 2 models:
 
 a) ***Full Model*** that includes both the fixed effects and the random effects. <br>
