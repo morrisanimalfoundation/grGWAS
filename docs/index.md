@@ -18,7 +18,7 @@ A subproject of the Golden Retriever Lifetime Study was The Golden Oldies study.
 The GRLS genotyping dataset is publicly available in a PLINK file format. More information about this dataset and how to access it can be found [here](https://github.com/morrisanimalfoundation/grGWAS/blob/main/GRLS_Axiom.json).
 
 ## 2.2. Phenotype data
-Morris Animal Foundation [Data Commons](https://datacommons.morrisanimalfoundation.org/) provides open access to a [growing collection](https://datacommons.morrisanimalfoundation.org/node/221) of data provided by participants in the Golden Retriever Lifetime Study. To download the data, you will need to [register](https://datacommons.morrisanimalfoundation.org/user/login?destination=/node/1) for an account.
+Morris Animal Foundation [Data Commons](https://datacommons.morrisanimalfoundation.org/) provides open access to a [growing collection](https://datacommons.morrisanimalfoundation.org/node/221) of data provided by participants in the Golden Retriever Lifetime Study. To download the data, you will need to [register](https://datacommons.morrisanimalfoundation.org/user/register?attributes%5Bclass%5D%5B0%5D=link1) for an account.
 
 <br>
 
