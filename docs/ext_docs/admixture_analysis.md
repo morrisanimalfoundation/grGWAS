@@ -1,4 +1,4 @@
-## Admixture analysis
+## Admixture Analysis
 Admixture analysis is a statistical method used in population genetics to estimate the proportions of ancestry in an individual's genome derived from multiple populations. By analyzing variations in DNA sequences, this method provides insights into historical migrations, inter-population mixing, and the genetic backgrounds of mixed populations. 
 
 Species with breeds under artificial selection pressure like dogs can make use of admixture analysis in special situations including:
