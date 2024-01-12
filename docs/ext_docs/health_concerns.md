@@ -1,8 +1,8 @@
 ## Health Concerns in Golden Retrievers: A Literature Review
 
-Golden Retrievers are one of the most popular breeds in the world, known for their friendly demeanor and beautiful golden coats. However, as with any breed, they are prone to specific health problems. This review aims to summarize some of the most prevalent health concerns in Golden Retrievers.
+Golden Retrievers are one of the most popular breeds in the world. However, like many pure-bred dogs, golden retrievers are prone to breed specific and non-beed specific health problems. This review aims to summarize some of the most prevalent health concerns in Golden Retrievers.
 
-**A) Breed-specific:**
+**A) Breed specific:**
 
 1. **Hip Dysplasia**:
    A common concern in many larger dog breeds, hip dysplasia is an abnormal formation of the hip socket. Over time, this can lead to arthritis and pain. <br>
@@ -48,7 +48,7 @@ Golden Retrievers are one of the most popular breeds in the world, known for the
    *Reference*: Scott, D. W., Miller Jr, W. H., & Griffin, C. E. (2001). Muller & Kirk's small animal dermatology. Elsevier Health Sciences. <br>
 
 
-**B) Not breed-specific**
+**B) Non-breed specific**
 
 1. **Heartworms**: Golden Retrievers, like all dogs, are susceptible to heartworm disease. Heartworm disease is a serious disease that results in severe lung disease, heart failure, other organ damage, and death in pets, mainly dogs, cats, and ferrets. It is caused by a parasitic worm called Dirofilaria immitis. The worms are spread through the bite of a mosquito. <br>
 *Reference*: Atkins, C. E. (2003). Comparison of results of three commercial heartworm antigen test kits in dogs with low heartworm burdens. Journal of the American Veterinary Medical Association, 222(9), 1221-1223. <br>
