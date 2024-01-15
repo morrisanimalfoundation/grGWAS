@@ -1,13 +1,13 @@
-## GCTA-GREML analysis
+## GCTA-GREML Analysis
 
 The narrow-sense heritability (h<sup>2</sup>) is defined as the proportion of phenotypic variance due to additive genetic variance. GREML (Genomic-relatedness-based restricted maximum likelihood) is a method used to estimate the proportion of variance in a phenotype that can be explained by SNPs in a population. In other words, **GREML calculates the SNP-based heritability**.
 
 GREML utilizes the genetic relationships between individuals in a sample population, captured in a genomic relationship matrix (GRM), to *partition the phenotypic variance* into its genetic and residual components. By fitting a linear mixed model, GREML estimates the proportion of variance attributable to all SNPs.
 
-Let us dive deeper into linear mixed models (LMM) and how they are used in the context of this genomic analysis:
+Here is a deeper dive into linear mixed models (LMM) and how they are used in the context of this genomic analysis:
 
-***1. Basics of Linear Models:*** <br>
-In simple linear regression, we model the relationship between a dependent variable (phenotype) and one or more independent variables (often genotypic data). The model is described as:
+***1. Basics of linear models:*** <br>
+In simple linear regression, the relationship between a dependent variable (phenotype) and one or more independent variables (often genotypic data) is modeled. The model is described as:
 
 Y=Xβ+ϵ
 
@@ -20,7 +20,7 @@ Where:
 
 <br>
 
-***2. Mixed Models Add a Random Component:*** <br>
+***2. Mixed models add a random component:*** <br>
 In mixed models, besides fixed effects (like the β in the linear model), there are random effects which capture variability in the data due to certain groups or clusters.
 
 Y=Xβ+Zu+ϵ
@@ -32,7 +32,7 @@ Where:
 
 <br>
 
-***3. Application to Genomic Data:*** <br>
+***3. Application to genomic data:*** <br>
 In the context of GREML and genomic studies:
 
 *  The fixed effects (β) might capture known factors influencing the phenotype, like age or gender.
@@ -41,8 +41,8 @@ In the context of GREML and genomic studies:
 
 <br>
 
-***4. Estimating the Variance Components:*** <br>
-The key goal in GREML is to estimate the σ<sup>2</sup><sub>g</sub> (genetic variance) and σ<sup>2</sup><sub>e</sub> (residual variance). From these, we can compute the SNP-based heritability as:
+***4. Estimating the variance components:*** <br>
+The key goal in GREML is to estimate the σ<sup>2</sup><sub>g</sub> (genetic variance) and σ<sup>2</sup><sub>e</sub> (residual variance). From these, the SNP-based heritability can be computed:
 
 h<sup>2</sup> = σ<sup>2</sup><sub>g</sub> / (σ<sup>2</sup><sub>g</sub> + σ<sup>2</sup><sub>e</sub>)
 
@@ -58,18 +58,18 @@ In summary, by using a linear mixed model, the GREML approach leverages both fix
 <br>
 
 
-***6. statistical varification:*** <br>
+***6. Statistical verification:*** <br>
 For GCTA to assess the importance of the SNPs' effects to the model, it fits and compare 2 models:
 
 a) ***Full Model*** that includes both the fixed effects and the random effects. <br>
 b) ***Reduced Model*** that only includes the fixed effects and omits the random effects of SNPs. <br>
 
-GCTA calculate the ***Log Likelihoods*** for both models. A higher log likelihood indicates a better fit of the model to the data. The difference in log likelihoods between the full and reduced models provides a test statistic for the significance of the random effects (SNP effects). Essentially, if the full model (which includes SNP effects) has a significantly better fit to the data than the reduced model (which excludes SNP effects), it implies that the SNPs are explaining a significant portion of the variance in the phenotype.
+GCTA calculates the ***Log Likelihoods*** for both models. A higher log likelihood indicates a better fit of the model to the data. The difference in log likelihoods between the full and reduced models provides a test statistic for the significance of the random effects (SNP effects). Essentially, if the full model (which includes SNP effects) has a significantly better fit to the data than the reduced model (which excludes SNP effects), it implies that the SNPs are explaining a significant portion of the variance in the phenotype.
 
 Formally, the difference in log likelihoods between the two models, multiplied by two, approximately follows a chi-squared distribution. This can be used for hypothesis testing:
-2 (LogLikelihood<sub>full</sub> − LogLikelihood<sub>reduced</sub>)
+2 (LogLikelihood<sub>full</sub> − LogLikelihood<sub>reduced</sub>).
 
 
 
 
-You can learn more about linear mixed models [here](https://www.youtube.com/playlist?list=PL8F480DgtpW9_IT7xN1XeRF_dglZmK0nM)
+More details about linear mixed models can be found [here](https://www.youtube.com/playlist?list=PL8F480DgtpW9_IT7xN1XeRF_dglZmK0nM).
