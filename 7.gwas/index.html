@@ -587,9 +587,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#711-linear-model" class="md-nav__link">
+  <a href="#711-logistic-regression-model" class="md-nav__link">
     <span class="md-ellipsis">
-      7.1.1.  linear model
+      7.1.1.  Logistic regression model
     </span>
   </a>
   
@@ -598,7 +598,7 @@
         <li class="md-nav__item">
   <a href="#712-genomic-control" class="md-nav__link">
     <span class="md-ellipsis">
-      7.1.2. genomic control
+      7.1.2. Genomic control
     </span>
   </a>
   
@@ -634,7 +634,7 @@
         <li class="md-nav__item">
   <a href="#722-genomic-control" class="md-nav__link">
     <span class="md-ellipsis">
-      7.2.2. genomic control:
+      7.2.2. Genomic control:
     </span>
   </a>
   
@@ -863,9 +863,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#711-linear-model" class="md-nav__link">
+  <a href="#711-logistic-regression-model" class="md-nav__link">
     <span class="md-ellipsis">
-      7.1.1.  linear model
+      7.1.1.  Logistic regression model
     </span>
   </a>
   
@@ -874,7 +874,7 @@
         <li class="md-nav__item">
   <a href="#712-genomic-control" class="md-nav__link">
     <span class="md-ellipsis">
-      7.1.2. genomic control
+      7.1.2. Genomic control
     </span>
   </a>
   
@@ -910,7 +910,7 @@
         <li class="md-nav__item">
   <a href="#722-genomic-control" class="md-nav__link">
     <span class="md-ellipsis">
-      7.2.2. genomic control:
+      7.2.2. Genomic control:
     </span>
   </a>
   
@@ -953,76 +953,74 @@
 
   <h1>7. GWAS Analysis</h1>
 
-<p>We will use 2 different software packages to perform the GWAS analysis. Each one use a different statistical approach to adjust for population stratification. We will use the genomic control λ to assess the efficiency of each. </p>
+<p>2 different software packages will be used to perform the GWAS analysis. Each one uses a different statistical approach to adjust for population stratification. The genomic control λ will be used to assess the efficiency of each. </p>
 <h2 id="71-gwas-by-plink">7.1.  GWAS by Plink</h2>
-<h2 id="711-linear-model">7.1.1.  linear model</h2>
+<h2 id="711-logistic-regression-model">7.1.1.  Logistic regression model</h2>
 <p>PLINK 2.0 has the new <code>--glm</code> command for association analysis (instead of  <code>--linear</code> and <code>--logistic</code> in Plink 1.9). For quantitative phenotypes, <code>--glm</code> fits a linear model while for binary phenotypes, it fits a logistic or Firth regression model instead.</p>
 <ul>
 <li>The model has a fixed-covariate matrix to include covariates loaded by <code>--covar</code>.<ul>
-<li>It is now standard practice to include top principal components (usually computed by <code>--pca</code>) as covariates in any association analysis, to correct for population stratification </li>
-<li>You can add the 'sex' modifier to include .fam/.psam sex as a covariate </li>
+<li>It is now standard practice to include top principal components (usually computed by <code>--pca</code>) as covariates in any association analysis, to correct for population stratification.</li>
+<li>The 'sex' modifier can be added to include ".fam/.psam" sex as a covariate. If this is not of interest, add the 'no-x-sex' modifier instead. </li>
 </ul>
 </li>
 <li>Dataset precautions:<ul>
-<li>This method does not properly adjust for small-scale family structure. As a consequence, it is usually necessary to prune close relations</li>
+<li>This method does not properly adjust for small-scale family structure. As a consequence, it is usually necessary to prune close relations.</li>
 <li>It is advised to exclude variants with very small minor allele count ("--mac 20" is a reasonable filter to apply). <br>
-Our filtered dataset already fulfill these precautions</li>
+The current filtered dataset already fulfill these precautions.</li>
 </ul>
 </li>
-<li>The model uses the minor allele dosages by default. To make it always contain ALT allele dosages instead (the A1 column of the main report), we need to add the 'omit-ref' modifier. </li>
+<li>The model uses the minor allele dosages by default. To make it always contain ALT allele dosages instead (the A1 column of the main report), the 'omit-ref' modifier needs to be added.</li>
+<li>Covariates are typically used to adjust for their effect but their effect is not needed in the output file. The 'hide-covar' modifier can greatly reduce file sizes.</li>
+<li>--ci causes confidence intervals with the given width to be reported for each beta or odds-ratio.</li>
 </ul>
-<p>Here, we will adjust for sex and 3 PCs </p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink2 --bfile $gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target} --chr-set 38 no-xy --allow-extra-chr \
+<p>Here, the data will be adjusted for sex and 3 PCs.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink2 --bfile &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>       --pheno $gwas/${target}.pheno \
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       --chr 1-38, X \
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>       --glm sex &#39;hide-covar&#39; --ci 0.95 \
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       --covar $gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.pca.eigenvec --covar-name PC1,PC2,PC3 \
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       --output-chr 26 --out $gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.glm
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       --covar &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.pca.eigenvec --covar-name PC1,PC2,PC3 \
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       --output-chr 26 --out &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.glm
 </span></code></pre></div>
-<p>Here is the output</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>PLINK v2.00a2.3LM 64-bit Intel (24 Jan 2020)   www.cog-genomics.org/plink/2.0/
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>(C) 2005-2020 Shaun Purcell, Christopher Chang   GNU General Public License v3
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Logging to gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.glm.log.
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Options in effect:
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  --allow-extra-chr
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  --bfile gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  --chr 1-38, X
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  --chr-set 38 no-xy
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  --ci 0.95
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  --covar gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.pca.eigenvec
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  --covar-name PC1,PC2,PC3
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  --glm sex hide-covar
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  --out gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.glm
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  --output-chr 26
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>  --pheno gwas_output/atopy.pheno
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>Start time: Mon Sep 25 11:09:27 2023
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>64289 MiB RAM detected; reserving 32144 MiB for main workspace.
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>Using up to 32 threads (change this with --threads).
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>1932 samples (942 females, 990 males; 1932 founders) loaded from
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.fam.
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>14735 out of 14795 variants loaded from
-</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.bim.
-</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>1 binary phenotype loaded (326 cases, 1606 controls).
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>3 covariates loaded from gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.pca.eigenvec.
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>Calculating allele frequencies... done.
-</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>--glm logistic regression on phenotype &#39;PHENO1&#39;: done.
-</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>Results written to gwas_output/AxiomGT1v2.noRelatives.filtered.LD_prune.atopy.glm.PHENO1.glm.logistic .
+<p>Here is the output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>...
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Options in effect:
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  --allow-extra-chr
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  --bfile gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  --chr 1-38, X
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  --chr-set 38 no-xy
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  --ci 0.95
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  --covar gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.pca.eigenvec
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  --covar-name PC1,PC2,PC3
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  --glm sex hide-covar
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  --out gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.glm
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  --output-chr 26
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  --pheno gwas_atopy/atopy.pheno
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>....
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>1989 samples (980 females, 1009 males; 1989 founders) loaded from
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.fam.
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>180605 out of 180689 variants loaded from
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.bim.
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>1 binary phenotype loaded (317 cases, 1672 controls).
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>3 covariates loaded from gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.pca.eigenvec.
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>Calculating allele frequencies... done.
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>--glm logistic regression on phenotype &#39;PHENO1&#39;: done.
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>Results written to gwas_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.glm.PHENO1.glm.logistic .
 </span></code></pre></div>
-<h2 id="712-genomic-control">7.1.2. genomic control</h2>
-<p>The genomic control λ value (often referred to as the "genomic inflation factor") is used to measure and correct for population stratification. A λ value close to 1 suggests that the results are not inflated due to population stratification, while values greater than 1 suggest potential inflation. <a href="https://jbiomedsci.biomedcentral.com/articles/10.1186/s12929-021-00733-7#:~:text=The%20genomic%20inflation%20factor%20%CE%BB,considered%20acceptable%20for%20a%20GWAS.">However, values up to 1.10 are generally considered acceptable for a GWAS</a> <br>
-We can use the results of our regression analysis to calculate the genomic control λ value:</p>
+<h2 id="712-genomic-control">7.1.2. Genomic control</h2>
+<p>The genomic control λ value (often referred to as the "genomic inflation factor") is used to measure and correct for population stratification. A λ value close to 1 suggests that the results are not inflated due to population stratification, while values greater than 1 suggest potential inflation. <a href="https://jbiomedsci.biomedcentral.com/articles/10.1186/s12929-021-00733-7#:~:text=The%20genomic%20inflation%20factor%20%CE%BB,considered%20acceptable%20for%20a%20GWAS.">However, values up to 1.10 are generally considered acceptable for a GWAS</a>. <br>
+The results of the regression analysis can be used to calculate the genomic control λ value.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>## λ = observed median chi-square statistic / 0.456
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>## Chi-square statistic = Z_stat&lt;sup&gt;2&lt;/sup&gt;
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>tail -n+2 $gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.glm.PHENO1.glm.logistic | awk &#39;{print $13*$13}&#39; | sort | awk &#39;{count[NR] = $1;}\
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>tail -n+2 $gwas/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.glm.PHENO1.glm.logistic | awk &#39;{print $13*$13}&#39; | sort | awk &#39;{count[NR] = $1;}\
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>END{
 </span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>if(NR % 2){gif = count[(NR + 1) / 2];} else {gif = (count[(NR / 2)] + count[(NR / 2) + 1]) / 2.0;}
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>print &quot;Genomic inflation factor = &quot; gif/0.456;}&#39;
 </span></code></pre></div>
-<p>Genomic inflation factor = 1.12741</p>
+<p>Genomic inflation factor = 1.0748.</p>
 <h2 id="713-plotting">7.1.3. Plotting</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>input_asc=&quot;$gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.glm.PHENO1.glm.logistic&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>input_asc=&quot;$gwas/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.glm.PHENO1.glm.logistic&quot;
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>output_prefix=&quot;$gwas/${target}.glm.logistic&quot;
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Rscript -e &#39;args=(commandArgs(TRUE));require(qqman);&#39;\
@@ -1034,59 +1032,59 @@ We can use the results of our regression analysis to calculate the genomic contr
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>&#39;noOfTests &lt;- dim(asc)[1];bonf &lt;- 0.05/as.numeric(noOfTests);bonfBy200 &lt;- 10/as.numeric(noOfTests);&#39;\
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>&#39;sigSNPs &lt;- asc$ID[which(asc$P&lt;=bonfBy200)];&#39;\
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>&#39;tiff(paste(args[2],&quot;.manh.tif&quot;,sep=&quot;&quot;),units=&quot;in&quot;, width=30, height=10, res=300);&#39;\
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;X.CHROM&quot;, bp = &quot;POS&quot;, p = &quot;P&quot;, snp = &quot;ID&quot;, ylim = c(0, 6), chrlabs = c(1:38, &quot;X&quot;),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;X.CHROM&quot;, bp = &quot;POS&quot;, p = &quot;P&quot;, snp = &quot;ID&quot;, ylim = c(0, 7), chrlabs = c(1:38, &quot;X&quot;),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>&#39;dev.off();&#39;  &quot;$input_asc&quot; &quot;$output_prefix&quot;
 </span></code></pre></div>
-<p>Here is the Q-Q plot</p>
+<p>Here is the Q-Q plot:</p>
 <p><a class="glightbox" href="../images/atopy.glm.logistic.qqplot.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.glm.logistic.qqplot.jpg" /></a><!-- --></p>
-<p>And the Manhattan plot</p>
+<p>And the Manhattan plot:</p>
 <p><a class="glightbox" href="../images/atopy.glm.logistic.manh.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.glm.logistic.manh.jpg" /></a><!-- --></p>
 <h2 id="72-gwas-by-gcta">7.2.  GWAS by GCTA</h2>
 <h2 id="721-mixed-linear-model">7.2.1.  Mixed linear model</h2>
-<p>Mixed model association software such as SAIGE, BOLT-LMM, GCTA, or FaST-LMM instead; or regenie's whole genome regression can better handel genetic relatedness. In this tutorial, we will use <code>--mlma-loco</code> for mixed linear model based association analysis. </p>
+<p>Mixed model association software such as SAIGE, BOLT-LMM, GCTA or FaST-LMM instead; or regenie's whole genome regression can better handle genetic relatedness. In this tutorial, <code>--mlma-loco</code> for mixed linear model-based association analysis will be used. </p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>y = a + bx + g + e
 </span></code></pre></div>
 <p>where: </p>
 <ul>
-<li>y is the phenotype</li>
-<li>a is the mean term (i.e. intercept)</li>
-<li>b is the additive effect (fixed effect) of the candidate SNP to be tested for association</li>
-<li>x is the SNP genotype indicator variable coded as 0, 1 or 2</li>
-<li>g is the polygenic effect (random effect) i.e. the accumulated effect of all SNPs (as captured by the GRM calculated using all SNPs)  </li>
+<li>y is the phenotype.</li>
+<li>a is the mean term (i.e. intercept).</li>
+<li>b is the additive effect (fixed effect) of the candidate SNP to be tested for association.</li>
+<li>x is the SNP genotype indicator variable coded as 0, 1 or 2.</li>
+<li>g is the polygenic effect (random effect) i.e. the accumulated effect of all SNPs (as captured by the GRM calculated using all SNPs).  </li>
 <li>e is the residual. </li>
 </ul>
 <p>The MLM leaving-one-chromosome-out (LOCO) analysis implements the model with the chromosome, on which the candidate SNP is located, excluded from calculating the GRM. This means that g is the accumulated effect of all SNPs except those on the chromosome where the candidate SNP is located. The var(g) will be re-estimated each time when a chromosome is excluded from calculating the GRM. The MLM-LOCO analysis is computationally less efficient but more powerful as compared with the classical MLM analysis.</p>
 <blockquote>
 <p><em>Note1:</em> The mixed linear model incorporates the genetic relationship matrix (GRM) to capture the accumulated effect of all SNPs which accounts for population stratification to a large extent. Therefore, there is no need to adjust for top PCs.</p>
-<p><em>Note2:</em> By default, the model include covariates (if provided) as fixed effects and the phenotype will be adjusted by the mean (i.e. intercept) and covariates before testing for SNP association. However, if SNPs are correlated with the covariates, pre-adjusting the phenotype by the covariates will probably cause loss of power. If the <code>--mlma-no-preadj-covar</code> option is specified, the covariates will be fitted together with the SNP for association test. However, this will significantly reduce computational efficiency.</p>
+<p><em>Note2:</em> By default, the model includes covariates (if provided) as fixed effects and the phenotype will be adjusted by the mean (i.e. intercept) and covariates before testing for SNP association. However, if SNPs are correlated with the covariates, pre-adjusting the phenotype by the covariates will probably cause loss of power. If the <code>--mlma-no-preadj-covar</code> option is specified, the covariates will be fitted together with the SNP for association test. However, this will significantly reduce computational efficiency.</p>
 </blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>gcta64 --mlma-loco --bfile gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta --autosome-num 38 --autosome \
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>       --grm gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>gcta64 --mlma-loco --bfile gcta_atopy/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta --autosome-num 38 --autosome \
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>       --grm gcta_atopy/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta_grm \
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>       --pheno $gwas/${target}.pheno \
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>       --covar gender.txt --mlma-no-preadj-covar \
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>       --covar $gwas/gender.txt --mlma-no-preadj-covar \
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>       --out $gwas/${target}_asc --thread-num 10
 </span></code></pre></div>
-<h2 id="722-genomic-control">7.2.2. genomic control:</h2>
-<p>The output of the MLM-LOCO analysis does not have chi-square statistic, however the p-values can be converted to chi-squared statistics for 1 degree of freedom by using the inverse of the cumulative distribution function (CDF) of the chi-squared distribution. This can be easily done using python</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>## Let us prepare our conda environment to run Python
+<h2 id="722-genomic-control">7.2.2. Genomic control:</h2>
+<p>The output of the MLM-LOCO analysis does not have chi-square statistic; however, the p-values can be converted to chi-squared statistics for 1 degree of freedom by using the inverse of the cumulative distribution function (CDF) of the chi-squared distribution. This can be easily done using Python.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>## Prepare the conda environment to run Python.
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mamba install -c conda-forge python=3.11.4 pandas=2.0.3 scipy=1.11.2
 </span></code></pre></div>
-<p>Now, we can open python in interactive mode by using the command <code>python</code>. Once we are dome, we can exit the interactive mode by using the <code>exit()</code> function</p>
+<p>Now, Python can be opened in interactive mode by using the command <code>python</code>. Once analysis is done, interactive mode can be exited by using the <code>exit()</code> function.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Load the GCTA-LOCO results</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">gwas_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s2">&quot;gwas_output/atopy_asc.loco.mlma&quot;</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Load the GCTA-LOCO results.</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">gwas_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s2">&quot;gwas_atopy/atopy_asc.loco.mlma&quot;</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Convert p-values to chi-squared statistics</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Convert p-values to chi-squared statistics.</span>
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">gwas_results</span><span class="p">[</span><span class="s1">&#39;CHISQ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gwas_results</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Calculate lambda</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Calculate lambda.</span>
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">lambda_value</span> <span class="o">=</span> <span class="n">gwas_results</span><span class="p">[</span><span class="s2">&quot;CHISQ&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> <span class="o">/</span> <span class="mf">0.456</span>
 </span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
 </span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Genomic control λ:&quot;</span><span class="p">,</span> <span class="n">lambda_value</span><span class="p">)</span>
 </span></code></pre></div>
-<p>Genomic control λ: 1.0218973008189114 which is GREAT!</p>
+<p>Genomic control λ = 1.0349228106573256 which is GREAT!</p>
 <h2 id="723-plotting">7.2.3.  Plotting</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>input_asc=&quot;$gwas/${target}_asc.loco.mlma&quot;
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>output_prefix=&quot;$gwas/${target}.loco.mlma&quot;
@@ -1103,7 +1101,7 @@ We can use the results of our regression analysis to calculate the genomic contr
 </span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>&#39;manhattan(asc, main = &quot;Manhattan Plot&quot;, chr = &quot;Chr&quot;, bp = &quot;bp&quot;, p = &quot;p&quot;, snp = &quot;SNP&quot;, ylim = c(0, 6),suggestiveline =  -log10(bonfBy200), genomewideline =  -log10(bonf), highlight = sigSNPs);&#39;\
 </span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>&#39;dev.off();&#39;  &quot;$input_asc&quot; &quot;$output_prefix&quot;
 </span></code></pre></div>
-<p>Here is the Q-Q plot</p>
+<p>Here is the Q-Q plot:</p>
 <p><a class="glightbox" href="../images/atopy.loco.mlma.qqplot.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.loco.mlma.qqplot.jpg" /></a><!-- --></p>
 <p>And the Manhattan plot</p>
 <p><a class="glightbox" href="../images/atopy.loco.mlma.manh.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/atopy.loco.mlma.manh.jpg" /></a><!-- --></p>
