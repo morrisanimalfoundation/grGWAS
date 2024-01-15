@@ -859,65 +859,11 @@
 <hr />
 </li>
 <li>
-<p>A text file that maps between sample IDs in the genotyping files, and the public IDs used in phenotype data files. Moreover, the file has gender information of the dogs <em>as reported by their owners</em>: <code>map_id_sex.tab</code></p>
-<p>Here is a sample of the file:</p>
-<table>
-<thead>
-<tr>
-<th>Family_ID</th>
-<th>replicate_id</th>
-<th>public_id</th>
-<th>Sex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GRLS</td>
-<td>grlsT459F8JJ_1</td>
-<td>grlsT459F8JJ</td>
-<td>1</td>
-</tr>
-<tr>
-<td>GRLS</td>
-<td>grls9ZOSMBXX_1</td>
-<td>grls9ZOSMBXX</td>
-<td>2</td>
-</tr>
-<tr>
-<td>GRLS</td>
-<td>grls9ZOSMBXX_2</td>
-<td>grls9ZOSMBXX</td>
-<td>2</td>
-</tr>
-<tr>
-<td>GRLS</td>
-<td>grls9ZOSMBXX_3</td>
-<td>grls9ZOSMBXX</td>
-<td>2</td>
-</tr>
-<tr>
-<td>PILOT</td>
-<td>grls1US5SPBB_1</td>
-<td>grls1US5SPBB</td>
-<td>1</td>
-</tr>
-<tr>
-<td>Oldies</td>
-<td>grlsa5561a48_1</td>
-<td>grlsa5561a48</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-<p><em>Notes:</em>
-1.  There are 3 posssible "Family_ID": GRLS and PILOT are two ids that label the 2 bathes of genotyping the samples of the longitudinal GRLS study. Oldies is the 3rd id which distinguishes the additional cohort of golden retrievers that had reached the age of 12 years or older and had not yet been diagnosed with a malignant cancer. See the <a href="https://github.com/morrisanimalfoundation/grGWAS/blob/main/GRLS_Axiom.json">GRLS genotyping data description</a> for details.
-2.  One sample (e.g. grls9ZOSMBXX) may have multiple duplicates in the genotyping files (e.g. grls9ZOSMBXX_1, grls9ZOSMBXX_2, grls9ZOSMBXX_3)
-3.  Sex is encoded where 1 is male and 2 is female.</p>
+<p>A text file that maps between sample IDs in the genotyping files, biological sample IDs, and the public IDs used in phenotype data files. Moreover, the file has gender information of the dogs as reported by their owners: <code>map_id_sex.tab</code></p>
 </li>
 </ol>
 <p><br></p>
 <h2 id="22-phenotype-data">2.2. Phenotype data</h2>
-<p>The phenotypic data of the Golden Retriever Lifetime Study is organized in modular data tables, covering 11 key subject areas: activity, behavior, dental, disease diagnoses, diet, environment, grooming, geographical locations, medications, physical exams and reproduction. You can learn more about the detailed description of each data table <a href="https://datacommons.morrisanimalfoundation.org/datasets">here</a></p>
 <p>In this tutorial, we are using the <a href="https://datacommons.morrisanimalfoundation.org/artisanal_dataset/91">Conditions - Skin</a> dataset as an example. The phenotype table was downloaded locally as <code>phenotypes/conditions_skin.csv</code>.</p>
 <p><br></p>
 

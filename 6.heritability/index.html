@@ -926,119 +926,130 @@
 <ul>
 <li>This command calculates the genetic relationship matrix (GRM) from all the autosomal SNPs.</li>
 <li>GCTA receives PLINK binary PED files as input. However, we have to tweak our Plink files to update the chromosome names into a numerical format and remove all extra chromosomes.  </li>
+<li>Data needs to be filtered to remove rare SNPs (e.g. --maf 0.01), and cryptic relatedness (e.g. --grm-cutoff 0.025). Our dataset does not need any further filtration</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>## a) Prepare the Plink input files
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>gcta=&quot;gcta_${target}&quot; &amp;&amp; mkdir -p &quot;$gcta&quot;
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>plink2 --bfile $gwas/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune --chr-set 38 no-xy --allow-extra-chr &#39;0&#39; \
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      --make-bed --out $gcta/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir -p gcta
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>plink --bfile AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr &#39;0&#39; \
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      --make-bed --out gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>## b) Run the GCTA-GRM command
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>gcta64 --bfile $gcta/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta --autosome-num 38 --autosome --make-grm \
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       --out $gcta/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta_grm --thread-num 10
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>gcta64 --bfile gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta --autosome-num 38 --autosome --make-grm \
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       --out gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm --thread-num 10
 </span></code></pre></div>
 <h2 id="62-input-phenotype-data">6.2. Input phenotype data</h2>
 <p>The input phenotype file is a plain text file similar to that of Plink. If the phenotypic value is coded as 0 or 1 (or 1 and 2, compatible with PLINK), then it will be recognized as a case-control study (0 for controls and 1 for cases). Missing value should be represented by "-9" or "NA". </p>
-<p>For this tutorial, we will use the file <code>$gwas/atopy.pheno</code> that has 318 cases and 1664 controls</p>
+<p>For this tutorial, we will use the file <code>$gwas/atopy.pheno</code> that has 240 atopy cases and 1645 controls</p>
 <h2 id="63-covariates">6.3. Covariates</h2>
 <p>We can adjust for quantitative and discrete covariates. Previous PCA analysis showed that three principle components explain most of the variance and non of them segregates with our phenotype of interest. Therefore, we will adjust the GREML analysis for these 3 eigenvectors. Also, we will adjust for possible gender effect.</p>
 <p>We already have this information but we need to reformat to match the GCTA expectations:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tail -n+2 $gwas/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.pca.eigenvec | cut -f1-5 &gt; $gwas/3PCs.txt
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat $gcta/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta.fam | awk &#39;{print $1,$2,$5}&#39; &gt; $gwas/gender.txt
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tail -n+2 $gwas/AxiomGT1v2.noRelatives.filtered.LD_prune.${target}.pca.eigenvec | cut -f1-5 &gt; $gwas/3PCs.txt
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta.fam | awk &#39;{print $1,$2,$5}&#39; &gt; gender.txt
 </span></code></pre></div>
 <h2 id="64-breeding-value">6.4. Breeding value</h2>
 <p>A breeding value is an estimate of an animal's genetic merit for a particular trait. The additional command <code>--reml-pred-rand</code> predicts the total genetic effect (i.e. breeding value) of each individual attributed by the aggregative effect of the SNPs used to estimate the GRM. The total genetic effects of all the individuals will be saved in a plain ext file *.indi.blp.</p>
 <h2 id="65-run-gcta-greml">6.5. Run GCTA-GREML</h2>
 <p>Now, we have all the pieces we need to run the analysis </p>
 <p><strong>Note:</strong> You do not have to have exactly the same individuals in these files. GCTA will find the individuals in common in the files and sort the order of the individuals.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gcta64 --reml --grm $gcta/AxiomGT1v2.filtered.${target}.noRelatives.LD_prune.gcta_grm \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gcta64 --reml --grm gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm \
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>       --pheno $gwas/${target}.pheno \
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>       --qcovar $gwas/3PCs.txt --covar $gwas/gender.txt \
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>       --qcovar $gwas/3PCs.txt --covar gender.txt \
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>       --reml-pred-rand \
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>       --out $gwas/${target}_greml --thread-num 10
 </span></code></pre></div>
 <p>Here is the output:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>...
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Accepted options:
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>--reml
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>--grm gcta_atopy/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.gcta_grm
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>--pheno gwas_atopy/atopy.pheno
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>--qcovar gwas_atopy/3PCs.txt
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>--covar gender.txt
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>--reml-pred-rand
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>--out gwas_atopy/atopy_greml
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>--thread-num 10
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>Note: the program will be running on 10 threads.
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>Reading IDs of the GRM from [gcta/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.gcta_grm.grm.id].
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>1989 IDs are read from [gcta/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.gcta_grm.grm.id].
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>Reading the GRM from [gcta/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.gcta_grm.grm.bin].
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>GRM for 1989 individuals are included from [gcta/AxiomGT1v2.filtered.atopy.noRelatives.LD_prune.gcta_grm.grm.bin].
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>Reading phenotypes from [gwas_atopy/atopy.pheno].
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>Non-missing phenotypes of 1989 individuals are included from [gwas_atopy/atopy.pheno].
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>Reading quantitative covariate(s) from [gwas_atopy/3PCs.txt].
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>3 quantitative covariate(s) of 1989 individuals are included from [gwas_atopy/3PCs.txt].
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>Reading discrete covariate(s) from [gwas_atopy/gender.txt].
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>1 discrete covariate(s) of 1989 individuals are included from [gwas_atopy/gender.txt].
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>Assuming a disease phenotype for a case-control study: 317 cases and 1672 controls 
-</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>Note: you can specify the disease prevalence by the option --prevalence so that GCTA can transform the variance explained to the underlying liability scale.
-</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>3 quantitative variable(s) included as covariate(s).
-</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>1 discrete variable(s) included as covariate(s).
-</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>1989 individuals are in common in these files.
-</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
-</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>Performing  REML analysis ... (Note: may take hours depending on sample size).
-</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>1989 observations, 5 fixed effect(s), and 2 variance component(s)(including residual variance).
-</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>Calculating prior values of variance components by EM-REML ...
-</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>Updated prior values: 0.0671216 0.0786665
-</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>logL: 927.007
-</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>Running AI-REML algorithm ...
-</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>Iter.   logL    V(G)    V(e)
-</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>1       948.09  0.04286 0.09394
-</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>2       974.49  0.02871 0.10482
-</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>3       986.91  0.02029 0.11235
-</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>4       992.52  0.01516 0.11746
-</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>5       995.02  0.01198 0.12090
-</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>6       996.11  0.00996 0.12321
-</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>7       996.60  0.00867 0.12475
-</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a>8       996.81  0.00602 0.12801
-</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>9       996.98  0.00624 0.12786
-</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>10      996.98  0.00623 0.12787
-</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>11      996.98  0.00623 0.12787
-</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a>Log-likelihood ratio converged.
-</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>
-</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>Calculating the logLikelihood for the reduced model ...
-</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>(variance component 1 is dropped from the model)
-</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>Calculating prior values of variance components by EM-REML ...
-</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>Updated prior values: 0.13387
-</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>logL: 995.87451
-</span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>Running AI-REML algorithm ...
-</span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>Iter.   logL    V(e)
-</span><span id="__span-3-58"><a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>1       995.88  0.13387
-</span><span id="__span-3-59"><a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>2       995.88  0.13387
-</span><span id="__span-3-60"><a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>Log-likelihood ratio converged.
-</span><span id="__span-3-61"><a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>
-</span><span id="__span-3-62"><a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>Summary result of REML analysis:
-</span><span id="__span-3-63"><a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>Source  Variance        SE
-</span><span id="__span-3-64"><a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>V(G)    0.006227        0.004659
-</span><span id="__span-3-65"><a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>V(e)    0.127868        0.005905
-</span><span id="__span-3-66"><a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>Vp      0.134095        0.004273
-</span><span id="__span-3-67"><a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>V(G)/Vp 0.046439        0.034585
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>*******************************************************************
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>* Genome-wide Complex Trait Analysis (GCTA)
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>* version v1.94.1 Linux
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>* Built at Nov 15 2022 21:14:25, by GCC 8.5
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>* (C) 2010-present, Yang Lab, Westlake University
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>* Please report bugs to Jian Yang &lt;jian.yang@westlake.edu.cn&gt;
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>*******************************************************************
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>Analysis started at 03:51:00 PDT on Mon Sep 25 2023.
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>Hostname: farm
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Accepted options:
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>--reml
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>--grm gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>--pheno gwas_output/atopy.pheno
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>--qcovar gwas_output/3PCs.txt
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>--covar gender.txt
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>--reml-pred-rand
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>--out gwas_output/atopy_greml
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>--thread-num 10
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>Note: the program will be running on 10 threads.
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>Reading IDs of the GRM from [gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm.grm.id].
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>2505 IDs are read from [gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm.grm.id].
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>Reading the GRM from [gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm.grm.bin].
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>GRM for 2505 individuals are included from [gcta/AxiomGT1v2.noRelatives.filtered.LD_prune.gcta_grm.grm.bin].
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>Reading phenotypes from [gwas_output/atopy.pheno].
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>Non-missing phenotypes of 1932 individuals are included from [gwas_output/atopy.pheno].
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>Reading quantitative covariate(s) from [gwas_output/3PCs.txt].
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>3 quantitative covariate(s) of 1932 individuals are included from [gwas_output/3PCs.txt].
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>Reading discrete covariate(s) from [gender.txt].
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>1 discrete covariate(s) of 2505 individuals are included from [gender.txt].
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>Assuming a disease phenotype for a case-control study: 326 cases and 1606 controls 
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>Note: you can specify the disease prevalence by the option --prevalence so that GCTA can transform the variance explained to the underlying liability scale.
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>3 quantitative variable(s) included as covariate(s).
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>1 discrete variable(s) included as covariate(s).
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>1932 individuals are in common in these files.
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>Performing  REML analysis ... (Note: may take hours depending on sample size).
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>1932 observations, 5 fixed effect(s), and 2 variance component(s)(including residual variance).
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>Calculating prior values of variance components by EM-REML ...
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>Updated prior values: 0.0700851 0.0818062
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>logL: 871.972
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>Running AI-REML algorithm ...
+</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a>Iter.   logL    V(G)    V(e)
+</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>1       890.66  0.04877 0.09524
+</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>2       911.08  0.03609 0.10488
+</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>3       920.57  0.02837 0.11161
+</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a>4       924.85  0.02357 0.11623
+</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>5       926.77  0.02053 0.11936
+</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>6       927.62  0.01858 0.12148
+</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>7       927.99  0.01457 0.12599
+</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>8       928.29  0.01488 0.12581
+</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>9       928.30  0.01487 0.12582
+</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>10      928.30  0.01487 0.12582
+</span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>Log-likelihood ratio converged.
+</span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>
+</span><span id="__span-3-58"><a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>Calculating the logLikelihood for the reduced model ...
+</span><span id="__span-3-59"><a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>(variance component 1 is dropped from the model)
+</span><span id="__span-3-60"><a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>Calculating prior values of variance components by EM-REML ...
+</span><span id="__span-3-61"><a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>Updated prior values: 0.14016
+</span><span id="__span-3-62"><a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>logL: 922.89947
+</span><span id="__span-3-63"><a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>Running AI-REML algorithm ...
+</span><span id="__span-3-64"><a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>Iter.   logL    V(e)
+</span><span id="__span-3-65"><a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>1       922.90  0.14016
+</span><span id="__span-3-66"><a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>2       922.90  0.14016
+</span><span id="__span-3-67"><a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>Log-likelihood ratio converged.
 </span><span id="__span-3-68"><a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a>
-</span><span id="__span-3-69"><a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>Sampling variance/covariance of the estimates of variance components:
-</span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>2.170601e-05    -1.915605e-05
-</span><span id="__span-3-71"><a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a>-1.915605e-05   3.486728e-05
-</span><span id="__span-3-72"><a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a>
-</span><span id="__span-3-73"><a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a>Summary result of REML analysis has been saved in the file [gwas_atopy/atopy_greml.hsq].
-</span><span id="__span-3-74"><a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a>
-</span><span id="__span-3-75"><a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a>BLUP solutions of the genetic effects for 1989 individuals have been saved in the file [gwas_atopy/atopy_greml.indi.blp].
+</span><span id="__span-3-69"><a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>Summary result of REML analysis:
+</span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>Source  Variance        SE
+</span><span id="__span-3-71"><a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a>V(G)    0.014868        0.005327
+</span><span id="__span-3-72"><a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a>V(e)    0.125824        0.006150
+</span><span id="__span-3-73"><a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a>Vp      0.140691        0.004583
+</span><span id="__span-3-74"><a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a>V(G)/Vp 0.105675        0.037199
+</span><span id="__span-3-75"><a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a>
+</span><span id="__span-3-76"><a id="__codelineno-3-76" name="__codelineno-3-76" href="#__codelineno-3-76"></a>Sampling variance/covariance of the estimates of variance components:
+</span><span id="__span-3-77"><a id="__codelineno-3-77" name="__codelineno-3-77" href="#__codelineno-3-77"></a>2.837822e-05    -2.259355e-05
+</span><span id="__span-3-78"><a id="__codelineno-3-78" name="__codelineno-3-78" href="#__codelineno-3-78"></a>-2.259355e-05   3.781671e-05
+</span><span id="__span-3-79"><a id="__codelineno-3-79" name="__codelineno-3-79" href="#__codelineno-3-79"></a>
+</span><span id="__span-3-80"><a id="__codelineno-3-80" name="__codelineno-3-80" href="#__codelineno-3-80"></a>Summary result of REML analysis has been saved in the file [gwas_output/atopy_greml.hsq].
+</span><span id="__span-3-81"><a id="__codelineno-3-81" name="__codelineno-3-81" href="#__codelineno-3-81"></a>
+</span><span id="__span-3-82"><a id="__codelineno-3-82" name="__codelineno-3-82" href="#__codelineno-3-82"></a>BLUP solutions of the genetic effects for 1932 individuals have been saved in the file [gwas_output/atopy_greml.indi.blp].
+</span><span id="__span-3-83"><a id="__codelineno-3-83" name="__codelineno-3-83" href="#__codelineno-3-83"></a>
+</span><span id="__span-3-84"><a id="__codelineno-3-84" name="__codelineno-3-84" href="#__codelineno-3-84"></a>Analysis finished at 03:51:12 PDT on Mon Sep 25 2023
+</span><span id="__span-3-85"><a id="__codelineno-3-85" name="__codelineno-3-85" href="#__codelineno-3-85"></a>Overall computational time: 12.23 sec.
 </span></code></pre></div>
 <h2 id="66-interpretation-of-results">6.6. Interpretation of results</h2>
 <p>a) <code>$gwas/atopy_greml.hsq</code>: The output file of the <code>--reml</code> command  <br></p>
 <ul>
 <li>V(G), V(e) and Vp for genetic variance, residual variance, and phenotypic variance respectively. <br>
    Note that Vp =  V(G) + V(e)</li>
-<li>V(G)/Vp represents the proportion of phenotypic variance explained by SNPs. Our results here indicate that SNPs can explain ~4.6% only of the phenotypic variance </li>
+<li>V(G)/Vp represents the proportion of phenotypic variance explained by SNPs. Our results here indicate that SNPs can explain ~10% only of the phenotypic variance </li>
 <li>The standard error (SE) is important to judge the reliability of the results. A 95% confidence interval (CI) is approximately h2-SNP estimate +/- 1.96 * SE. If the SE is too large, the 95% CI will cover the whole parameter space (from 0 to 1) so that you won't be able to make any meaningful inference from the estimate. Therefore, a value of SE &lt; 0.1 is needed to have reliable results</li>
 <li>logL is the log likelihood for the full model (the null hypothesis that σ<sup>2</sup><sub>g</sub> ≠ 0). </li>
 <li>logL0 is the log likelihood for the reduced model (the null hypothesis that σ<sup>2</sup><sub>g</sub> = 0). </li>
@@ -1050,14 +1061,7 @@ For more information about the full and reduced models and the interpretation of
 <ul>
 <li>columns are family ID, individual ID, an intermediate variable, the total genetic effect, another intermediate variable and the residual effect.</li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Histogram of the genetic effect
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($4/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39; $gwas/${target}_greml.indi.blp &gt; $gwas/${target}_greml.indi.blp_gen_histo
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a># Histogram of the residual effect
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39; $gwas/${target}_greml.indi.blp &gt; $gwas/${target}_greml.indi.blp_res_histo
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a># annotate the report by the phenotype
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>awk &#39;BEGIN{OFS=&quot;\t&quot;}NR==FNR{a[$2]=$3;next}{print $2,$4,$6,a[$2]}&#39; $gwas/atopy.pheno $gwas/${target}_greml.indi.blp | sort -k2,2g &gt; $gwas/${target}_greml.indi.blp.pheno
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>awk -v size=0.02 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($6/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i){if(i==0) print -1*size,size,a[i]/1;else if(i&lt;0) print (i-1)*size,i*size,a[i]/1;else print i*size,(i+1)*size,a[i]/1 }}&#39; $gwas/${target}_greml.indi.blp &gt; $gwas/${target}_greml.indi.blp_histo
 </span></code></pre></div>
 <p><br>
 <br></p>

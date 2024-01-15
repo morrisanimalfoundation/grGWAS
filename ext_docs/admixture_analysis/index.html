@@ -739,45 +739,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-exclude-1st-degree-relatives" class="md-nav__link">
+  <a href="#2-remove-non-autosomal-markers-and-change-chr-names-to-intigers" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Exclude 1st degree relatives
+      2. remove non-autosomal markers and change chr names to intigers
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-remove-non-autosomal-markers-and-change-chr-names-to-intigers" class="md-nav__link">
+  <a href="#3-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries" class="md-nav__link">
     <span class="md-ellipsis">
-      3. remove non-autosomal markers and change chr names to intigers
+      3. Run Admixture in the cross validation mode to find out the best number of ancestries
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries" class="md-nav__link">
+  <a href="#4-plot-the-q-estimates" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Run Admixture in the cross validation mode to find out the best number of ancestries
+      4. plot the Q estimates
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-plot-the-q-estimates" class="md-nav__link">
+  <a href="#5-plot-the-q-estimates-of-a-selected-subset-of-individuals" class="md-nav__link">
     <span class="md-ellipsis">
-      5. plot the Q estimates
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-plot-the-q-estimates-of-a-selected-subset-of-individuals" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. plot the Q estimates of a selected subset of individuals
+      5. plot the Q estimates of a selected subset of individuals
     </span>
   </a>
   
@@ -863,45 +854,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-exclude-1st-degree-relatives" class="md-nav__link">
+  <a href="#2-remove-non-autosomal-markers-and-change-chr-names-to-intigers" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Exclude 1st degree relatives
+      2. remove non-autosomal markers and change chr names to intigers
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-remove-non-autosomal-markers-and-change-chr-names-to-intigers" class="md-nav__link">
+  <a href="#3-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries" class="md-nav__link">
     <span class="md-ellipsis">
-      3. remove non-autosomal markers and change chr names to intigers
+      3. Run Admixture in the cross validation mode to find out the best number of ancestries
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries" class="md-nav__link">
+  <a href="#4-plot-the-q-estimates" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Run Admixture in the cross validation mode to find out the best number of ancestries
+      4. plot the Q estimates
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-plot-the-q-estimates" class="md-nav__link">
+  <a href="#5-plot-the-q-estimates-of-a-selected-subset-of-individuals" class="md-nav__link">
     <span class="md-ellipsis">
-      5. plot the Q estimates
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-plot-the-q-estimates-of-a-selected-subset-of-individuals" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. plot the Q estimates of a selected subset of individuals
+      5. plot the Q estimates of a selected subset of individuals
     </span>
   </a>
   
@@ -948,57 +930,46 @@
 <h2 id="1-install">1. install</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>conda install -c bioconda admixture=1.3.0
 </span></code></pre></div>
-<h2 id="2-exclude-1st-degree-relatives">2. Exclude 1st degree relatives</h2>
+<h2 id="2-remove-non-autosomal-markers-and-change-chr-names-to-intigers">2. remove non-autosomal markers and change chr names to intigers</h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir -p admix
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a># We will use 0.177 (the geometric mean of 0.25 and 0.125) as cutoff for the KING kinship coeffiecients to identify 1st degree relatives.
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>plink2 --bfile AxiomGT1v2.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>       --king-cutoff 0.177 \
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>       --out admix/AxiomGT1v2.1st_degree_relatives
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a># Let&#39;s remove those relatives to avoid inflation of false associations in our GWAS
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>plink2 --bfile AxiomGT1v2.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>       --remove admix/AxiomGT1v2.1st_degree_relatives.king.cutoff.out.id \
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>       --make-bed --output-chr &#39;chrM&#39; --out admix/AxiomGT1v2.noRelatives.filtered.LD_prune
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>plink --bfile AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>      --autosome \
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      --make-bed -out admix/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
 </span></code></pre></div>
-<h2 id="3-remove-non-autosomal-markers-and-change-chr-names-to-intigers">3. remove non-autosomal markers and change chr names to intigers</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>plink2 --bfile admix/AxiomGT1v2.noRelatives.filtered.LD_prune --chr-set 38 no-xy --allow-extra-chr \
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>       --autosome \
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>       --make-bed -out admix/AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes
-</span></code></pre></div>
-<h2 id="4-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries">4. Run Admixture in the cross validation mode to find out the best number of ancestries</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cd admix
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>for k in {1..10};do echo $k;
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  admixture -j8 --cv AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.bed $k | tee log${k}.out
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>done
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>grep &quot;^CV error&quot; log*.out | cut -d&quot;:&quot; -f1,3 | sed &#39;s/log//;s/\.out://&#39; | sort -k1,1n &gt; admix_cv.txt
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Rscript -e &#39;val &lt;- read.table(&quot;admix_cv.txt&quot;);&#39;\
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>&#39;jpeg(file = &quot;admix_cv.jpg&quot;);&#39;\
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>&#39;plot( x = val$V1, y = val$V2, type = &quot;o&quot;,xlab = &quot;K Ancestry&quot;, ylab = &quot;CV error&quot;);&#39;\
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>&#39;dev.off();&#39;
+<h2 id="3-run-admixture-in-the-cross-validation-mode-to-find-out-the-best-number-of-ancestries">3. Run Admixture in the cross validation mode to find out the best number of ancestries</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cd admix
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>for k in {1..10};do echo $k;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  admixture -j8 --cv AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.bed $k | tee log${k}.out
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>done
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>grep &quot;^CV error&quot; log*.out | cut -d&quot;:&quot; -f1,3 | sed &#39;s/log//;s/\.out://&#39; | sort -k1,1n &gt; admix_cv.txt
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Rscript -e &#39;val &lt;- read.table(&quot;admix_cv.txt&quot;);&#39;\
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>&#39;jpeg(file = &quot;admix_cv.jpg&quot;);&#39;\
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>&#39;plot( x = val$V1, y = val$V2, type = &quot;o&quot;,xlab = &quot;K Ancestry&quot;, ylab = &quot;CV error&quot;);&#39;\
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>&#39;dev.off();&#39;
 </span></code></pre></div>
 <p><a class="glightbox" href="../../images/admix_cv.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/admix_cv.jpg" /></a><!-- --></p>
 <p>There is an output file for each parameter set: Q (the ancestry fractions), and P (the allele frequencies of the inferred ancestral populations). </p>
-<h2 id="5-plot-the-q-estimates">5. plot the Q estimates</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sort -k1,3nr AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q &gt; AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Rscript -e &#39;tbl=read.table(&quot;AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted&quot;);&#39;\
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>&#39;jpeg(file = &quot;ancestries.jpg&quot;);&#39;\
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>&#39;barplot(t(as.matrix(tbl)), col=rainbow(3),xlab=&quot;Individual #&quot;, ylab=&quot;Ancestry&quot;, border=NA);&#39;\
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>&#39;dev.off();&#39;
+<h2 id="4-plot-the-q-estimates">4. plot the Q estimates</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sort -k1,3nr AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q &gt; AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Rscript -e &#39;tbl=read.table(&quot;AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q.sorted&quot;);&#39;\
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>&#39;jpeg(file = &quot;ancestries.jpg&quot;);&#39;\
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>&#39;barplot(t(as.matrix(tbl)), col=rainbow(3),xlab=&quot;Individual #&quot;, ylab=&quot;Ancestry&quot;, border=NA);&#39;\
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>&#39;dev.off();&#39;
 </span></code></pre></div>
 <p><a class="glightbox" href="../../images/ancestries.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/ancestries.jpg" /></a><!-- --></p>
-<h2 id="6-plot-the-q-estimates-of-a-selected-subset-of-individuals">6. plot the Q estimates of a selected subset of individuals</h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>tail -n+2 AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec | awk &#39;{if($3&lt;0.02 &amp;&amp; $4&gt;0.03)print $1,$2}&#39; &gt; pc2_extreme
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>paste AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q  AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.fam | grep -wf pc2_extreme &gt; pc2_extreme.Q
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>echo Population Percent Individual &gt; subset_ancestry.txt
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>cat pc2_extreme.Q | awk &#39;{for (a = 1; a &lt;= 3; a++)print &quot;Pop&quot;a,$a,$4&quot;.&quot;$5}&#39; &gt;&gt; subset_ancestry.txt
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>Rscript -e &#39;data &lt;- read.table(&quot;subset_ancestry.txt&quot;,header = TRUE);&#39;\
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>&#39;library(ggplot2);&#39;\
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>&#39;bar &lt;- ggplot(data, aes(fill=Population, y=Percent, x=factor(Individual))) +&#39;\
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>&#39;geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) + ggtitle(&quot;Admixture ancestries&quot;);&#39;\
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>&#39;bar2 &lt;- bar + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size = 4));&#39;\
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>&#39;ggsave(&quot;subset_ancestries.png&quot;, bar2, width = 12, height = 6, dpi = 400);&#39;
+<h2 id="5-plot-the-q-estimates-of-a-selected-subset-of-individuals">5. plot the Q estimates of a selected subset of individuals</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tail -n+2 AxiomGT1v2.noRelatives.filtered.LD_prune.pca.eigenvec | awk &#39;{if($3&lt;0.02 &amp;&amp; $4&gt;0.03)print $1,$2}&#39; &gt; pc2_extreme
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>paste AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.3.Q  AxiomGT1v2.noRelatives.filtered.LD_prune.autosomes.fam | grep -wf pc2_extreme &gt; pc2_extreme.Q
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>echo Population Percent Individual &gt; subset_ancestry.txt
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>cat pc2_extreme.Q | awk &#39;{for (a = 1; a &lt;= 3; a++)print &quot;Pop&quot;a,$a,$4&quot;.&quot;$5}&#39; &gt;&gt; subset_ancestry.txt
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Rscript -e &#39;data &lt;- read.table(&quot;subset_ancestry.txt&quot;,header = TRUE);&#39;\
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>&#39;library(ggplot2);&#39;\
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>&#39;bar &lt;- ggplot(data, aes(fill=Population, y=Percent, x=factor(Individual))) +&#39;\
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>&#39;geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) + ggtitle(&quot;Admixture ancestries&quot;);&#39;\
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>&#39;bar2 &lt;- bar + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size = 4));&#39;\
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>&#39;ggsave(&quot;subset_ancestries.png&quot;, bar2, width = 12, height = 6, dpi = 400);&#39;
 </span></code></pre></div>
 <p><a class="glightbox" href="../../images/subset_ancestries.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/subset_ancestries.png" /></a><!-- --></p>
 
