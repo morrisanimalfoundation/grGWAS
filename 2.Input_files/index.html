@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -851,15 +851,15 @@
 <li>
 <p>The <a href="https://github.com/morrisanimalfoundation/grGWAS/blob/main/GRLS_Axiom.json">GRLS genotyping data</a> is available in binary PLINK file format for each of two Axiom array sets A and B. The <a href="https://www.cog-genomics.org/plink/1.9/input#bed">PLINK documentation</a> has more information about this file format. In this tutorial, the data was downloaded to the working directory where:</p>
 <ul>
-<li>The files of array A have the prefix <code>output/setA/export_plink/AxiomGT1.bin</code></li>
-<li>The files of array B have the prefix <code>output/setB/export_plink/AxiomGT1.bin</code></li>
+<li>The files of array A have the prefix <code>GRLS_Genotyping/setA/AxiomGT1.bin</code></li>
+<li>The files of array B have the prefix <code>GRLS_Genotyping/setB/AxiomGT1.bin</code></li>
 </ul>
 <hr />
 <p><strong><em>Note:</em></strong> These PLINK files have the gender as predicted by the Axiom genotyping analysis tools which is not always consistent with the gender in the dog records. Check the <a href="https://github.com/morrisanimalfoundation/grGWAS/raw/main/Genotyping_Analysis_Notes.docx">genotyping analysis notes</a> for details.</p>
 <hr />
 </li>
 <li>
-<p>There is a text file that maps between sample IDs in the genotyping files, biological sample IDs and the public IDs used in phenotype data files. The file includes gender information of the dogs as reported by their owners: <code>map_id_sex.tab</code>.</p>
+<p>There is A text file that maps between replicate IDs in the genotyping files, and their corresponding sample IDs in phenotype data files. The file includes gender information of the dogs as reported by their owners: <code>GRLS_Genotyping/map_id_sex.tab</code>.</p>
 <p>Here is a sample of the file:</p>
 <table>
 <thead>
@@ -1008,10 +1008,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -902,17 +902,17 @@
 <p>Genotyping data are provided as 2 datasets for Affymetrix (ThermoFisher) Axiom Canine HD Array sets A and B. Both datasets must be merged into one final dataset, but this requires resolving replicate SNPs, known technical replicates and gender conflicts. Finally, sample IDs in the genotyping files must match those in the phenotype files.</p>
 <h2 id="31-replicate-snps">3.1. Replicate SNPs</h2>
 <p>Both arrays have a number of replicate SNPs which are useful for QC but also require special attention for proper merging of the files. A QC merging mode of PLINK is used to identify mismatching non-missing calls between the 2 arrays.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 7 \
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>plink --bfile GRLS_Genotyping/setB/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      --bmerge GRLS_Genotyping/setA/AxiomGT1.bin --merge-mode 7 \
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      --output-chr &#39;chrM&#39; --out AxiomGT1.mismatching7
 </span></code></pre></div>
 <p>Here is the output of this command:</p>
 <blockquote>
-<p>3339 samples loaded from output/setB/export_plink/AxiomGT1.bin.fam. <br> 
-3355 samples to be merged from output/setA/export_plink/AxiomGT1.bin.fam. <br> 
+<p>3339 samples loaded from GRLS_Genotyping/setB/AxiomGT1.bin.fam. <br> 
+3355 samples to be merged from GRLS_Genotyping/setA/AxiomGT1.bin.fam. <br> 
 Of these, 17 are new, while 3338 are present in the base dataset. <br> 
-547232 markers loaded from output/setB/export_plink/AxiomGT1.bin.bim. <br> 
-397685 markers to be merged from output/setA/export_plink/AxiomGT1.bin.bim. <br> 
+547232 markers loaded from GRLS_Genotyping/setB/AxiomGT1.bin.bim. <br> 
+397685 markers to be merged from GRLS_Genotyping/setA/AxiomGT1.bin.bim. <br> 
 Of these, 368215 are new, while 29470 are present in the base dataset. <br> 
 Warning: Variants 'Affx-206088448' and 'Affx-205939940' have the same position. <br> 
 Warning: Variants 'Affx-205859745' and 'Affx-205344060' have the same position. <br> 
@@ -928,22 +928,22 @@ Performing 1-pass diff (mode 7), writing results to AxiomGT1.mismatching7.diff <
 <p><strong>Mismatching genotypes:</strong> Use the following code to have a closer look at the mismatching genotypes to see if they are uniformly distributed among the samples or not.
     <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tail -n+2 AxiomGT1.mismatching7.diff | awk &#39;{print $2,$3}&#39; | sort | uniq -c | sort -k1,1nr &gt; AxiomGT1.mismatching7.diff.samples
 </span></code></pre></div></p>
-<p>It seems that two samples show exceptional higher rate of mismatching genotypes: <code>GRLS grlsU85RZ2FF_1</code> and <code>GRLS grlsQZAMFHKK_1</code> have 11676 and 11440 mismatches respectively. The latter sample is the only sample that was predicted to be female on Array A and male on Array B according to the genotyping analysis notes. This likely indicates that these samples had something wrong. Therefore, both samples will be excluded from further analysis during the merging step. </p>
+<p>It seems that two samples show exceptional higher rate of mismatching genotypes: <code>GRLS grlsU85RZ2FF_1</code> and <code>GRLS grlsQZAMFHKK_1</code> have 11676 and 11440 mismatches respectively. The latter sample was predicted to be female on Array A and male on Array B according to the genotyping analysis notes. This likely indicates that these samples had something wrong. Therefore, both samples will be excluded from further analysis during the merging step. </p>
 </li>
 <li>
 <p><strong>Variants having the same position:</strong> The mismatching analysis reveals 1463 markers that have the same position on both arrays but with different SNP IDs. Further digging in the array annotation shows that most of these markers are identical with minor differences in the flanking sequences. To avoid genotyping errors, these SNPs will be excluded from array B.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>grep &quot;Warning: Variants .* have the same position&quot; AxiomGT1.mismatching7.log | awk -F&quot;&#39;&quot; &#39;BEGIN{OFS=&quot;\n&quot;;}{print $2,$4}&#39; &gt; same_pos.arrB.lst
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>plink --bfile GRLS_Genotyping/setB/AxiomGT1.bin --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  --exclude same_pos.arrB.lst \
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  --make-bed --output-chr &#39;chrM&#39; --out output/setB/export_plink/AxiomGT1.bin_noSamePos
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  --make-bed --output-chr &#39;chrM&#39; --out GRLS_Genotyping/setB/AxiomGT1.bin_noSamePos
 </span></code></pre></div>
 </li>
 </ol>
 <h2 id="32-merging-of-array-sets-a-and-b-genotyping-data">3.2. Merging of array sets A and B genotyping data</h2>
 <p>Now, the genotyping data of both arrays should be merged. For SNPs shared between the arrays, the genotypes of array A will overwrite the non-missing calls in array B. Also, <strong>the 2 samples with higher rates of non-concordance will be excluded</strong>.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>echo &quot;GRLS grlsU85RZ2FF_1|GRLS grlsQZAMFHKK_1&quot; | tr &#39;|&#39; &#39;\n&#39; &gt; hiMismatches_samples.lst
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>plink --bfile output/setB/export_plink/AxiomGT1.bin_noSamePos --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>      --bmerge output/setA/export_plink/AxiomGT1.bin --merge-mode 3 \
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>plink --bfile GRLS_Genotyping/setB/AxiomGT1.bin_noSamePos --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>      --bmerge GRLS_Genotyping/setA/AxiomGT1.bin --merge-mode 3 \
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      --remove hiMismatches_samples.lst \
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge
 </span></code></pre></div>
@@ -958,7 +958,7 @@ Total genotyping rate in remaining samples is 0.994631. <br>
 ...</p>
 </blockquote>
 <p>The first warning is usually caused by male heterozygous calls in the X chromosome pseudo-autosomal region. Looking at <code>AxiomGT1v2.comp_merge.hh</code> shows that all the 1355 heterozygous haploid genotypes belong to sample <code>GRLS grlsJCVWWRMM_1</code>. According to the genotyping analysis notes, this sample is reported as a male in metadata as well as by the genotyping algorithm on array B, but the algorithm failed to predict its gender on array A. This sample will be handled later during the check for gender accuracy.</p>
-<p>The second warning indicates that some non-male samples have Y chromosome genotypes. Most PLINK commands treat these genotypes as missing. This behavior is intended for safety, however it makes it tricky to identify these markers. Here is a workaround to find these markers:</p>
+<p>The second warning indicates that some non-male samples have Y chromosome genotypes. Most PLINK commands (e.g. --freq) treat these genotypes as missing. This behavior is intended for safety, however it makes it tricky to identify these markers. Here is a workaround to find these markers:</p>
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdir -p temp_nonmale
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cat AxiomGT1v2.comp_merge.fam | awk &#39;{if($5==&quot;2&quot;)print}&#39; &gt; temp_nonmale/female.lst
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>plink --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
@@ -985,7 +985,7 @@ Total genotyping rate in remaining samples is 0.994631. <br>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>## Then find the number of replicates remaining after exclusion of those selected by the Plink2 kinship filter.
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>## The expectations is that one replicate will remain from each group of replicate samples.
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$3]+=1;next}/^Family_ID/{print}{if(a[$3]&gt;1)print}&#39; map_id_sex.tab map_id_sex.tab &gt; dup_samples.tab
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$3]+=1;next}/^Family_ID/{print}{if(a[$3]&gt;1)print}&#39; GRLS_Genotyping/map_id_sex.tab GRLS_Genotyping/map_id_sex.tab &gt; dup_samples.tab
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$1 FS $2]=1;next}{if(!a[$1 FS $2])print $0}&#39; AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id dup_samples.tab &gt; dup_samples_remain.tab
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>tail -n+2 dup_samples_remain.tab | cut -f3 | sort | uniq -c | sort -k1,1nr
 </span></code></pre></div>
@@ -1001,7 +1001,7 @@ Hear is a list for the count of remaining replicates per sample:</p>
 <p>It seems that 2 duplicates of sample <code>grlsFGFIVFXX</code> are still remaining! Let's try to calculate their KING kinship to see how similar they are.
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>grep grlsFGFIVFXX dup_samples.tab &gt; failed_deDup.lst
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>       --keep failed_deDup.lst --make-king-table \
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>       --keep failed_deDup.lst --make-king-table &#39;cols=maybefid,id,maybesid,nsnp,hethet,ibs0,ibs1,kinship&#39; \
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>       --out AxiomGT1v2.comp_merge.failed_deDup
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>cat AxiomGT1v2.comp_merge.failed_deDup.kin0
 </span></code></pre></div></p>
@@ -1016,6 +1016,8 @@ Hear is a list for the count of remaining replicates per sample:</p>
 <th>NSNP</th>
 <th>HETHET</th>
 <th>IBS0</th>
+<th>HET1_HOM2</th>
+<th>HET2_HOM1</th>
 <th>KINSHIP</th>
 </tr>
 </thead>
@@ -1028,10 +1030,20 @@ Hear is a list for the count of remaining replicates per sample:</p>
 <td>879956</td>
 <td>0.0645396</td>
 <td>0.0414475</td>
+<td>0.11505</td>
+<td>0.112207</td>
 <td>-0.0559478</td>
 </tr>
 </tbody>
 </table>
+<ul>
+<li>NSNP: Number of variants considered (autosomal, neither call missing)</li>
+<li>HETHET:   Proportion of considered call pairs which are het-het</li>
+<li>IBS0: Proportion of considered call pairs which are opposite homs</li>
+<li>HET1_HOM2:    Proportion of sample 1 het, sample 2 hom</li>
+<li>HET2_HOM1:    Proportion of sample 1 hom, sample 2 het</li>
+<li>KINSHIP:  KING-robust between-family kinship estimate</li>
+</ul>
 <p>It is obvious that these two samples are unrelated. Therefore, both of them should be excluded with the duplicate samples identified by the Plink2 kinship filter. There are 120 samples included in this total, so there will end up being 3234 samples in the output PLINK file
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>plink2 --bfile AxiomGT1v2.comp_merge --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>       --remove &lt;(cat AxiomGT1v2.comp_merge.nodup.king.cutoff.out.id failed_deDup.lst) \
@@ -1041,18 +1053,18 @@ Hear is a list for the count of remaining replicates per sample:</p>
 <p>According to the <a href="https://github.com/morrisanimalfoundation/grGWAS/raw/main/Genotyping_Analysis_Notes.docx">genotyping analysis notes</a>, there are two samples <code>GRLS grlsQZAMFHKK_1</code> and <code>GRLS grlsJCVWWRMM_1</code> that had discordant computed gender on the two arrays. The former was removed already because of the high rate of mismatching genotypes between the 2 arrays (see <strong>3.1. Replicate SNPs</strong>). The latter showed high rate of heterozygous haploid genotypes despite being reported as male in metadata (see <strong>3.2. Merging of array sets</strong>). Therefore, this sample should be discarded as well from further analysis.</p>
 <p>There are an additional 9 samples with concordant gender on both arrays but different from the metadata. This information can be reproduced by comparing known gender in metadata file <code>map_id_sex.tab</code> versus the computed gender based on genotyping data in the PLINK files.
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>echo &quot;Family_ID Individual_ID computed_sex metadata_sex&quot; | tr &#39; &#39; &#39;\t&#39; &gt; gender_conflict.lst
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$1 FS $2]=$4;next}{if(a[$1 FS $2] &amp;&amp; a[$1 FS $2]!=$5)print $1,$2,$5,a[$1 FS $2]}&#39; map_id_sex.tab AxiomGT1v2.comp_merge.deDup.fam &gt;&gt; gender_conflict.lst
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>echo &quot;GRLS grlsJCVWWRMM_1 ? 1&quot; | tr &#39; &#39; &#39;\t&#39; &gt;&gt; gender_conflict.lst
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}FNR==NR{a[$1 FS $2]=$4;next}{if(a[$1 FS $2] &amp;&amp; a[$1 FS $2]!=$5)print $1,$2,$5,a[$1 FS $2]}&#39; GRLS_Genotyping/map_id_sex.tab AxiomGT1v2.comp_merge.deDup.fam &gt;&gt; gender_conflict.lst
 </span></code></pre></div></p>
 <p>Incorrect gender could be a mistake in the metadata or an indication for sample swap. Therefore, it is safer to exclude these samples from the genotyping data.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>echo &quot;GRLS grlsJCVWWRMM_1&quot; | tr &#39; &#39; &#39;\t&#39; &gt;&gt; gender_conflict.lst
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>       --remove gender_conflict.lst \
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup.sexConfirm
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>       --remove gender_conflict.lst \
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup.sexConfirm
 </span></code></pre></div>
 The output of the last PLINK command indicates that the final file has 3224 samples (1615 females, 1609 males; 3224 founders)</p>
 <h2 id="35-update-sample-ids-in-the-genotyping-files-to-match-the-phenotyping-files">3.5. Update sample IDs in the genotyping files to match the phenotyping files</h2>
 <p>The sample IDs in the genotyping files have a suffix that identify the duplicates of the same sample. The samples have already been deduplicated in the genotyping files (see <strong>3.3. Removal of duplicate samples</strong>). Now the IDs need to be updated to exactly match the public_ids (e.g. grlsH764T844) used in phenotypic data files.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>tail -n+2 map_id_sex.tab | awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}{print $1,$2,$1,$3}&#39; &gt; public_ids.update.lst 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>tail -n+2 GRLS_Genotyping/map_id_sex.tab | awk &#39;BEGIN{FS=OFS=&quot;\t&quot;}{print $1,$2,$1,$3}&#39; &gt; public_ids.update.lst 
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>plink2 --bfile AxiomGT1v2.comp_merge.deDup.sexConfirm --chr-set 38 no-xy --allow-no-sex --allow-extra-chr \
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>       --update-ids public_ids.update.lst \
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>       --make-bed --output-chr &#39;chrM&#39; --out AxiomGT1v2.comp_merge.deDup.sexConfirm.public_ids
@@ -1145,10 +1157,10 @@ The output of the last PLINK command indicates that the final file has 3224 samp
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "content.action.view", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "search.highlight", "content.tabs.link"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
