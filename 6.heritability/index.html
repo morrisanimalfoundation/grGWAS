@@ -918,7 +918,7 @@
   <h1>6. Heritability</h1>
 
 <p>It is meaningless to perform a genomic association study with a phenotype unless it is heritable. Preceding studies are needed to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5635617/">determine heritability estimates for especially complex traits</a>; however, this is out of scope for this tutorial. By heritability assessment, this means estimating the proportion of variance in the phenotype explained by the genotyped SNPs. Later, it should be calculated how much of this heritability was captured by the selected markers.   </p>
-<p><a href="https://yanglab.westlake.edu.cn/software/gcta/#Overview">GCTA software</a> will be used to perform the GREML analysis for heritability assessment.</p>
+<p><a href="https://yanglab.westlake.edu.cn/software/gcta/#Overview">GCTA software</a> will be used to perform the GREML (Genetic Relatedness Estimation through Maximum Likelihood) analysis for heritability assessment.</p>
 <p>The <code>--reml</code> command of GCTA estimates the proportion of phenotypic variance that can be explained by SNPs. Here is a more detailed explanation of the [GREML method (https://morrisanimalfoundation.github.io/grGWAS/ext_docs/GREML_analysis/) and the underlying linear mixed model. </p>
 <p>In brief, GREML utilizes the genetic relationships between individuals in a sample population, captured in a genomic relationship matrix (GRM), to <em>partition the phenotypic variance</em> into its genetic and residual components. By fitting a linear mixed model, GREML estimates the proportion of variance attributable to all SNPs.</p>
 <p>The summary result of REML analysis will be saved in a plain text file (*.hsq).</p>

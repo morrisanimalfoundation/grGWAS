@@ -1237,6 +1237,7 @@ There are 317 cases and 1672 controls.</p>
 <ul>
 <li>--r2 reports squared inter-variant allele count correlations.</li>
 <li>--ld-window-r2    variant pairs with r2 values &lt; 0.2 are filtered out by default. This option is used to adjust this threshold.</li>
+<li>Every pair of variants with at least 10 variants between them, or more than 1000 kilobases apart, is ignored. The first threshold can be changed with --ld-window, and the second threshold with --ld-window-kb.</li>
 </ul>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>plink --bfile &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives --chr-set 38 no-xy --allow-extra-chr \
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>      --r2 --ld-window-r2 0 --ld-window-kb 10000 --ld-window 100 \
@@ -1246,6 +1247,7 @@ There are 317 cases and 1672 controls.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>awk -v size=0.01 &#39;BEGIN{OFS=&quot;\t&quot;;bmin=bmax=0}{ b=int($7/size); a[b]++; bmax=b&gt;bmax?b:bmax; bmin=b&lt;bmin?b:bmin } END { for(i=bmin;i&lt;=bmax;++i) print i*size,(i+1)*size,a[i]/1 }&#39;  &lt;(tail -n+2 &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.stats.ld) &gt; &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.stats.ld.r2_histo ## 155780 sequential markers have complete linkage
 </span></code></pre></div></p>
 <p>Create an LD Decay Plot.
+The key step is the "aggregate" function that calculate the mean R2 of all pair of variants at the same distance 
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>cat &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.stats.ld | awk &#39;/NR==1/{print;next}{x=$5-$2;if(x&lt;100000)print}&#39; &gt; &quot;$gwas&quot;/AxiomGT1v2.filtered.${target}.noRelatives.stats.ld2
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Rscript -e &#39;args=(commandArgs(TRUE));require(ggplot2);&#39;\
